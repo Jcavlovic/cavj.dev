@@ -1,0 +1,29 @@
+kind: github
+metadata:
+  name: github
+  revision: 484429ba-6d99-44bc-855b-331368fc9c5b
+spec:
+  api_endpoint_url: https://api.github.com
+  client_id: 
+  client_secret: 
+  display: GitHub
+  endpoint_url: https://github.com
+  redirect_url: https://teleport.cavj.dev/v1/webapi/github/callback
+  teams_to_logins: null
+  teams_to_roles:
+  - organization: teleport-cavlovicj
+    roles:
+    - admin
+    - access
+    - editor
+    - auditor
+    - db-access-postgres
+    - cavlovicj-ec2-ssh-access
+    - argocd-access
+    - saml-admin
+    - cavlovicj-k8s-access
+    - linux-desktop-admins
+    - grafana-editor
+    team: dev
+version: v3
+
