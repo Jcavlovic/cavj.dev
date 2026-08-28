@@ -25,6 +25,7 @@ Repo for Teleport Deployment
 1. EC2 Large :x:
 
 ### Windows Desktops
+1. HomePC :x:
 
 ### Networking
 1. Cert-Manager :x:
