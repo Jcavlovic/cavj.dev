@@ -6,31 +6,31 @@ Repo for Teleport Deployment
 ## Resources
 
 ### Apps
-1. :x: ArgoCD
-2. :x: Authentik
-3. :x: Grafana
+1. ArgoCD :x:
+2. Authentik :x:
+3. Grafana :x:
 
 ### Databases
-:x: Postgres
-:x: MongoDB
+1. Postgres :x:
+2. MongoDB :x:
 
 ### Kube
-:x: EKS
+1. EKS :x:
 
 ### SSH Nodes
-:x: IAM
-:x: Token
+1. IAM :x:
+2. Token :x:
 
 ### Linux Desktops
-:x: EC2 Large
+1. EC2 Large :x:
 
 ### Windows Desktops
 
 ### Networking
-:x: Cert-Manager
-:x: ExternalDNS
-:x: Traefik
+1. Cert-Manager :x:
+2. ExternalDNS :x:
+3. Traefik :x:
 
 ### Monitoring
-:x: Alerta
-:x: Prometheus
+1. Alerta :x:
+2. Prometheus :x:
