@@ -1,0 +1,32 @@
+kind: role
+metadata:
+  description: Access rights to SSH to CavlovicJ EC2 instance.
+  name: cavlovicj-ec2-ssh-access
+  revision: 2ccbb117-42ca-499e-80e5-37ce8b2bae24
+spec:
+  allow:
+    logins:
+    - cavlovicj
+    node_labels:
+      env: dev
+  deny:
+    logins:
+    - root
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+
