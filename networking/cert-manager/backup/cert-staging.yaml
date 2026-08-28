@@ -1,0 +1,21 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cavj-dev-staging
+  namespace: cert-manager
+spec:
+  secretName: cavj-dev-staging-tls
+
+  duration: 2160h # 90 days
+  renewBefore: 720h # 30 days
+
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+
+  commonName: "*.teleport.cavj.dev"
+
+  dnsNames:
+    - "*.teleport.cavj.dev"
+    - "teleport.cavj.dev"
