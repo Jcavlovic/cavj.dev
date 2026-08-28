@@ -1,0 +1,27 @@
+kind: saml
+metadata:
+  name: okta
+  revision: 3f87f8ed-eff5-425d-82a8-e054f8cefdcb
+spec:
+  acs: https://teleport.cavj.dev/v1/webapi/saml/acs/okta
+  attributes_to_roles:
+  - name: groups
+    roles:
+    - auditor
+    - editor
+    value: admins
+  - name: groups
+    roles:
+    - access
+    value: devs
+  audience: https://teleport.cavj.dev/v1/webapi/saml/acs/okta
+  cert: ""
+  display: Okta
+  entity_descriptor: |-
+  entity_descriptor_url: https://integrator-2606352.okta.com/app/exk169vot7l5viVvr698/sso/saml/metadata
+  issuer: http://www.okta.com/exk169vot7l5viVvr698
+  service_provider_issuer: https://teleport.cavj.dev/v1/webapi/saml/acs/okta
+  signing_key_pair:
+  sso: https://integrator-2606352.okta.com/app/trial-3865409_teleport_1/exk169vot7l5viVvr698/sso/saml
+version: v2
+
