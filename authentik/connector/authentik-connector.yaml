@@ -1,0 +1,24 @@
+kind: saml
+metadata:
+  name: authentik
+spec:
+  acs: https://teleport.cavj.dev:443/v1/webapi/saml/acs/authentik
+  attributes_to_roles:
+  - name: http://schemas.xmlsoap.org/claims/Group
+    roles:
+    - editor
+    - auditor
+    value: teleport-admins
+  - name: http://schemas.xmlsoap.org/claims/Group
+    roles:
+    - access
+    value: teleport-developers
+  audience: https://teleport.cavj.dev:443/v1/webapi/saml/acs/authentik
+  cert: ""
+  display: authentik
+  entity_descriptor: ""
+  entity_descriptor_url: https://authentik.cavj.dev/application/saml/teleport/metadata/
+  issuer: ""
+  service_provider_issuer: https://teleport.cavj.dev:443/v1/webapi/saml/acs/authentik
+  sso: ""
+version: v2

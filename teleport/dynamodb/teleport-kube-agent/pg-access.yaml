@@ -1,0 +1,10 @@
+kind: role
+version: v7
+metadata:
+  name: cnpg-access
+spec:
+  allow:
+    db_labels:
+      engine: [cloudnativepg]
+    db_names: [appdb, postgres]
+    db_users: [teleport]
