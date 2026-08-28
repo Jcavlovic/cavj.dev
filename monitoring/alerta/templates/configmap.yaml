@@ -1,0 +1,27 @@
+apiVersion: v1
+data:
+  alertad.conf: |
+    {{- if .Values.alertaConfig }}
+    {{ range $key, $value := .Values.alertaConfig }}
+    {{ $key }} = {{ $value }}
+    {{- end }}
+    {{- end }}
+    {{ if .Values.postgresql.enabled -}}
+    DATABASE_URL = "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql:5432/{{ .Values.postgresql.auth.database }}"
+    {{ else if and (.Values.useExistingDatabase) (eq .Values.useExistingDatabase.type "postgresql") }}
+    {{ if eq .Values.useExistingDatabase.type "postgresql" }}
+    DATABASE_URL = "postgresql://{{- if .Values.useExistingDatabase.auth.enabled -}}{{ .Values.useExistingDatabase.auth.username }}:{{ .Values.useExistingDatabase.auth.password }}@{{- end -}}{{ .Values.useExistingDatabase.endpoint }}/{{ .Values.useExistingDatabase.database }}"
+    {{- end }}
+    {{- end }}
+{{- if .Values.alertaWebUIConfig }}
+  config.js: |
+{{ .Values.alertaWebUIConfig | indent 4 }}
+{{- end }}
+kind: ConfigMap
+metadata:
+  name: {{ include "alerta.fullname" . }}
+  labels:
+    app: {{ include "alerta.name" . }}
+    chart: {{ include "alerta.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}

@@ -1,0 +1,128 @@
+## nameOverride String to partially override alerta.fullname template (will maintain the release name)
+nameOverride: ""
+
+## fullnameOverride String to fully override alerta.fullname template
+fullnameOverride: ""
+
+replicaCount: 1
+image:
+  repository: hayk96/alerta-web
+  tag: 9.0.4
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+  # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+  # ingressClassName: nginx
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - alerta.example.com
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+## Affinity settings for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+affinity: {}
+
+## Node labels for Alerta pod assignment
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+nodeSelector: {}
+
+## Node tolerations for scheduling to nodes with taints
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+tolerations: []
+  # - key: "key"
+  #   operator: "Equal|Exists"
+  #   value: "value"
+  #   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+alertaAdminPassword: ALERTA_ADMIN_PASSWORD
+alertaAdminUsers:
+  - admin
+
+alertaAdminKey: ALERTA_ADMIN_KEY
+alertaApiKey:   ALERTA_ADMIN_KEY
+
+alertaInstallPlugins:
+  - prometheus
+  - normalise
+  - enhance
+
+## ref: http://docs.alerta.io/en/latest/configuration.html
+alertaConfig:
+  DEBUG: "False"
+  AUTH_REQUIRED: "True"
+  SIGNUP_ENABLED: "False"
+  DELETE_EXPIRED_AFTER: 60
+  DELETE_INFO_AFTER: 60
+  COLUMNS: "['severity', 'status', 'lastReceiveTime', 'environment', 'service', 'resource', 'event', 'value', 'text']"
+  ACTIONS: "['createIssue', 'updateIssue']"
+  PLUGINS: "['prometheus', 'enhance']"
+  ALERTMANAGER_API_URL: '"http://prometheus-alertmanager.svc"'
+  ALERTMANAGER_SILENCE_FROM_ACK: "True"
+  LOG_HANDLERS: "['console']"
+  COLOR_MAP: "{
+  'severity': {
+    'security': '#000000',
+    'critical': 'red',
+    'major' : '#F89407',
+    'minor' : '#f8bc07',
+    'warning': '#1E90FF',
+    'indeterminate': '#a32cf2',
+    'informational': 'green',
+    'ok': '#00CC00',
+    'normal': '#0aab78',
+    'unknown': 'silver'
+  },
+  'text': 'white'
+  }"
+
+## ref: https://docs.alerta.io/webui/configuration.html#webui-config
+## must be a string, so you have to add a | after alertaWebUIConfig:
+alertaWebUIConfig:
+  # {
+  #   "endpoint": "http://localhost:8080"
+  # }
+
+postgresql:
+  enabled: true
+  image:
+    repository: bitnamilegacy/postgresql
+  auth:
+    database: alerta
+    username: alerta
+    password: PG_ALERTA_PASSWORD
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
+  # Disables persistence of replicas PgSQL
+  readReplicas: {persistence: {enabled: false}}
+
+## Use already existing database. Currently, supported type is Postgres.
+useExistingDatabase: {}
+#  type: postgresql
+#  endpoint: example-postgresql.default.svc:5432
+#  database: EXISTING_DATABASE_NAME
+#  auth:
+#    enabled: true
+#    username: EXISTING_USERNAME
+#    password: EXISTING_PASSWORD
