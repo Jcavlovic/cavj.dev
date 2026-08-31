@@ -7,7 +7,7 @@ Repo for Teleport Deployment
 
 ### Apps
 1. ArgoCD :white_check_mark:
-2. Authentik :x:
+2. Authentik :white_check_mark:
 3. Grafana :x:
 
 ### Databases
@@ -42,7 +42,7 @@ The implementation plan for follow this order of deployment.
 1. Cert-Manager :white_check_mark:
 2. ExternalDNS :white_check_mark:
 3. Treafik Ingress Controller :white_check_mark:
-4. Authentik
+4. Authentik :white_check_mark:
 5. Prometheus
 6. Alerta
 7. Grafana
