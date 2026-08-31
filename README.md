@@ -6,7 +6,7 @@ Repo for Teleport Deployment
 ## Resources
 
 ### Apps
-1. ArgoCD :x:
+1. ArgoCD :white_check_mark:
 2. Authentik :x:
 3. Grafana :x:
 
