@@ -106,7 +106,9 @@ installCRDs: false
 crds:
   # This option decides if the CRDs should be installed
   # as part of the Helm installation.
-  enabled: false
+  # CHANGED: true so `helm install` installs the Certificate/Issuer/ClusterIssuer
+  # CRDs that the manifests in ./issuers depend on.
+  enabled: true
 
   # This option makes it so that the "helm.sh/resource-policy": keep
   # annotation is added to the CRD. This will prevent Helm from uninstalling
@@ -260,7 +262,10 @@ serviceAccount:
   # annotations:
   #   "{{ .Chart.Name }}-helm-chart/version": "{{ .Chart.Version }}"
   # +docs:property
-  # annotations: {}
+  # CHANGED: IRSA. Replace 278576220453 with your AWS account ID. The role's
+  # trust policy must allow system:serviceaccount:cert-manager:cert-manager.
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::278576220453:role/cert-manager-route53"
 
   # Optional additional labels to add to the controller's Service Account.
   # +docs:property
@@ -336,11 +341,14 @@ config: {}
 # For more information, see the [cert-manager documentation](https://cert-manager.io/docs/configuration/acme/dns01/#setting-nameservers-for-dns01-self-check).
 
 # A comma-separated string with the host and port of the recursive nameservers cert-manager should query.
-dns01RecursiveNameservers: ""
+# CHANGED: query public resolvers directly so the DNS01 self-check is not
+# answered by in-cluster CoreDNS or a split-horizon private zone.
+dns01RecursiveNameservers: "1.1.1.1:53,8.8.8.8:53"
 
 # Forces cert-manager to use only the recursive nameservers for verification.
 # Enabling this option could cause the DNS01 self check to take longer owing to caching performed by the recursive nameservers.
-dns01RecursiveNameserversOnly: false
+# CHANGED: required for the setting above to actually take effect.
+dns01RecursiveNameserversOnly: true
 
 # Option to disable cert-manager's build-in auto-approver. The auto-approver
 # approves all CertificateRequests that reference issuers matching the 'approveSignerNames'
@@ -356,7 +364,6 @@ disableAutoApproval: false
 # ref: https://cert-manager.io/docs/concepts/certificaterequest/#approval
 # +docs:property
 approveSignerNames:
-- issuers.cert-manager.io/*
 - clusterissuers.cert-manager.io/*
 
 # Additional command line flags to pass to cert-manager controller binary.
@@ -425,6 +432,10 @@ securityContext:
   runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault
+  # CHANGED: required for IRSA. Without an fsGroup the projected service
+  # account token is not readable by the non-root cert-manager process and
+  # the AWS SDK falls back to no credentials.
+  fsGroup: 1001
 
 # Container Security Context to be set on the controller component container.
 # For more information, see [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).

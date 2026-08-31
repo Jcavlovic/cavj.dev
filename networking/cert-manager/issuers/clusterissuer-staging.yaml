@@ -1,0 +1,24 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: jordan.cavlovic@goteleport.com
+    # Each ACME account key is registered against one specific ACME server.
+    # Never share this secret with the prod issuer.
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+      - selector:
+          dnsZones:
+            - "cavj.dev"
+        dns01:
+          route53:
+            # Route 53 is a global service, but the SDK still requires a region.
+            region: us-west-1
+            hostedZoneID: Z09654461UHZKWUZUMQEK
+            # Credentials come from IRSA via the annotated cert-manager
+            # ServiceAccount. No accessKeyID/secretAccessKeySecretRef needed.

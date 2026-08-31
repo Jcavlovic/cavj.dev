@@ -1,0 +1,25 @@
+---
+# Let's Encrypt STAGING. Issues an untrusted cert but exercises the full
+# DNS01 / Route 53 path without burning production rate limits.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cavj-dev-staging
+  namespace: cert-manager
+spec:
+  secretName: cavj-dev-staging-tls
+
+  duration: 2160h # 90 days
+  renewBefore: 720h # 30 days
+
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+
+  commonName: "*.cavj.dev"
+
+  # Deliberately identical to the prod cert (12-cert-prod.yaml) so that a
+  # successful staging issuance actually proves prod will succeed.
+  dnsNames:
+    - "*.cavj.dev"
+    - "cavj.dev"
