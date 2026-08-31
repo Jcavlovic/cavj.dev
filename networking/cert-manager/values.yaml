@@ -265,7 +265,7 @@ serviceAccount:
   # CHANGED: IRSA. Replace 278576220453 with your AWS account ID. The role's
   # trust policy must allow system:serviceaccount:cert-manager:cert-manager.
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::278576220453:role/cert-manager-route53"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::278576220453:role/cavj-cm-route53"
 
   # Optional additional labels to add to the controller's Service Account.
   # +docs:property
