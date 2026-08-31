@@ -29,7 +29,7 @@ Repo for Teleport Deployment
 
 ### Networking
 1. Cert-Manager :white_check_mark:
-2. ExternalDNS :x:
+2. ExternalDNS :white_check_mark:
 3. Traefik :x:
 
 ### Monitoring
@@ -40,7 +40,7 @@ Repo for Teleport Deployment
 The current implementation includes migrating hosted services to ArgoCD, and depolying new services. Each service will be deployed to ArgoCD, tested, and verified for successful deployment before moving on to the next service.
 The implementation plan for follow this order of deployment.
 1. Cert-Manager :white_check_mark:
-2. ExternalDNS
+2. ExternalDNS :white_check_mark:
 3. Treafik Ingress Controller
 4. Authentik
 5. Prometheus
