@@ -227,7 +227,7 @@ api:  # @schema additionalProperties: false
 ingressRoute:
   dashboard:
     # -- Create an IngressRoute for the dashboard
-    enabled: false
+    enabled: true
     # -- Additional ingressRoute annotations (e.g. for kubernetes.io/ingress.class)
     annotations: {}
     # -- Additional ingressRoute labels (e.g. for filtering IngressRoute by custom labels)
@@ -1126,7 +1126,10 @@ tlsOptions: {}
 
 # -- TLS Store are created as [TLSStore CRDs](https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/crd/tls/tlsstore/).
 # This is useful if you want to set a default certificate. See EXAMPLE.md for details.
-tlsStore: {}
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: cavj-dev-tls
 
 service:
   enabled: true
