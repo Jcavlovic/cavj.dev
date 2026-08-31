@@ -58,7 +58,7 @@ service:
   # -- Service IP family policy.
   ipFamilyPolicy:  # @schema type: [string, null];  enum:[SingleStack, PreferDualStack, RequireDualStack, null]
 
-  # @schema additionalProperties: true
+rbac:  # @schema additionalProperties: true
   # -- If `true`, create a `ClusterRole` & `ClusterRoleBinding` with access to the Kubernetes API.
   create: true
   # -- Additional rules to add to the `ClusterRole`.
