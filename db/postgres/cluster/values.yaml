@@ -174,9 +174,9 @@ recovery:
       sslMode: "verify-full"
       passwordSecret:
         # -- Whether to create a secret for the password
-        create: false
+        create: true
         # -- Name of the secret containing the password
-        name: ""
+        name: "pg-secret"
         # -- The key in the secret containing the password
         key: "password"
         # -- The password value to use when creating the secret
@@ -194,11 +194,11 @@ recovery:
 
 cluster:
   # -- Number of instances
-  instances: 1
+  instances: 3
 
   # -- Name of the container image, supporting both tags (<image>:<tag>) and digests for deterministic and repeatable deployments:
   # <image>:<tag>@sha256:<digestValue>
-  imageName: docker.io/cavlovicj/postgresdb-wal2json:18  # Default value depends on type (postgresql/postgis/timescaledb)
+  imageName: "docker.io/cavlovicj/postgresdb-wal2json:18"  # Default value depends on type (postgresql/postgis/timescaledb)
 
   # -- Reference to `ImageCatalog` of `ClusterImageCatalog`, if specified takes precedence over `cluster.imageName`
   imageCatalogRef: {}

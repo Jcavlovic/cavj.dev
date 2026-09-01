@@ -31,7 +31,7 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-namespaceOverride: "cloudnativepg"
+namespaceOverride: ""
 
 hostNetwork: false
 dnsPolicy: ""
