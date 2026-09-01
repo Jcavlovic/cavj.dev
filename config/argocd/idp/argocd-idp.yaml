@@ -1,0 +1,44 @@
+kind: saml_idp_service_provider
+version: v1
+metadata:
+  name: argocd
+  labels:
+    app: argocd
+    env: prod
+spec:
+  entity_id: https://argocd.cavj.dev/api/dex/callback
+  acs_url: https://argocd.cavj.dev/api/dex/callback
+ 
+  # `email` MUST resolve to something. A mapping that resolves to nothing is silently
+  # omitted from the assertion, which is what produced Dex's
+  #   failed to authenticate: no attribute with name "email"
+  # This user has no `email` trait, so `uid` (the Teleport username) is used.
+  attribute_mapping:
+    - name: email
+      value: uid
+    - name: name
+      value: uid
+    - name: groups
+      value: union(user.spec.traits.groups, user.spec.roles)
+ 
+  # No validUntil: the descriptor Teleport generated previously carried an expiry that
+  # had already lapsed, which is a silent time bomb.
+  entity_descriptor: |
+    <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://argocd.cavj.dev/api/dex/callback">
+      <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" AuthnRequestsSigned="false" WantAssertionsSigned="true">
+        <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+        <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://argocd.cavj.dev/api/dex/callback" index="1"></AssertionConsumerService>
+        <AttributeConsumingService index="0">
+          <ServiceName xml:lang="en">teleport_saml_idp_service</ServiceName>
+          <RequestedAttribute FriendlyName="email" Name="email" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">
+            <AttributeValue>uid</AttributeValue>
+          </RequestedAttribute>
+          <RequestedAttribute FriendlyName="name" Name="name" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">
+            <AttributeValue>uid</AttributeValue>
+          </RequestedAttribute>
+          <RequestedAttribute FriendlyName="groups" Name="groups" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">
+            <AttributeValue>union(user.spec.traits.groups, user.spec.roles)</AttributeValue>
+          </RequestedAttribute>
+        </AttributeConsumingService>
+      </SPSSODescriptor>
+    </EntityDescriptor>

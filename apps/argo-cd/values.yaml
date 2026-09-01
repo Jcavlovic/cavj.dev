@@ -30,7 +30,9 @@ openshift:
 ## Custom resource configuration
 crds:
   # -- Install and upgrade CRDs
-  install: true
+  ## Disabled: CRDs are cluster-scoped and already owned by the `argocd` release
+  ## in the argocd namespace. This instance reuses them.
+  install: false
   # -- Keep CRDs on chart uninstall
   keep: true
   # -- Annotations to be added to all CRDs
@@ -43,7 +45,7 @@ crds:
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: argocd.teleport.cavj.dev
+  domain: argocd.cavj.dev
 
   # -- Runtime class name for all components
   runtimeClassName: ""
@@ -224,6 +226,22 @@ configs:
     ## Ref: https://argo-cd.readthedocs.io/en/stable/user-guide/status-badge/
     statusbadge.enabled: false
 
+    # -- Canonical external URL. The chart defaults this to global.domain, but set it
+    # explicitly so it's obvious which host owns the OIDC/SAML callback.
+    url: https://argocd.cavj.dev
+
+    # -- Additional externally-facing base URLs that are allowed as redirect targets.
+    # Without this, reaching the UI through any host other than `url` above fails with
+    # "Invalid redirect URL: the protocol and host (including port) must match and the
+    # path must be within allowed URLs if provided".
+    #
+    # argocd.teleport.cavj.dev is the Teleport App Access route. Note the asymmetry:
+    # Dex's SAML ACS (`redirectURI` below) is a single fixed value on argocd.cavj.dev,
+    # so an SSO login started at the Teleport host still completes its callback on
+    # argocd.cavj.dev. That host must therefore stay reachable from the browser.
+    additionalUrls: |
+      - https://argocd.teleport.cavj.dev
+
     dex.config: |
       connectors:
         - type: saml
@@ -231,13 +249,14 @@ configs:
           name: Teleport
           config:
             ssoURL: https://teleport.cavj.dev/enterprise/saml-idp/sso
-            entityIssuer: https://argocd.teleport.cavj.dev/api/dex/callback
-            redirectURI: https://argocd.teleport.cavj.dev/api/dex/callback
+            entityIssuer: https://argocd.cavj.dev/api/dex/callback
+            redirectURI: https://argocd.cavj.dev/api/dex/callback
             usernameAttr: email
             emailAttr: email
             groupsAttr: groups
-            nameIDPolicyFormat: urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
-            
+            nameIDPolicyFormat: urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+            caData: $argocd-dex-teleport-saml:caData
+
     # Dex configuration
     # dex.config: |
     #   connectors:
@@ -454,6 +473,9 @@ configs:
     # (e.g.)
     # otlp.address: ''
 
+    # -- Run argocd-server without internal TLS; Traefik terminates TLS at the ingress
+    server.insecure: true
+
   # Argo CD RBAC policy configuration
   ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md
   rbac:
@@ -471,7 +493,15 @@ configs:
 
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
-    policy.csv: ""
+    ## Subjects on the left are literal values from the `groups` SAML attribute, which
+    ## Teleport maps as union(user.spec.traits.groups, user.spec.roles) — so both
+    ## Teleport role names and group traits are valid here, with no provider prefix.
+    ## Observed values for this cluster: admin, access, editor, auditor, saml-admin,
+    ## argocd-access, grafana-editor, db-access-postgres, cavlovicj-k8s-access,
+    ## linux-desktop-admins, cavlovicj-ec2-ssh-access
+    policy.csv: |
+      g, admin, role:admin
+      g, argocd-access, role:readonly
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
@@ -2604,7 +2634,7 @@ server:
   # Argo CD server ingress configuration
   ingress:
     # -- Enable an ingress resource for the Argo CD server
-    enabled: false
+    enabled: true
     # -- Specific implementation for ingress controller. One of `generic`, `aws` or `gke`
     ## Additional configuration might be required in related configuration sections
     controller: generic
@@ -2612,16 +2642,17 @@ server:
     labels: {}
     # -- Additional ingress annotations
     ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#option-1-ssl-passthrough
-    annotations: {}
-      # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
 
     # -- Defines which ingress controller will implement the resource
-    ingressClassName: ""
+    ingressClassName: traefik
 
     # -- Argo CD server hostname
     # @default -- `""` (defaults to global.domain)
-    hostname: ""
+    hostname: argocd.cavj.dev
 
     # -- The path to Argo CD server
     path: /
@@ -2632,7 +2663,7 @@ server:
     # -- Enable TLS configuration for the hostname defined at `server.ingress.hostname`
     ## TLS certificate will be retrieved from a TLS secret `argocd-server-tls`
     ## You can create this secret via `certificate` or `certificateSecret` option
-    tls: false
+    tls: true
 
     # -- The list of additional hostnames to be covered by ingress record
     # @default -- `[]` (See [values.yaml])
@@ -2647,7 +2678,7 @@ server:
       # - path: /*
       #   pathType: Prefix
       #   backend:
-      #     service:
+      #     service:    
       #       name: ssl-redirect
       #       port:
       #         name: use-annotation
