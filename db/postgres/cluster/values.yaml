@@ -388,7 +388,13 @@ cluster:
 
   postgresql:
     # -- PostgreSQL configuration options (postgresql.conf)
-    parameters: {}
+    parameters:
+      # Required by the Teleport Postgres backend: its change feed uses a
+      # logical replication slot with the wal2json output plugin.
+      # PG >= 18.6/17.11/16.15/15.19/14.24 require plugins to be allowlisted.
+      output_plugin_libraries: "pgoutput, test_decoding, wal2json"
+      # At least one slot per Teleport Auth Service replica.
+      max_replication_slots: "32"
       # max_connections: 300
 
     # -- Quorum-based Synchronous Replication
