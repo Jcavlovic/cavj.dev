@@ -34,7 +34,7 @@ Repo for Teleport Deployment
 
 ### Monitoring
 1. Alerta :x:
-2. Prometheus :x:
+2. Prometheus :white_check_mark:
 
 ### Implementation Plan migration to ArgoCD
 The current implementation includes migrating hosted services to ArgoCD, and depolying new services. Each service will be deployed to ArgoCD, tested, and verified for successful deployment before moving on to the next service.
@@ -43,7 +43,7 @@ The implementation plan for follow this order of deployment.
 2. ExternalDNS :white_check_mark:
 3. Treafik Ingress Controller :white_check_mark:
 4. Authentik :white_check_mark:
-5. Prometheus
+5. Prometheus :white_check_mark:
 6. Alerta
 7. Grafana
 8. Teleport Cluster PG Backend
