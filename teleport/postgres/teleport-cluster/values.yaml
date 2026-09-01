@@ -70,14 +70,6 @@ auth:
         conn_string: postgres://teleport@cnpg-cluster-rw.cnpg.svc.cluster.local:5432/teleport_backend?sslmode=verify-full&sslrootcert=/var/lib/postgres-ca/cacert.pem&pool_max_conns=20
         audit_events_uri:
           - "postgres://teleport@cnpg-cluster-rw.cnpg.svc.cluster.local:5432/teleport_audit?sslmode=verify-full&sslrootcert=/var/lib/postgres-ca/cacert.pem#disable_cleanup=false&retention_period=8766h"
-        # audit_sessions_uri is REQUIRED whenever audit_events_uri is set --
-        # Teleport refuses to start without it.
-        #
-        # Local emptyDir for now: recordings are lost when the pod restarts and
-        # are not shared between replicas, so keep highAvailability.replicaCount
-        # at 1 while this is in use. Switch to the S3 line below (and uncomment
-        # the AWS env vars) once the bucket credentials exist.
-        # audit_sessions_uri: "file:///var/lib/teleport/log"
         audit_sessions_uri: "s3://cavlovicj/records?region=us-west-1"
 
   extraVolumes:
@@ -92,11 +84,11 @@ auth:
     # Password for the "teleport" role on the CNPG cluster (postgres-cluster).
     # kubectl -n teleport-postgres create secret generic postgres-pass \
     #   --from-literal=password='<the teleport role password>'
-    - name: PGPASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: postgres-pass
-          key: password
+    # - name: PGPASSWORD
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: postgres-pass
+    #       key: password
     # Uncomment along with audit_sessions_uri once the bucket-creds secret exists.
     # - name: AWS_ACCESS_KEY_ID
     #   valueFrom:
