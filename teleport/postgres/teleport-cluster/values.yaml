@@ -84,11 +84,11 @@ auth:
     # Password for the "teleport" role on the CNPG cluster (postgres-cluster).
     # kubectl -n teleport-postgres create secret generic postgres-pass \
     #   --from-literal=password='<the teleport role password>'
-    # - name: PGPASSWORD
-    #   valueFrom:
-    #     secretKeyRef:
-    #       name: postgres-pass
-    #       key: password
+    - name: PGPASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-pass
+          key: password
     # Uncomment along with audit_sessions_uri once the bucket-creds secret exists.
     # - name: AWS_ACCESS_KEY_ID
     #   valueFrom:
