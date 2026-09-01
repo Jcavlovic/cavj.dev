@@ -295,7 +295,7 @@ ingress:
   pathType: Prefix
   ingressClassName: nginx
   hosts:
-    - grafana.teleport.cavj.dev
+    - grafana.cavj.dev
   ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
   extraPaths: []
   # - path: /*
@@ -876,11 +876,11 @@ dashboardsConfigMaps: {}
 ##
 grafana.ini:
   server:
-    domain: grafana.teleport.cavj.dev
-    root_url: "https://grafana.teleport.cavj.dev"
+    domain: grafana.cavj.dev
+    root_url: "https://grafana.cavj.dev"
   security:
     csrf_trusted_origins:
-      - grafana.teleport.cavj.dev
+      - grafana.cavj.dev
     cookie_secure: true
     cookie_samesite: none      # required — Teleport proxies cross-site
   auth.jwt:
