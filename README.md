@@ -8,7 +8,7 @@ Repo for Teleport Deployment
 ### Apps
 1. ArgoCD :white_check_mark:
 2. Authentik :white_check_mark:
-3. Grafana :x:
+3. Grafana :white_check_mark:
 
 ### Databases
 1. Postgres :x:
@@ -45,7 +45,7 @@ The implementation plan for follow this order of deployment.
 4. Authentik :white_check_mark:
 5. Prometheus :white_check_mark:
 6. Alerta :white_check_mark:
-7. Grafana
+7. Grafana :white_check_mark:
 8. Teleport Cluster PG Backend
 9. Teleport Cluster DynamoDB Backend
 10. MongoDB
