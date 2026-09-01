@@ -46,6 +46,6 @@ The implementation plan for follow this order of deployment.
 5. Prometheus :white_check_mark:
 6. Alerta :white_check_mark:
 7. Grafana :white_check_mark:
-8. Teleport Cluster PG Backend
+8. Teleport Cluster PG Backend :white_check_mark:
 9. Teleport Cluster DynamoDB Backend
 10. MongoDB
