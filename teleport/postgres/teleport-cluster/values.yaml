@@ -67,9 +67,9 @@ auth:
     teleport:
       storage:
         type: postgresql
-        conn_string: postgres://teleport@postgres-cluster-rw.cnpg.svc.cluster.local:5432/teleport_backend?sslmode=verify-full&sslrootcert=/var/lib/postgres-ca/cacert.pem&pool_max_conns=20
+        conn_string: postgres://teleport@cnpg-cluster-rw.cnpg.svc.cluster.local:5432/teleport_backend?sslmode=verify-full&sslrootcert=/var/lib/postgres-ca/cacert.pem&pool_max_conns=20
         audit_events_uri:
-          - "postgres://teleport@postgres-cluster-rw.cnpg.svc.cluster.local:5432/teleport_audit?sslmode=verify-full&sslrootcert=/var/lib/postgres-ca/cacert.pem#disable_cleanup=false&retention_period=8766h"
+          - "postgres://teleport@cnpg-cluster-rw.cnpg.svc.cluster.local:5432/teleport_audit?sslmode=verify-full&sslrootcert=/var/lib/postgres-ca/cacert.pem#disable_cleanup=false&retention_period=8766h"
         # audit_sessions_uri is REQUIRED whenever audit_events_uri is set --
         # Teleport refuses to start without it.
         #
