@@ -1616,7 +1616,7 @@ grafana:
         # traceIdLabelName: trace_id
         # urlDisplayLabel: View traces
       alertmanager:
-        enabled: true
+        enabled: false
         name: Alertmanager
         uid: alertmanager
         handleGrafanaManagedAlerts: false

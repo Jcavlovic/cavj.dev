@@ -24,7 +24,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - alerta.example.com
+    - alerta.cavj.com
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
