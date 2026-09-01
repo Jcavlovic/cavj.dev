@@ -965,6 +965,17 @@ dashboardsConfigMaps: {}
 ## ref: http://docs.grafana.org/installation/configuration/
 ##
 grafana.ini:
+  paths:
+    data: /var/lib/grafana/
+    logs: /var/log/grafana
+    plugins: /var/lib/grafana/plugins
+    provisioning: /etc/grafana/provisioning
+  analytics:
+    check_for_updates: true
+  log:
+    mode: console
+  unified_storage:
+    index_path: /var/lib/grafana-search/bleve
   server:
     domain: grafana.cavj.dev
     root_url: "https://grafana.cavj.dev"
