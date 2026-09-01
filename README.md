@@ -33,7 +33,7 @@ Repo for Teleport Deployment
 3. Traefik :white_check_mark:
 
 ### Monitoring
-1. Alerta :x:
+1. Alerta :white_check_mark:
 2. Prometheus :white_check_mark:
 
 ### Implementation Plan migration to ArgoCD
@@ -44,7 +44,7 @@ The implementation plan for follow this order of deployment.
 3. Treafik Ingress Controller :white_check_mark:
 4. Authentik :white_check_mark:
 5. Prometheus :white_check_mark:
-6. Alerta
+6. Alerta :white_check_mark:
 7. Grafana
 8. Teleport Cluster PG Backend
 9. Teleport Cluster DynamoDB Backend
