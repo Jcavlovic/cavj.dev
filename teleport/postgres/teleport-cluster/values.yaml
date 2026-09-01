@@ -13,7 +13,7 @@
 #
 # Warning: The clusterName cannot be changed during a Teleport cluster's lifespan.
 # If you need to change it, you must redeploy a completely new cluster.
-clusterName: "teleport2.cavj.dev"
+clusterName: "teleport-pg.cavj.dev"
 
 # Name for this kubernetes cluster to be used by teleport users.
 kubeClusterName: "cavj-eks-cluster"
