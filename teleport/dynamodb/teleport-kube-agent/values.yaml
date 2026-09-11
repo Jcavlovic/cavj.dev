@@ -64,7 +64,7 @@ enterprise: true
 # The token used must at least grant the required system roles. For example, if
 # the chart [`roles`](#roles) is `kube,app`, the token should allow the system
 # roles `App` and `Kube`.
-authToken: "4d6568eb9e3535529fe1a9d5ba3e336a"
+authToken: ""
 
 # joinParams -- controls how the Teleport Agent joins the Teleport cluster.
 # These sub-values must be configured for the agent to connect to a cluster.
@@ -103,7 +103,9 @@ joinParams:
   # [`joinTokenSecret`](#joinTokenSecret) for more details and instructions.
   #
   # If method is `kubernetes`, you must set [`teleportClusterName`](#teleportClusterName).
-  tokenName: ""
+  tokenName: "/etc/teleport-secrets/kube-agent-token"
+
+  # token_name: "/etc/teleport-secrets/kube-agent-token"
 
   # joinParams.tokenSecret(string) -- is the secret value tied to the token identified
   # by `joinparams.tokenName`. It is only valid when `joinParams.method` is `token` and
@@ -1121,7 +1123,7 @@ joinTokenSecret:
   # Kubernetes `Secret` containing the Teleport join token.
   # If false, you must create a Kubernetes Secret with the configured name in
   # the Helm release namespace.
-  create: true
+  create: false
   # joinTokenSecret.name(string) -- is the name of the Kubernetes Secret
   # containing the Teleport join token used by the chart.
   #
@@ -1151,7 +1153,7 @@ joinTokenSecret:
   #   method: "token"
   #   tokenName: ""
   # ```
-  name: teleport-kube-agent-join-token
+  name: kube-agent-token
 
 # log -- controls the agent logging.
 log:
