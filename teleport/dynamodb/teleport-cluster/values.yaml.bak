@@ -1,0 +1,186 @@
+acme: true
+acmeEmail: jordan.cavlovic@goteleport.com
+acmeURI: ""
+affinity: {}
+annotations:
+  certSecret: {}
+  config: {}
+  deployment: {}
+  ingress: {}
+  pod: {}
+  service: {}
+  serviceAccount: {}
+auth:
+  teleportConfig: {}
+authentication:
+  connectorName: ""
+  localAuth: true
+  lockingMode: ""
+  secondFactors:
+  - otp
+  - webauthn
+  type: local
+aws:
+  accessMonitoring:
+    enabled: false
+    reportResults: ""
+    roleARN: ""
+    workgroup: ""
+  athenaURL: ""
+  auditLogMirrorOnStdout: false
+  auditLogPrimaryBackend: ""
+  auditLogTable: cavlovicj-log
+  backendTable: cavlovicj-state
+  backups: false
+  dynamoAutoScaling: false
+  readMaxCapacity: null
+  readMinCapacity: null
+  readTargetValue: null
+  region: us-west-1
+  sessionRecordingBucket: cavlovicj/cavlovicj
+  writeMaxCapacity: null
+  writeMinCapacity: null
+  writeTargetValue: null
+azure:
+  auditLogDatabase: teleport_audit
+  auditLogMirrorOnStdout: false
+  backendDatabase: teleport_backend
+  clientID: ""
+  databaseHost: ""
+  databasePoolMaxConnections: 0
+  databaseUser: ""
+  sessionRecordingStorageAccount: ""
+chartMode: aws
+clusterName: teleport.cavj.dev
+createProxyToken: true
+disableTopologySpreadConstraints: false
+enterprise: true
+enterpriseImage: public.ecr.aws/gravitational/teleport-ent-distroless
+extraArgs: []
+extraContainers: []
+extraEnv: []
+extraLabels:
+  certSecret: {}
+  clusterRole: {}
+  clusterRoleBinding: {}
+  config: {}
+  deployment: {}
+  ingress: {}
+  job: {}
+  jobPod: {}
+  persistentVolumeClaim: {}
+  pod: {}
+  podDisruptionBudget: {}
+  secret: {}
+  service: {}
+  serviceAccount: {}
+extraVolumeMounts: []
+extraVolumes: []
+gcp:
+  auditLogMirrorOnStdout: false
+  auditLogTable: ""
+  backendTable: ""
+  credentialSecretName: teleport-gcp-credentials
+  projectId: ""
+  sessionRecordingBucket: ""
+global:
+  clusterDomain: cluster.local
+goMemLimitRatio: 0.9
+highAvailability:
+  certManager:
+    addCommonName: false
+    addPublicAddrs: false
+    enabled: false
+    issuerGroup: cert-manager.io
+    issuerKind: Issuer
+    issuerName: ""
+  minReadySeconds: 15
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+  replicaCount: 1
+  requireAntiAffinity: false
+image: public.ecr.aws/gravitational/teleport-distroless
+imagePullPolicy: IfNotPresent
+imagePullSecrets: []
+ingress:
+  enabled: false
+  spec: {}
+  suppressAutomaticWildcards: false
+  useExisting: false
+initContainers: []
+jobResources: {}
+kubeClusterName: cavj-eks-cluster
+kubePublicAddr: []
+labels: {}
+licenseSecretName: license
+log:
+  extraFields:
+  - timestamp
+  - level
+  - component
+  - caller
+  format: text
+  level: DEBUG
+  output: stderr
+mongoPublicAddr: []
+mysqlPublicAddr: []
+nodeSelector: {}
+operator:
+  enabled: false
+  image: public.ecr.aws/gravitational/teleport-operator
+  joinMethod: kubernetes
+  nameOverride: operator
+  resources: {}
+  token: teleport-operator
+persistence:
+  enabled: true
+  existingClaimName: ""
+  volumeSize: 10Gi
+podMonitor:
+  additionalLabels:
+    prometheus: default
+    release: prometheus
+  enabled: true
+  interval: 30s
+podSecurityContext: {}
+podSecurityPolicy:
+  enabled: true
+postStart:
+  command: []
+postgresPublicAddr: []
+priorityClassName: ""
+probeTimeoutSeconds: 5
+proxy:
+  teleportConfig: {}
+proxyListenerMode: multiplex
+publicAddr: []
+rbac:
+  create: true
+readinessProbe:
+  failureThreshold: 12
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  successThreshold: 1
+resources: {}
+securityContext: {}
+separateMongoListener: false
+separatePostgresListener: false
+service:
+  spec: {}
+  type: LoadBalancer
+serviceAccount:
+  create: true
+  name: ""
+sessionRecording: ""
+sshPublicAddr: []
+teleportVersionOverride: ""
+terminationGracePeriodSeconds: 60
+tls:
+  existingCASecretKeyName: ca.pem
+  existingCASecretName: ""
+  existingSecretName: ""
+tolerations: []
+topologySpreadConstraints: []
+tunnelPublicAddr: []
+validateConfigOnDeploy: true
