@@ -1,0 +1,192 @@
+adminClusterRoleBinding:
+  create: false
+  name: cluster-admin
+affinity: {}
+annotations:
+  config: {}
+  deployment: {}
+  pod: {}
+  secret: {}
+  serviceAccount: {}
+appResources: []
+apps:
+- labels:
+    env: dev
+    purpose: monitoring
+  name: grafana
+  uri: http://grafana.grafana.svc.cluster.local:80
+- labels:
+    app: argocd
+    env: dev
+  name: argocd
+  uri: https://argocd.cavj.dev
+- labels:
+    app: authentik
+    env: dev
+  name: authentik
+  uri: http://authentik-server.authentik.svc.cluster.local:80
+authToken: 4d6568eb9e3535529fe1a9d5ba3e336a
+awsDatabases:
+- regions:
+  - us-west-1
+  tags:
+    instance_metadata_tagging_req: jordan.cavlovic@goteleport.com
+  types:
+  - rds
+azureDatabases: []
+caPin: []
+clusterDomain: cluster.local
+clusterRoleBindingName: ""
+clusterRoleName: ""
+databaseResources: []
+disableTopologySpreadConstraints: false
+dnsConfig: {}
+dnsPolicy: ""
+enterprise: true
+enterpriseImage: public.ecr.aws/gravitational/teleport-ent-distroless
+existingDataVolume: ""
+extraArgs: []
+extraContainers: []
+extraEnv: []
+extraLabels:
+  clusterRole: {}
+  clusterRoleBinding: {}
+  config: {}
+  deployment: {}
+  job: {}
+  pod: {}
+  podDisruptionBudget: {}
+  podSecurityPolicy: {}
+  role: {}
+  roleBinding: {}
+  secret: {}
+  serviceAccount: {}
+extraVolumeMounts: []
+extraVolumes: []
+goMemLimitRatio: 0.9
+highAvailability:
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 1
+  replicaCount: 1
+  requireAntiAffinity: false
+hostAliases: []
+image: public.ecr.aws/gravitational/teleport-distroless
+imagePullPolicy: IfNotPresent
+imagePullSecrets: []
+initContainers: []
+initSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 9807
+  seccompProfile:
+    type: RuntimeDefault
+insecureSkipProxyTLSVerify: false
+jamfApiEndpoint: ""
+jamfClientId: ""
+jamfClientSecret: ""
+jamfCredentialsSecret:
+  create: true
+  name: teleport-jamf-api-credentials
+joinParams:
+  method: token
+  tokenName: ""
+  tokenSecret: ""
+joinTokenSecret:
+  create: true
+  name: teleport-kube-agent-join-token
+kubeClusterName: cavj-eks-cluster
+kubernetesDiscovery:
+- labels:
+    '*': '*'
+  namespaces:
+  - '*'
+  types:
+  - app
+labels: {}
+log:
+  extraFields:
+  - timestamp
+  - level
+  - component
+  - caller
+  format: text
+  level: INFO
+  output: stderr
+nodeSelector: {}
+podMonitor:
+  additionalLabels: {}
+  enabled: false
+  interval: 30s
+podSecurityContext:
+  fsGroup: 9807
+podSecurityPolicy:
+  enabled: true
+priorityClassName: ""
+probeTimeoutSeconds: 1
+proxyAddr: teleport.cavj.dev:443
+rbac:
+  create: true
+relayAddr: ""
+resources: {}
+roleBindingName: ""
+roleName: ""
+roles: app,kube,db,discovery
+secretName: ""
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 9807
+  seccompProfile:
+    type: RuntimeDefault
+serviceAccount:
+  create: true
+  name: ""
+serviceAccountName: ""
+skipHooks: false
+storage:
+  enabled: false
+  requests: 128Mi
+  storageClassName: ""
+teleportClusterName: ""
+teleportConfig:
+  app_service:
+    debug_app: true
+  discovery_service:
+    aws:
+    - assume_role_arn: arn:aws:iam::123456789012:role/cavj-terraform-auto-discovery-role
+      regions:
+      - us-west-1
+      tags:
+        instance_metadata_auto_discovery: terraform
+      types:
+      - eks
+    discovery_group: dev
+    enabled: true
+teleportVersionOverride: ""
+terminationGracePeriodSeconds: 30
+tls:
+  existingCASecretKeyName: ca.pem
+  existingCASecretName: ""
+tolerations: []
+topologySpreadConstraints: []
+updater:
+  enabled: false
+  extraArgs: []
+  extraVolumeMounts: []
+  extraVolumes: []
+  group: ""
+  image: public.ecr.aws/gravitational/teleport-kube-agent-updater
+  pullCredentials: ""
+  releaseChannel: stable/cloud
+  serviceAccount:
+    name: ""
+  versionServer: https://{{ .Values.proxyAddr }}/v1/webapi/automaticupgrades/channel

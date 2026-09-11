@@ -169,37 +169,21 @@ kubeClusterName: "cavj-eks-cluster"
 # </Admonition>
 apps:
   - name: grafana
-    uri: http://grafana.cavj-grafana-agent.svc.cluster.local:80
+    uri: http://grafana.grafana.svc.cluster.local:80
     labels:
       purpose: monitoring
       env: dev
 
   - name: argocd
-    uri: "http://argocd-server.argocd.svc.cluster.local:80"
-    labels:
-      app: argocd
-      env: dev
-    # rewrite:
-    #   redirect:
-    #     - "argocd-server.argocd.svc.cluster.local"
+    uri: "https://argocd-server.argocd.svc.cluster.local"
+    public_addr: "argocd.cavj.dev"
+    # insecure_skip_verify: true
 
   - name: authentik
     uri: "http://authentik-server.authentik.svc.cluster.local:80"
     labels:
       app: authentik
       env: dev
-    # rewrite:
-    #   redirect:
-    #     - "authentik-server.authentik.svc.cluster.local"
-
-  - name: kuard
-    uri: "http://kuard-7f978f894.kuard.svc.cluster.local:80"
-    labels:
-      app: authentik
-      env: dev
-    # rewrite:
-    #   redirect:
-    #     - "authentik-server.authentik.svc.cluster.local"
         
 
 # appResources(list) -- is a set of labels the agent will monitor. Any application
@@ -501,7 +485,7 @@ kubernetesDiscovery:
   - types: ["app"]
     namespaces: ["*"]
     labels:
-      "*": "*"
+      "env": "dev"
 
 ################################################################
 # Values that must be provided if Jamf service is enabled.
