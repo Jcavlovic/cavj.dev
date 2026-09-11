@@ -404,7 +404,7 @@ azureDatabases: []
 #       readOnly: true
 #   ```
 # </Admonition>
-databases:
+databases: []
 #   - name: cnpg-eks
 #     uri: "pg-rw.postgres.svc.cluster.local:5432"
 #     protocol: postgres
