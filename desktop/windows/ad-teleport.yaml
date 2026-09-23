@@ -1,0 +1,40 @@
+version: v3
+teleport:
+  nodename: cavlovicj-ec2-token
+  data_dir: /var/lib/teleport
+  join_params:
+    token_name: /tmp/token
+    method: token
+  proxy_server: teleport.cavj.dev:443
+  log:
+    output: stderr
+    severity: INFO
+    format:
+      output: text
+  ca_pin: sha256:b8abec77ef32fabb6abe49390553a36dfccec9a0985b985aa6535217c91cbb1d
+  diag_addr: ""
+auth_service:
+  enabled: "no"
+windows_desktop_service:
+  enabled: true
+  ldap:
+    addr: "EC2AMAZ-JRAK9VT.winad.cavj.dev:636"
+    domain: "winad.cavj.dev"
+    username: "svc-teleport"
+    sid: "S-1-5-21-4037342509-4175574460-3524576034-1114"
+    ldap_ca_cert: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+  discovery_configs:
+    - base_dn: "*"
+ssh_service:
+  enabled: "yes"
+  labels:
+    cloud: aws
+    env: dev
+    teleport.internal/resource-id: f3dd6a33-99f3-411d-9e67-c0e80fed6af3
+proxy_service:
+  enabled: "no"
+  https_keypairs: []
+  https_keypairs_reload_interval: 0s
+  acme: {}

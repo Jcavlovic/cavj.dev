@@ -1,0 +1,36 @@
+version: v3
+teleport:
+  nodename: cavlovicj-ec2-token
+  data_dir: /var/lib/teleport
+  join_params:
+    token_name: 0cad6f6b0c499972be55f351ce765831
+    method: token
+  proxy_server: teleport.cavj.dev:443
+  log:
+    output: stderr
+    severity: INFO
+    format:
+      output: text
+  ca_pin: sha256:b8abec77ef32fabb6abe49390553a36dfccec9a0985b985aa6535217c91cbb1d
+  diag_addr: ""
+auth_service:
+  enabled: "no"
+windows_desktop_service:
+  enabled: true
+  static_hosts:
+  - name: EC2AMAZ-T9NBU0E
+    ad: false
+    addr: ip-10-0-11-86.us-west-1.compute.internal
+  labels:
+    env: dev
+ssh_service:
+  enabled: "yes"
+  labels:
+    cloud: aws
+    env: dev
+    teleport.internal/resource-id: f3dd6a33-99f3-411d-9e67-c0e80fed6af3
+proxy_service:
+  enabled: "no"
+  https_keypairs: []
+  https_keypairs_reload_interval: 0s
+  acme: {}
