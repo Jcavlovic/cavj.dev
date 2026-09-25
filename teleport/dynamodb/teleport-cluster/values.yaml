@@ -71,7 +71,7 @@ auth:
     # Add a section for configuring the Access Graph connection.
     access_graph:
       enabled: true
-      endpoint: teleport-access-graph.teleport-access-graph.svc.cluster.local:443
+      endpoint: access-graph-teleport-access-graph.teleport-access-graph.svc.cluster.local:443
   # auth.teleportConfig contains YAML teleport configuration for auth pods
   # The configuration will be merged with the chart-generated configuration
   # and will take precedence in case of conflict.
