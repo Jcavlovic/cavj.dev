@@ -18,7 +18,7 @@ clusterName: "teleport.cavj.dev"
 # Name for this kubernetes cluster to be used by teleport users.
 kubeClusterName: "cavj-eks-cluster"
 
-##################################################
+############################## firfe####################
 # Values that you may need to change.
 ##################################################
 
@@ -79,7 +79,14 @@ auth:
   #   auth_service:
   #     client_idle_timeout: 2h
   #     client_idle_timeout_message: "Connection closed after 2hours without activity"
-  teleportConfig: {}
+  # teleportConfig: {}
+  teleportConfig:
+    # <...>
+
+    # Add a section for configuring the Access Graph connection.
+    access_graph:
+      enabled: true
+      endpoint: teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
 
 # `proxy` allows you to set chart values only for Kubernetes resources related to the Teleport Proxy Service. 
 # This is merged with chart-scoped values and takes precedence in case of conflict.
