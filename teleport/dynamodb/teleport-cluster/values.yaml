@@ -65,6 +65,13 @@ teleportVersionOverride: ""
 #    command: ["curl", "http://hook"]
 #  imagePullPolicy: Always
 auth:
+  teleportConfig:
+    # <...>
+
+    # Add a section for configuring the Access Graph connection.
+    access_graph:
+      enabled: true
+      endpoint: teleport-access-graph.teleport-access-graph.svc.cluster.local:443
   # auth.teleportConfig contains YAML teleport configuration for auth pods
   # The configuration will be merged with the chart-generated configuration
   # and will take precedence in case of conflict.
@@ -80,13 +87,6 @@ auth:
   #     client_idle_timeout: 2h
   #     client_idle_timeout_message: "Connection closed after 2hours without activity"
   # teleportConfig: {}
-  teleportConfig:
-    # <...>
-
-    # Add a section for configuring the Access Graph connection.
-  access_graph:
-    enabled: true
-    endpoint: teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
 
 # `proxy` allows you to set chart values only for Kubernetes resources related to the Teleport Proxy Service. 
 # This is merged with chart-scoped values and takes precedence in case of conflict.
