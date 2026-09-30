@@ -998,7 +998,7 @@ grafana.ini:
       'Viewer'
     allow_assign_grafana_admin: true
   auth:
-    disable_login_form: true   # Teleport is now the only way in
+    disable_login_form: false   # Teleport is now the only way in
 ## grafana Authentication can be enabled with the following values on grafana.ini
   # server:
   # The full public facing url you use in browser, used for redirects and emails
