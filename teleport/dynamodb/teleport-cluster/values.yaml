@@ -114,7 +114,7 @@ auth:
 #   annotations:
 #     service:
 #       external-dns.alpha.kubernetes.io/hostname: "teleport.example.com"
-proxy:
+# proxy:
   # proxy.teleportConfig contains YAML teleport configuration for proxy pods
   # The configuration will be merged with the chart-generated configuration
   # and will take precedence in case of conflict
@@ -130,7 +130,25 @@ proxy:
   #     https_keypairs:
   #       - key_file: /my-custom-mount/key.pem
   #         cert_file: /my-custom-mount/cert.pem
-  teleportConfig: {}
+  # teleportConfig: {}
+
+proxy:
+  teleportConfig:
+    access_graph:
+      enabled: true
+      endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
+      ca: /var/run/access-graph/ca.crt
+  extraVolumes:
+    - name: access-graph-ca
+      secret:
+        secretName: access-graph-tls
+        items:
+          - key: ca.crt
+            path: ca.crt
+  extraVolumeMounts:
+    - name: access-graph-ca
+      mountPath: /var/run/access-graph
+      readOnly: true
 
 authentication:
   # Default authentication type. Possible values are 'local' and 'github' for OSS, plus 'oidc' and 'saml' for Enterprise.
