@@ -1,0 +1,53 @@
+# Private CA. Lives in the cert-manager namespace so a ClusterIssuer can read it.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: access-graph-ca
+  namespace: cert-manager
+spec:
+  isCA: true
+  commonName: access-graph-ca
+  secretName: access-graph-ca
+  duration: 87600h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  usages:
+    - cert sign
+    - crl sign
+  issuerRef:
+    name: selfsigned
+    kind: ClusterIssuer
+---
+# ClusterIssuer backed by the private CA
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: access-graph-ca
+spec:
+  ca:
+    secretName: access-graph-ca
+---
+# Server certificate for Access Graph
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: access-graph-tls
+  namespace: teleport-dynamodb
+spec:
+  secretName: access-graph-tls
+  duration: 8760h
+  renewBefore: 720h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  usages:
+    - server auth
+    - digital signature
+  dnsNames:
+    - access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local
+    - access-graph-teleport-access-graph.teleport-dynamodb.svc
+    - access-graph-teleport-access-graph
+  issuerRef:
+    name: access-graph-ca
+    kind: ClusterIssuer

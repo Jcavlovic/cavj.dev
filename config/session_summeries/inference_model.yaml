@@ -1,0 +1,9 @@
+kind: inference_model
+version: v1
+metadata:
+  name: shell-summary-model
+spec:
+  bedrock:
+    region: us-west-2
+    bedrock_model_id: arn:aws:bedrock:us-west-2::foundation-model/openai.gpt-oss-120b-1:0
+  max_session_length_bytes: 190000

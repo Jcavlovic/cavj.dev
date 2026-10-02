@@ -1,0 +1,31 @@
+# Grants the Kubernetes group "Dev" full access to all resources in the
+# "test" namespace. Namespaced Role + RoleBinding -- nothing outside "test"
+# and no cluster-scoped resources (nodes, PVs, CRDs, namespaces) are reachable.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dev-all
+  namespace: test
+rules:
+- apiGroups: ["*"] # core + every extension/CRD API group
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dev-all
+  namespace: test
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: dev-all
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: Dev

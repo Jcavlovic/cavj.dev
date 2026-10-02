@@ -1,0 +1,3531 @@
+]11;?\[6nkind: health_check_config
+metadata:
+  description: Enables health checks for all databases by default
+  name: default
+  revision: af391615-1e42-4237-aa2b-155e6abbd41a
+spec:
+  match:
+    db_labels:
+    - name: '*'
+      values:
+      - '*'
+version: v1
+---
+kind: health_check_config
+metadata:
+  description: Enables health checks for all Kubernetes clusters by default.
+  name: default-kube
+  revision: d796f007-e60c-4747-8dde-f479aff6b743
+spec:
+  match:
+    kubernetes_labels:
+    - name: '*'
+      values:
+      - '*'
+version: v1
+---
+kind: github
+metadata:
+  name: github
+  revision: e0c38ef5-5b4b-46f6-be4f-073e42687d70
+spec:
+  api_endpoint_url: https://api.github.com
+  client_id: Ov23liywZDFfIDqCSpvk
+  client_secret: abd0085e71ab228f9ccfbd8159e1b51ae0fe0802
+  display: GitHub
+  endpoint_url: https://github.com
+  redirect_url: https://teleport.cavj.dev/v1/webapi/github/callback
+  teams_to_logins: null
+  teams_to_roles:
+  - organization: teleport-cavlovicj
+    roles:
+    - admin
+    - access
+    - editor
+    - auditor
+    - db-access-postgres
+    - cavlovicj-ec2-ssh-access
+    - argocd-access
+    - saml-admin
+    - cavlovicj-k8s-access
+    - linux-desktop-admins
+    - grafana-editor
+    - windows-desktop-admins
+    - access-graph-reader
+    team: dev
+version: v3
+---
+kind: saml
+metadata:
+  name: authentik
+  revision: 48a06ae9-42d6-417e-8c1a-d3cb65a8da59
+spec:
+  acs: https://teleport.cavj.dev:443/v1/webapi/saml/acs/authentik_saml
+  attributes_to_roles:
+  - name: http://schemas.xmlsoap.org/claims/Group
+    roles:
+    - access
+    - editor
+    - auditor
+    - db-access-postgres
+    - cavlovicj-ec2-ssh-access
+    - argocd-access
+    - saml-admin
+    - cavlovicj-k8s-access
+    value: Admin
+  - name: http://schemas.xmlsoap.org/claims/Group
+    roles:
+    - dba
+    value: DBA
+  - name: http://schemas.xmlsoap.org/claims/Group
+    roles:
+    - dev
+    value: Dev
+  audience: https://teleport.cavj.dev:443/v1/webapi/saml/acs/authentik_saml
+  cert: ""
+  display: Authentik
+  entity_descriptor: |-
+    <md:EntityDescriptor xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" ID="_0e9d78e72a050b4d8b30a9589a0aed1d4addeb9cb100aac8c0757a155783fba9" entityID="https://authentik.cavj.dev/application/saml/teleport/metadata/"><ds:Signature><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#_0e9d78e72a050b4d8b30a9589a0aed1d4addeb9cb100aac8c0757a155783fba9"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>pgHDiYw15l3MxUfrG87Xvc6z/2QW0NCBvoiyYHnmtaE=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>aUY5oSPVnBLBeoPXex7cmgD9wDuPoEu4qJh28T8JwA6aze7K4iQC4+cGG4VH5XY2MBWcRmd7apepSe/joGilD3SUgM35sOrigKm6HfKygt3z9Yn6QnrEeEJb0i5zixtr9HGRkcY8+SA9a0HfjF6A5qSXvbNCtlxGVKGdPxjorYiN/DIBLWbh14P1Gnq+0GWSMILfdFegG5Se1d9KcwUEsWB/hnqYryS8FNbuPxgrok1PEVbqLXvrrMZzth92xelOBK6DvWTKGEDH10XP9yhZpD9gWuYqZIHTMix/9VjWy116gaonvTwlg0KfIW14CCZyMXNXkA0qYgCpJWRGfVV1BQuxCvAivZKmpUik8qpx9TENmz0/uRvSpJ2onqwxt620IcrqU3ncSe5BxGr6XIpc/JZAprX6PEHuT1nyrYjwesQUcT6iOL6cYnk9Hih3vHqAx07CtezO3hZ+gxeXd9ICxADKq7g1/kx/0uXJCbfHkLiVPnUX+5/QRTRsACWmWBgZBXVIi1ooSD1EUEVObCi7r2bbEigfYI598/KpoYYYxo2HDqJz72sgNDntB9PTTKZNEVBfRI3pQB/A8/B8LCpOWF/6nZFC8cKVbk4wxBqbHaHzIqfqNWbviVEreJ71ZZpe71YNVfRwqKs9QA39UUoyaXrTowOfeKSUU+ZRMZMuagg=</ds:SignatureValue><ds:KeyInfo><ds:X509Data>
+    <ds:X509Certificate>MIIFUzCCAzugAwIBAgIRAJGNKpmtM0j5nhY2QSGgSwcwDQYJKoZIhvcNAQELBQAwHTEbMBkGA1UEAwwSYXV0aGVudGlrIDIwMjYuOC4wMB4XDTI2MDgzMDIxMTg0NVoXDTI3MDgzMTIxMTg0NVowVjEqMCgGA1UEAwwhYXV0aGVudGlrIFNlbGYtc2lnbmVkIENlcnRpZmljYXRlMRIwEAYDVQQKDAlhdXRoZW50aWsxFDASBgNVBAsMC1NlbGYtc2lnbmVkMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAq+7bB0YusXeThFIArmsRAUsLj97dOmtTNpedFrhdXDpodx6tLk5arFgshUQkW5arz23/2Cj94uUvzg1qF3ClzPavf4LaeZLa6pREuL8Ll9aUdbKb9KLcSNcmi8Hk/oGUNCq5EOtbb9mJ2WYLAUleLMEVFBVxzFDUfUjBlvRQTU7QHOHW9Q5vumjHb30OAJph+ko1ZBAFjepMewy7boklmvfRPFpG21TLlTcvB0TzQBtx0yueCZps8zanExGpzAK9y2fgnNGiCEltPcvfPBJ4XYMOeLvUr+Ad7pwQyoxb/ETuOdcKkCpAdTU1vbPzfNMx+NbgQ5XhknXEiwusRJ60KD7DqKCJcv6zXdRUOUXkoHTVFQn3ED7Zul7EHcbeMoKdIurbtRTJ3g59i70Exeh2N6CHsV+F3uj8wN1eoQ8x9VH7HSFthAjXFrRl5j5bupAOUl+DjKbCIFyoPdQBx3i5y+yChK6DrTTc9WDhVCnAeZQ8c3AXGV/6M1DCmOJDGonTh92x4AMx7etPE0G/T41geuCx5ob3ht1r6altCyMzATMPI/uM2O9DoN9eDoxGGz0uzPS1gM8lMK+cn/mTpK0hFzBJgVl6OVySaYQftJ7j6ml+0Js9dal+tV0nuXzf3QaPcwCpwAkPA8YFibkMbJM/73BeJdegsQrpMPmtopdtT0cCAwEAAaNVMFMwUQYDVR0RAQH/BEcwRYJDdGtNVWZNMEdFME1XbDhyZFpCUGxSNkNtVENwbjBFOVF2VEkwMUhjSy5zZWxmLXNpZ25lZC5nb2F1dGhlbnRpay5pbzANBgkqhkiG9w0BAQsFAAOCAgEAfq5zwz3/WNyxEOsz2UbShC8yo/emWOMiUpkyumOxMdUaiphiCvX3hR/BbtDSIqt/dizgmHFXNULiPzZcaEYP3Pgz9Q57nMb4gIYFlOUrCZb24MKeMO73tu0md2DvDCXzGetYWNrZ9Gr3MrujRetAxtr882sHEOYrbPGYkrWX4nRYvzwTLTn4onR01ecES+E7rvi4EVE3S+BRPOj4tPpDOQPLxSjA3GxcBpWv8Io5aP0AORidUMm9lrvp3giuKLU4HBQjQRNHol2GLdWlus3cxP+2phD6AH4F6QfhA59F1FcJmEMnF3oWM0uBk4nJ7vj8IIrXv30czqIZd2QDJnB8ugXo6ndqxGKpW5Z0cW588mVbvHy3UjSeaHA6wJjit2epvw17YpmxKjQn53ZudFhu+uSpObEs6HWRp7IzjzS/ieb+Y2/CZl/izpboJo76N25wWHAe0DhDc/8OIIB+a34haACiFsUqHo0TI2o1Iz8l+nEFyNBPCpI6wDy75dDCKrE9shI1Zh6XYnS81u4B+13DKYKNiBb4WxPtTbXXHEaTsvdwnmzpJhdAg/sC1I716qzBGaJzOiLcvN0iwP6CY2uE5OsoGwQdmTTX8RhFczsNI5HcQSDn23I13pvknvX2NIIXCXwE+9rhturwYSD7dECoKfrtufXDruPrx0bthMvdAd8=
+    </ds:X509Certificate>
+    </ds:X509Data></ds:KeyInfo></ds:Signature><md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:KeyDescriptor use="signing"><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIFUzCCAzugAwIBAgIRAJGNKpmtM0j5nhY2QSGgSwcwDQYJKoZIhvcNAQELBQAwHTEbMBkGA1UEAwwSYXV0aGVudGlrIDIwMjYuOC4wMB4XDTI2MDgzMDIxMTg0NVoXDTI3MDgzMTIxMTg0NVowVjEqMCgGA1UEAwwhYXV0aGVudGlrIFNlbGYtc2lnbmVkIENlcnRpZmljYXRlMRIwEAYDVQQKDAlhdXRoZW50aWsxFDASBgNVBAsMC1NlbGYtc2lnbmVkMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAq+7bB0YusXeThFIArmsRAUsLj97dOmtTNpedFrhdXDpodx6tLk5arFgshUQkW5arz23/2Cj94uUvzg1qF3ClzPavf4LaeZLa6pREuL8Ll9aUdbKb9KLcSNcmi8Hk/oGUNCq5EOtbb9mJ2WYLAUleLMEVFBVxzFDUfUjBlvRQTU7QHOHW9Q5vumjHb30OAJph+ko1ZBAFjepMewy7boklmvfRPFpG21TLlTcvB0TzQBtx0yueCZps8zanExGpzAK9y2fgnNGiCEltPcvfPBJ4XYMOeLvUr+Ad7pwQyoxb/ETuOdcKkCpAdTU1vbPzfNMx+NbgQ5XhknXEiwusRJ60KD7DqKCJcv6zXdRUOUXkoHTVFQn3ED7Zul7EHcbeMoKdIurbtRTJ3g59i70Exeh2N6CHsV+F3uj8wN1eoQ8x9VH7HSFthAjXFrRl5j5bupAOUl+DjKbCIFyoPdQBx3i5y+yChK6DrTTc9WDhVCnAeZQ8c3AXGV/6M1DCmOJDGonTh92x4AMx7etPE0G/T41geuCx5ob3ht1r6altCyMzATMPI/uM2O9DoN9eDoxGGz0uzPS1gM8lMK+cn/mTpK0hFzBJgVl6OVySaYQftJ7j6ml+0Js9dal+tV0nuXzf3QaPcwCpwAkPA8YFibkMbJM/73BeJdegsQrpMPmtopdtT0cCAwEAAaNVMFMwUQYDVR0RAQH/BEcwRYJDdGtNVWZNMEdFME1XbDhyZFpCUGxSNkNtVENwbjBFOVF2VEkwMUhjSy5zZWxmLXNpZ25lZC5nb2F1dGhlbnRpay5pbzANBgkqhkiG9w0BAQsFAAOCAgEAfq5zwz3/WNyxEOsz2UbShC8yo/emWOMiUpkyumOxMdUaiphiCvX3hR/BbtDSIqt/dizgmHFXNULiPzZcaEYP3Pgz9Q57nMb4gIYFlOUrCZb24MKeMO73tu0md2DvDCXzGetYWNrZ9Gr3MrujRetAxtr882sHEOYrbPGYkrWX4nRYvzwTLTn4onR01ecES+E7rvi4EVE3S+BRPOj4tPpDOQPLxSjA3GxcBpWv8Io5aP0AORidUMm9lrvp3giuKLU4HBQjQRNHol2GLdWlus3cxP+2phD6AH4F6QfhA59F1FcJmEMnF3oWM0uBk4nJ7vj8IIrXv30czqIZd2QDJnB8ugXo6ndqxGKpW5Z0cW588mVbvHy3UjSeaHA6wJjit2epvw17YpmxKjQn53ZudFhu+uSpObEs6HWRp7IzjzS/ieb+Y2/CZl/izpboJo76N25wWHAe0DhDc/8OIIB+a34haACiFsUqHo0TI2o1Iz8l+nEFyNBPCpI6wDy75dDCKrE9shI1Zh6XYnS81u4B+13DKYKNiBb4WxPtTbXXHEaTsvdwnmzpJhdAg/sC1I716qzBGaJzOiLcvN0iwP6CY2uE5OsoGwQdmTTX8RhFczsNI5HcQSDn23I13pvknvX2NIIXCXwE+9rhturwYSD7dECoKfrtufXDruPrx0bthMvdAd8=</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://authentik.cavj.dev/application/saml/teleport/"/><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://authentik.cavj.dev/application/saml/teleport/"/><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://authentik.cavj.dev/application/saml/teleport/"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://authentik.cavj.dev/application/saml/teleport/"/></md:IDPSSODescriptor></md:EntityDescriptor>
+  entity_descriptor_url: https://authentik.cavj.dev/application/saml/teleport/metadata/
+  issuer: https://authentik.cavj.dev/application/saml/teleport/metadata/
+  service_provider_issuer: https://teleport.cavj.dev:443/v1/webapi/saml/acs/authentik_saml
+  signing_key_pair:
+    cert: |
+      -----BEGIN CERTIFICATE-----
+      MIIDKjCCAhKgAwIBAgIQM+IgfNBntOsUOeRDoX+f+zANBgkqhkiG9w0BAQsFADBA
+      MRUwEwYDVQQKEwxUZWxlcG9ydCBPU1MxJzAlBgNVBAMTHnRlbGVwb3J0LmxvY2Fs
+      aG9zdC5sb2NhbGRvbWFpbjAeFw0yNjA5MTAyMDAxMjZaFw0zNjA5MDcyMDAxMjZa
+      MEAxFTATBgNVBAoTDFRlbGVwb3J0IE9TUzEnMCUGA1UEAxMedGVsZXBvcnQubG9j
+      YWxob3N0LmxvY2FsZG9tYWluMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+      AQEAz2MKRFhtlP2QHTQE+ovbQaqOcDxsxnqerkRRZFuWYGkrgjBE5flx+ipkhP5p
+      hie9dYMutkMz+CDsF4kfeaGvMrsI/FEp/d0ySzBOpnLtfCe+mjaiAKlosjWOOWw8
+      mHk/NdxCC3iBBH1FG67/mBk1UCVcUk6GpPH58g2H3jZsagd298m9DEgRnlntWkhN
+      bM72f2NrGqEufq+8OylB1vUtBkiHZKVhWltESzE9YbtwQZ0/+gr8LWUA3FVALxvj
+      oei/oSH3Z6Tl9TNONtUKNEcu8B9QhMSSJ7R4Cvf5hc04T97dBjWExloSNyWUepfd
+      Z+lwnCEWXFsKRucIEoo9GGONSwIDAQABoyAwHjAOBgNVHQ8BAf8EBAMCB4AwDAYD
+      VR0TAQH/BAIwADANBgkqhkiG9w0BAQsFAAOCAQEAZoTYBmxi/moP7djIT/kShz3O
+      wqS5eHHhi7q/6SKKobY7dT7+fqTrKsQKvNt16Z5RaCMwRyKCeNgGZm9pvGnk9Zai
+      sCw0D1bdmMp6LYl79iw4TVra82NZ32XYIz/3nE5taEByozr9VRShryIlwNBkf+FP
+      NxKcMa8vfqrhQJpeF5QpOiuGPdP4OnTH43eheDDmhK5KuAyDHpQS2Bfc3WcvahT2
+      fJ2xtolfdvE/tVS9Q+iMfUdlYjIwfrOZ0cqYxFF8der5kPeJs4VLz3kkSS7ZKASx
+      ep3u1MNwEaq/aabvvILc9bGa6s7ZVE75m+smNa7+v9VfRLhCRkgNYng6ykq1OA==
+      -----END CERTIFICATE-----
+    private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAz2MKRFhtlP2QHTQE+ovbQaqOcDxsxnqerkRRZFuWYGkrgjBE
+      5flx+ipkhP5phie9dYMutkMz+CDsF4kfeaGvMrsI/FEp/d0ySzBOpnLtfCe+mjai
+      AKlosjWOOWw8mHk/NdxCC3iBBH1FG67/mBk1UCVcUk6GpPH58g2H3jZsagd298m9
+      DEgRnlntWkhNbM72f2NrGqEufq+8OylB1vUtBkiHZKVhWltESzE9YbtwQZ0/+gr8
+      LWUA3FVALxvjoei/oSH3Z6Tl9TNONtUKNEcu8B9QhMSSJ7R4Cvf5hc04T97dBjWE
+      xloSNyWUepfdZ+lwnCEWXFsKRucIEoo9GGONSwIDAQABAoIBAB0wkHphg+hWRC7d
+      aodP9hK+Yda0T+R5JSqGx89Qq3rIcsJGmaamPypPRd9eO8C73okoEgQUs2o3oA4J
+      U9p318P+hVuWRPXME3nNGSozv5obsf0yDAf8eur9FMFKVcEUQmxfTcB1kUXuJ92n
+      T6cQgpYpnAlNr4U54HdMUOpa+Kl3lfe6HMsPDOzxJdOTxnMP5lAOz21k6yG8Slxz
+      4EHMy4+BliJvMeJ2uBlGurKnYMTnaBksMVmVQ2dO8Mz1TmbKZ2lB2HksN0gnLvBy
+      fUQEmbvkWghgzUrRVMQ9zky2QRbRQyGEKCwRr3qg7TCMgv4y2npO7f7lDIJHxSFB
+      uP2kl9kCgYEA4rK5jrJsHF+Qt+Q5SfR7Z8XrBIXykNBBPmfxRVLRHjVO2AcmiUHU
+      Bybz3gjFBX2KZ5xmZglJeMUUXMm8xm3aDD4TFHIPsicRHyuPcNpK/Qm/JbebO0Ol
+      qZ22HDo8uu4bU7OJPe43ZV/FxykWpmYeq2uehmax7dT6BEKfdBTIVy0CgYEA6jFR
+      z5ucEl4GMni0yfF3Z1Ed53x/+hIGNnYoSVN6zYGBjbp3ksUT5G9TI/lQwkDHsNuO
+      2dOpys+YgnyGCCel62Ra+46Sz/DZNcxV3F6RazIOCjMS7KVIT+xlGsWA6rKdurz1
+      LrPSBRhqToynbK3yO/woOmmG3MMRIzMguGYJwVcCgYBqJ+kugiyQCMw64HtXP03+
+      ZTbNcnAJEgxLTd80aDiWnb3i+U45XgMMqlfuNEsWbBhAtoNY6qZmEFudq7ZjcRN3
+      QiYrH9JryVGCOCK+ZOpSnZrN7bGaSe4shDa/9yFzI4bWZi8xOfjk1rlFrt71YsKf
+      4RBlvXc6eM3u6sfCUu0RrQKBgQDYyjz8XQUV75n3AMwCoJcyueFf1100pZjAs5JJ
+      hpCISlkeVL25zNvEO9WP2IwMtiDks+pB9HEaACAispj0VZd/FtAuS+XVvhOkfHoC
+      3DvrKlPa1zque7Y73g4dwTS8jgn6wk6JJAbHlrlZ61RVA5TYOG0Y3XTtSVnE5uBk
+      MnjXUwKBgC+m4xOA73cBa8xUg92kh3UeJJfGO0y67Ck4t8KT90LPkUJ5QmEz6TnN
+      5ylcH8J27ZWqBxKHRXW8DqvQEJEQQUCqVhNSN96V+smocxqO1UAvI3PEPDtJZUVT
+      qPwDvUJuR2cxSDTTDvKJB5ypGJABLmsjTooJoOSnwWVO2zcc11Pu
+      -----END RSA PRIVATE KEY-----
+  sso: https://authentik.cavj.dev/application/saml/teleport/
+version: v2
+---
+kind: saml
+metadata:
+  name: okta
+  revision: 3f87f8ed-eff5-425d-82a8-e054f8cefdcb
+spec:
+  acs: https://teleport.cavj.dev/v1/webapi/saml/acs/okta
+  attributes_to_roles:
+  - name: groups
+    roles:
+    - auditor
+    - editor
+    value: admins
+  - name: groups
+    roles:
+    - access
+    value: devs
+  audience: https://teleport.cavj.dev/v1/webapi/saml/acs/okta
+  cert: ""
+  display: Okta
+  entity_descriptor: |-
+    <?xml version="1.0" encoding="UTF-8"?><md:EntityDescriptor entityID="http://www.okta.com/exk169vot7l5viVvr698" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"><md:IDPSSODescriptor WantAuthnRequestsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIIDtDCCApygAwIBAgIGAZ/xxkMeMA0GCSqGSIb3DQEBCwUAMIGaMQswCQYDVQQGEwJVUzETMBEG
+    A1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNjbzENMAsGA1UECgwET2t0YTEU
+    MBIGA1UECwwLU1NPUHJvdmlkZXIxGzAZBgNVBAMMEmludGVncmF0b3ItMjYwNjM1MjEcMBoGCSqG
+    SIb3DQEJARYNaW5mb0Bva3RhLmNvbTAeFw0yNjA4MTExNzAxMTBaFw0zNjA4MTExNzAyMTBaMIGa
+    MQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5jaXNj
+    bzENMAsGA1UECgwET2t0YTEUMBIGA1UECwwLU1NPUHJvdmlkZXIxGzAZBgNVBAMMEmludGVncmF0
+    b3ItMjYwNjM1MjEcMBoGCSqGSIb3DQEJARYNaW5mb0Bva3RhLmNvbTCCASIwDQYJKoZIhvcNAQEB
+    BQADggEPADCCAQoCggEBAKPT2cDBvSImdNitZLHwwRtIt+AiBQgoYKvR6DlrknLCR+ghSuElMLnl
+    yTyfM8xvBxTFEhG3z+mZgOeZUo2wkq0fb+bli4fE835BbWHRGz9nfWbpRN1Ydzy57wCBVDNBJ87O
+    kkGJWvVTcxVp2I8LdKOvTJkqWqPsfZtUn74ueAecVvUQyFLpHddTKx7pW8k8HOi1/PrFPtLQCEZF
+    Q5F+XpmKjBNd1bs5Jhi9xfCgRMfa7UHpuJ9gVYkda/Evp9kqCHMaBNB0A+6suu6PIbFJCzEbxqYi
+    365zeSLj7uQiKWktJkRVC3zBaWWa/sRN0tjydPcfgxBuurNIEu+Jpkox9XkCAwEAATANBgkqhkiG
+    9w0BAQsFAAOCAQEAfFDj3JAaYtHGwqfg1bUUANgic5+RFAfDk9nNxFQtn2WcfWkgCB4/GHjzMIKQ
+    c2Z38Bi1cX0crR0FQxhndl+xuc5FK4QhqDiY923MUf/HDi1AI1/3B/31RemPlyXD0mKEsjrbvXkg
+    HUmspAy688WvGnDTFVcEz0e1JHbq0HtYFoPP0PQ9x1hs1BiKddP3OPE0FriGLe2TQ+O+5TRU/WLX
+    plD49+mEMjJ3P4jf9Ckw7pgUAG+1h8ytKlkLOHzp6BT569QYyLFoenVtU0BEopaRkESNzPpz/wAI
+    a/bwREJ6sBgjvfnEbrlMPlITsye8CM9lo+WIMnmLKGFAvxIpASPcNw==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat><md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://integrator-2606352.okta.com/app/trial-3865409_teleport_1/exk169vot7l5viVvr698/sso/saml"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://integrator-2606352.okta.com/app/trial-3865409_teleport_1/exk169vot7l5viVvr698/sso/saml"/></md:IDPSSODescriptor></md:EntityDescriptor>
+  entity_descriptor_url: https://integrator-2606352.okta.com/app/exk169vot7l5viVvr698/sso/saml/metadata
+  issuer: http://www.okta.com/exk169vot7l5viVvr698
+  service_provider_issuer: https://teleport.cavj.dev/v1/webapi/saml/acs/okta
+  signing_key_pair:
+    cert: |
+      -----BEGIN CERTIFICATE-----
+      MIIDKjCCAhKgAwIBAgIQBD2Zly9C8ANEnO6lgN7DIzANBgkqhkiG9w0BAQsFADBA
+      MRUwEwYDVQQKEwxUZWxlcG9ydCBPU1MxJzAlBgNVBAMTHnRlbGVwb3J0LmxvY2Fs
+      aG9zdC5sb2NhbGRvbWFpbjAeFw0yNjA4MTExNzMwNDFaFw0zNjA4MDgxNzMwNDFa
+      MEAxFTATBgNVBAoTDFRlbGVwb3J0IE9TUzEnMCUGA1UEAxMedGVsZXBvcnQubG9j
+      YWxob3N0LmxvY2FsZG9tYWluMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+      AQEA9e3HPhgulJihJ0+2HHHtVKyqjHwnFoHnkcFM5pe5s0BgjpkgCVqJdaFLzpMv
+      nSOS6HVtdrnwGc+4tELnleQ/h+qZ1ftQbND6XKWp9Olcs8PR5v9uFEuhybXk/b1D
+      lbmMCIvC1cMMEZ2DlamNlDF4Q9fq5woGxLoI1H3KNcJvIvadLcGfer1lBnPVTQ1A
+      pFgl/WuLxlWKHEEfUyIz2Kd/7+Oc2o2OOQI5K4evt82k000Cxgt4YXcqxN1I3hBz
+      VY6OFlM0txvIyzobpihuLz5pLAah3VAcuIMUTC1TDNxIsDxnv9u8Y2R+rWz6FcjR
+      3HZbi4Fkg+gZjFh9xkibXj4WYQIDAQABoyAwHjAOBgNVHQ8BAf8EBAMCB4AwDAYD
+      VR0TAQH/BAIwADANBgkqhkiG9w0BAQsFAAOCAQEAk4gqKQCCdKTEQfvMct26QAlj
+      1nSqmcJ1jyQvvDaMuUot5Bmjs3TgJW/Ns2YdPMtive3NIzQWxqM0SQmpSTK+GPjv
+      orQE1ipIzp9smUlwNioq0QoGLR3a012DouM81kOKzKUXzWvmYlr9qIj+RdNCm62p
+      +cd77QOp5FCiIvHO7Qqys+RwgYp4Vk1YaWHx1iErEWZ6N63I6zprHFZ72TqmmCGq
+      7bK4loHg76Eq9V15Ocf90UqwjcD2yeAit2gnN9aiENQTLxYfQq2mcBvzebrGWopE
+      faKzNzin+DTJ9kvsSLUQc5OEb5XTiN3U1UTaoiEnat9Ye9QQj44J0spsEum64A==
+      -----END CERTIFICATE-----
+    private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEogIBAAKCAQEA9e3HPhgulJihJ0+2HHHtVKyqjHwnFoHnkcFM5pe5s0Bgjpkg
+      CVqJdaFLzpMvnSOS6HVtdrnwGc+4tELnleQ/h+qZ1ftQbND6XKWp9Olcs8PR5v9u
+      FEuhybXk/b1DlbmMCIvC1cMMEZ2DlamNlDF4Q9fq5woGxLoI1H3KNcJvIvadLcGf
+      er1lBnPVTQ1ApFgl/WuLxlWKHEEfUyIz2Kd/7+Oc2o2OOQI5K4evt82k000Cxgt4
+      YXcqxN1I3hBzVY6OFlM0txvIyzobpihuLz5pLAah3VAcuIMUTC1TDNxIsDxnv9u8
+      Y2R+rWz6FcjR3HZbi4Fkg+gZjFh9xkibXj4WYQIDAQABAoIBABvijS/uQAHbWJKD
+      iEurY1Sxi1kIjsoPirlNKLIQzB6WExy4IhjNaj6rPlQ6/jAcI4E2J2ZJ6P6UPgY6
+      e9XUHpwDrtPDfjgIbgrpQd8iQr+jWX6OweWNOdgMRt26gxpMAqPJbRsd1ZV9vbjP
+      k90UyuUua1UtHt1Zlry5Up9L35wgD4RW3lOtP748fn3NmD5s/HIDsiVc/wx49gOr
+      RDNxKfSZMqncnyH1PLgW8QC8nnutk+nvwBu+EkRlJCeIfW/ryoT9zB2Jy2Alam/7
+      sDLam31Rs8AjvuT70TM9YipPtIs2NwywR5mgjfSqwnLcfRHlHOABwm3pdNXqB8Gt
+      Uyfo4Y0CgYEA/lvAH0WezQl+t7MqnqYa/0bt0UXqssLn+G96sV8JiaI1mvkEYgZV
+      zvUSRBtQXap9291yowF8FaqlY8LLUIvyusqdDw/lotPZXUircY9ooVxDMbusoQKg
+      EjBiPmVaa8WQQAqQrvLoQn2XRGPuJCMKiBflZKbRXuLzJAt0mGg+JjMCgYEA94QZ
+      uxlDi1zTDb5mTNTSXBxbEOagXNy08fOy0Fe9ZsqxybDHY9mA4YC18UoY6q9EOmPE
+      r+kWMciOny8FtsWR9RlVlEu/x7ZgnsKy5S3y+4Yi91qr0axanP67SdsnF2qGmGX6
+      MBCsetgiW40qtX8xpbthw3L8YiVr6EuNDLyatRsCgYA3+UzgFNwLVumR11Wrr/YE
+      80DmarJpQEb3/uBLJBTfOtj9D4uNXsOHVZr9bd1Tn28u8R6HDI6X3gOjXnyLbyCt
+      RmUlqWPpXyFYS+Oei+aEi98llJ06mW9MUWVtQbSSPtmtniWUulOuPiEJpcwEG8n3
+      hPqwGZ29ecfzyKmR2G7EzQKBgARFgFgtQHAoQvAqyAMtbQ/v4VZyVHQlzu2aAgz8
+      ZqVefCD57wb3GvVJTlqCp9ls+uVzEVLj1+E2D9gJbLTRxgoPzN1JTV7588Lpo0K3
+      P0k98F6KbwqoScwJzVuh75PE39vDbsTjlMZt8nHYBtOpBUdR64b+9gIPmUQiAaYl
+      nxnfAoGAAvvuoMS4XfmRnkl8yWgYUvsDzzYYAM6Y8osctmbqYLGl3JJEw8WxcDB3
+      NT94BZjBcuAP58Rvau5e7GX9MCi8FrRgamus/MC2GPVSm0xStyvKcUz8gc6OeEvk
+      cJ5ZeyHnOGO1b+c1DA7Lfk20fGaz3GJpLoMJVWZ2APFEd0eEKSo=
+      -----END RSA PRIVATE KEY-----
+  sso: https://integrator-2606352.okta.com/app/trial-3865409_teleport_1/exk169vot7l5viVvr698/sso/saml
+version: v2
+---
+kind: role
+metadata:
+  description: Approves any access request
+  labels:
+    teleport.internal/resource-type: system
+    teleport.internal/revision: "1"
+  name: '@teleport-access-approver'
+  revision: c4dc249b-3dd7-4109-8dbc-cb86aef2c4e1
+spec:
+  allow:
+    review_requests:
+      roles:
+      - '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Access cluster resources
+  labels:
+    teleport.internal/resource-type: preset
+  name: access
+  revision: a9eef70a-7820-4169-9174-3d28a94a5677
+spec:
+  allow:
+    app_labels:
+      '*': '*'
+    aws_role_arns:
+    - '{{internal.aws_role_arns}}'
+    azure_identities:
+    - '{{internal.azure_identities}}'
+    db_labels:
+      '*': '*'
+    db_names:
+    - '{{internal.db_names}}'
+    db_roles:
+    - '{{internal.db_roles}}'
+    db_service_labels:
+      '*': '*'
+    db_users:
+    - '{{internal.db_users}}'
+    gcp_service_accounts:
+    - '{{internal.gcp_service_accounts}}'
+    github_permissions:
+    - orgs:
+      - '{{internal.github_orgs}}'
+    kubernetes_groups:
+    - '{{internal.kubernetes_groups}}'
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - kind: '*'
+      name: '*'
+      namespace: '*'
+      verbs:
+      - '*'
+    kubernetes_users:
+    - '{{internal.kubernetes_users}}'
+    logins:
+    - '{{internal.logins}}'
+    mcp:
+      tools:
+      - '{{internal.mcp_tools}}'
+    node_labels:
+      '*': '*'
+    rules:
+    - resources:
+      - event
+      verbs:
+      - list
+      - read
+    - resources:
+      - session
+      verbs:
+      - read
+      - list
+      where: contains(session.participants, user.metadata.name)
+    - resources:
+      - instance
+      verbs:
+      - list
+      - read
+    - resources:
+      - cluster_maintenance_config
+      verbs:
+      - list
+      - read
+    windows_desktop_labels:
+      '*': '*'
+    windows_desktop_logins:
+    - '{{internal.windows_logins}}'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: true
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      desktop: true
+    ssh_file_copy: true
+    ssh_port_forwarding:
+      local:
+        enabled: true
+      remote:
+        enabled: true
+version: v7
+---
+kind: role
+metadata:
+  name: access-graph-reader
+  revision: 171a2481-3112-464e-8acd-95142effea97
+spec:
+  allow:
+    rules:
+    - resources:
+      - access_graph
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Default access plugin role
+  labels:
+    teleport.internal/resource-type: preset
+  name: access-plugin
+  revision: 0f8fd94c-d874-461b-878f-066c5ac8e9d6
+spec:
+  allow:
+    review_requests:
+      preview_as_roles:
+      - list-access-request-resources
+    rules:
+    - resources:
+      - access_request
+      verbs:
+      - list
+      - read
+    - resources:
+      - access_plugin_data
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - access_monitoring_rule
+      verbs:
+      - list
+      - read
+    - resources:
+      - access_list
+      verbs:
+      - list
+      - read
+    - resources:
+      - role
+      verbs:
+      - list
+      - read
+    - resources:
+      - user
+      verbs:
+      - list
+      - read
+    - resources:
+      - user_login_state
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Default access plugin with review role
+  labels:
+    teleport.internal/resource-type: preset
+  name: access-plugin-with-review
+  revision: b03f05dd-13c0-482b-b378-4d96bd812f19
+spec:
+  allow:
+    review_requests:
+      preview_as_roles:
+      - list-access-request-resources
+    rules:
+    - resources:
+      - access_request
+      verbs:
+      - list
+      - read
+    - resources:
+      - access_plugin_data
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - access_monitoring_rule
+      verbs:
+      - list
+      - read
+    - resources:
+      - access_list
+      verbs:
+      - list
+      - read
+    - resources:
+      - role
+      verbs:
+      - list
+      - read
+    - resources:
+      - user
+      verbs:
+      - list
+      - read
+    - resources:
+      - user_login_state
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: admin
+  labels:
+    env: dev
+  name: admin
+  revision: 82546b7b-d059-46c4-938e-9b8686be7fe5
+spec:
+  allow:
+    app_labels:
+      '*': '*'
+    aws_role_arns:
+    - '{{internal.aws_role_arns}}'
+    azure_identities:
+    - '{{internal.azure_identities}}'
+    db_labels:
+      '*': '*'
+    db_names:
+    - '{{internal.db_names}}'
+    db_roles:
+    - '{{internal.db_roles}}'
+    db_service_labels:
+      '*': '*'
+    db_users:
+    - '{{internal.db_users}}'
+    gcp_service_accounts:
+    - '{{internal.gcp_service_accounts}}'
+    github_permissions:
+    - orgs:
+      - '{{internal.github_orgs}}'
+    kubernetes_groups:
+    - '{{internal.kubernetes_groups}}'
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - api_group: '*'
+      kind: '*'
+      name: '*'
+      namespace: '*'
+      verbs:
+      - '*'
+    logins:
+    - cavlovicj
+    mcp:
+      tools:
+      - '{{internal.mcp_tools}}'
+    node_labels:
+      '*': '*'
+    rules:
+    - resources:
+      - '*'
+      verbs:
+      - '*'
+    windows_desktop_labels:
+      '*': '*'
+    windows_desktop_logins:
+    - '{{internal.windows_logins}}'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  name: argocd-access
+  revision: 3124f18c-0296-46ad-a36a-c73c905ac114
+spec:
+  allow:
+    app_labels:
+      app: argocd
+    kubernetes_groups:
+    - system:masters
+    kubernetes_labels:
+      env: dev
+    kubernetes_resources:
+    - kind: '*'
+      name: '*'
+      namespace: '*'
+      verbs:
+      - '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 8h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Review cluster events and replay sessions
+  labels:
+    teleport.internal/resource-type: preset
+  name: auditor
+  revision: 1e1a7b40-be38-40e9-8584-65a115a70ecc
+spec:
+  allow:
+    rules:
+    - resources:
+      - session
+      verbs:
+      - list
+      - read
+    - resources:
+      - event
+      verbs:
+      - list
+      - read
+    - resources:
+      - session_tracker
+      verbs:
+      - list
+      - read
+    - resources:
+      - cluster_alert
+      verbs:
+      - list
+      - read
+    - resources:
+      - instance
+      verbs:
+      - list
+      - read
+    - resources:
+      - security_report
+      verbs:
+      - list
+      - read
+      - use
+    - resources:
+      - audit_query
+      verbs:
+      - list
+      - read
+      - use
+    - resources:
+      - bot_instance
+      verbs:
+      - list
+      - read
+    - resources:
+      - notification
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      desktop: false
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Access AWS IAM Identity Center resources
+  labels:
+    teleport.internal/resource-type: system
+  name: aws-ic-access
+  revision: 6007cde9-83e3-4476-91c5-0f84fd8918e8
+spec:
+  allow:
+    account_assignments:
+    - account: '*'
+      permission_set: '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Used by a beam to issue itself credentials
+  labels:
+    teleport.internal/resource-type: system
+  name: beam
+  revision: 48b16829-7754-403c-a656-7f8c2184531e
+spec:
+  allow:
+    rules:
+    - resources:
+      - host_cert
+      verbs:
+      - create
+      where: contains_all(user.spec.traits["teleport.internal/beams/id"], host_cert.principals)
+        && host_cert.host_id == "" && host_cert.node_name == ""
+    - resources:
+      - workload_identity
+      verbs:
+      - list
+      - read
+    workload_identity_labels:
+      teleport.internal/beams/id: '{{external["teleport.internal/beams/id"]}}'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Administer beams belonging to other users
+  labels:
+    teleport.internal/resource-type: preset
+  name: beam-admin
+  revision: 6dcf40f5-1a9a-42a7-bfe6-1b8c77a778de
+spec:
+  allow:
+    beam_labels:
+      teleport.internal/beams/owner: '*'
+    rules:
+    - resources:
+      - beam
+      verbs:
+      - '*'
+    - resources:
+      - beams_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Use the Beams feature
+  labels:
+    teleport.internal/resource-type: preset
+  name: beam-user
+  revision: 7f85714c-5a72-4734-9e86-299cc401e890
+spec:
+  allow:
+    app_labels_expression: labels["teleport.internal/beams/app-type"] == "llm" ||
+      labels["teleport.internal/beams/owner"] == user.metadata.name
+    beam_labels:
+      teleport.internal/beams/owner: '{{user.metadata.name}}'
+    logins:
+    - beams
+    node_labels:
+      teleport.internal/beams/owner: '{{user.metadata.name}}'
+    rules:
+    - resources:
+      - beam
+      verbs:
+      - '*'
+    - resources:
+      - beams_config
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Access rights to SSH to CavlovicJ EC2 instance.
+  name: cavlovicj-ec2-ssh-access
+  revision: 2ccbb117-42ca-499e-80e5-37ce8b2bae24
+spec:
+  allow:
+    logins:
+    - cavlovicj
+    node_labels:
+      env: dev
+  deny:
+    logins:
+    - root
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Access rights to SSH to CavlovicJ EC2 instance.
+  name: cavlovicj-ec2-ssh-access2
+  revision: fd50f2f8-cb5c-4385-be77-8711396f50d1
+spec:
+  allow:
+    host_groups:
+    - teleport-keep
+    logins:
+    - cavlovicj
+    node_labels:
+      env: dev
+  deny:
+    logins:
+    - root
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    create_host_user_default_shell: /bin/bash
+    create_host_user_mode: keep
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  name: cavlovicj-k8s-access
+  revision: 19a70f70-f615-4ef4-8d16-edf5f976172b
+spec:
+  allow:
+    kubernetes_groups:
+    - teleport-cluster-admins
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - api_group: '*'
+      kind: '*'
+      name: '*'
+      namespace: '*'
+      verbs:
+      - '*'
+    kubernetes_users:
+    - '{{internal.kubernetes_users}}'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  name: cnpg-access
+  revision: 27b1ed1f-3c97-4ce3-8515-bea026c8a914
+spec:
+  allow:
+    db_labels:
+      engine: cloudnativepg
+    db_names:
+    - appdb
+    - postgres
+    db_users:
+    - teleport
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  name: contractor
+  revision: b18124ce-8ac4-41a6-93b5-ad4b2e87779e
+spec:
+  allow:
+    request:
+      roles:
+      - cavlovicj-ec2-ssh-access2
+      - admin
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v5
+---
+kind: role
+metadata:
+  description: AWS RDS Postgres access
+  name: db-access-postgres
+  revision: 471bcbc0-8457-4d1b-ba81-2ba6c0ed5b1c
+spec:
+  allow:
+    db_labels:
+      '*': '*'
+    db_names:
+    - postgres
+    db_users:
+    - cavlovicj-rds-role
+    - postgres
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v6
+---
+kind: role
+metadata:
+  description: Database Administrator
+  labels:
+    role: dba
+  name: dba
+  revision: b0e6aad0-b435-4cef-9db0-a7c658c1c92c
+spec:
+  allow:
+    db_labels:
+      engine: postres
+      role: dba
+    db_names:
+    - '{{internal.db_names}}'
+    db_roles:
+    - '{{internal.db_roles}}'
+    db_service_labels:
+      engine: postgres
+    db_users:
+    - '{{internal.db_users}}'
+    kubernetes_groups:
+    - '{{external["http://schemas.xmlsoap.org/claims/Group"]}}'
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - api_group: '*'
+      kind: '*'
+      name: '*'
+      namespace: dba
+      verbs:
+      - '*'
+    kubernetes_users:
+    - '{{internal.kubernetes_users}}'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Developer
+  labels:
+    role: dev
+  name: dev
+  revision: 3b1ead51-5419-4ffa-bea9-887ad67b8a22
+spec:
+  allow:
+    kubernetes_groups:
+    - '{{external["http://schemas.xmlsoap.org/claims/Group"]}}'
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - api_group: '*'
+      kind: '*'
+      name: '*'
+      namespace: dev
+      verbs:
+      - '*'
+    kubernetes_users:
+    - '{{internal.kubernetes_users}}'
+    logins:
+    - '{{internal.logins}}'
+    node_labels:
+      env: dev
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Administer trusted devices
+  labels:
+    teleport.internal/resource-type: preset
+  name: device-admin
+  revision: 6afb5975-9f43-4521-9803-316f95987075
+spec:
+  allow:
+    rules:
+    - resources:
+      - device
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+      - create_enroll_token
+      - enroll
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Grant permission to enroll trusted devices
+  labels:
+    teleport.internal/resource-type: preset
+  name: device-enroll
+  revision: d740b2a8-c6b5-4de3-8e92-1b4d40687c81
+spec:
+  allow:
+    rules:
+    - resources:
+      - device
+      verbs:
+      - enroll
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Edit cluster configuration
+  labels:
+    teleport.internal/resource-type: preset
+  name: editor
+  revision: c1fa10a4-7c42-421b-a50b-bf9d36f9faf2
+spec:
+  allow:
+    rules:
+    - resources:
+      - user
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - role
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - bot
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - crown_jewel
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - db_object_import_rule
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - oidc
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - saml
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - github
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - oidc_request
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - saml_request
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - github_request
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - cluster_audit_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - cluster_auth_preference
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - auth_connector
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - cluster_name
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - cluster_networking_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - session_recording_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - external_audit_storage
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - ui_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - trusted_cluster
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - remote_cluster
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - token
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - connection_diagnostic
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - db
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - database_certificate
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - installer
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - device
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+      - create_enroll_token
+      - enroll
+    - resources:
+      - db_service
+      verbs:
+      - read
+      - list
+    - resources:
+      - instance
+      verbs:
+      - read
+      - list
+    - resources:
+      - login_rule
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - saml_idp_service_provider
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - user_group
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - plugin
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - okta_import_rule
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - okta_assignment
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - lock
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - integration
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+      - use
+    - resources:
+      - billing
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - cluster_alert
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - access_list
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - node
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - discovery_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - security_report
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+      - use
+    - resources:
+      - audit_query
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+      - use
+    - resources:
+      - access_graph
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - server_info
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - access_monitoring_rule
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - app_server
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - vnet_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - bot_instance
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - access_graph_settings
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - spiffe_federation
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - notification
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - static_host_user
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - user_task
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - aws_identity_center
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - contact
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - workload_identity
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - autoupdate_version
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - autoupdate_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - autoupdate_agent_rollout
+      verbs:
+      - read
+      - list
+    - resources:
+      - autoupdate_agent_report
+      verbs:
+      - read
+      - list
+    - resources:
+      - autoupdate_bot_instance_report
+      verbs:
+      - read
+      - list
+    - resources:
+      - git_server
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - workload_identity_x509_revocation
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - health_check_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - sigstore_policy
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - workload_identity_x509_issuer_override
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - workload_identity_x509_issuer_override_csr
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - inference_model
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - inference_secret
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - inference_policy
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - retrieval_model
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - client_ip_restriction
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - scoped_role
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - scoped_role_assignment
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - scoped_token
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - workload_cluster
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - recording_encryption
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+    - resources:
+      - beams_config
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: true
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      desktop: false
+    ssh_file_copy: true
+    ssh_port_forwarding:
+      local:
+        enabled: true
+      remote:
+        enabled: true
+version: v7
+---
+kind: role
+metadata:
+  name: grafana-access
+  revision: e1496edc-3a80-45aa-86f7-1172e5e6a3a2
+spec:
+  allow:
+    app_labels:
+      purpose: monitoring
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  name: grafana-editor
+  revision: b1e4dea6-220c-458b-9dff-5c3bd04aa250
+spec:
+  allow:
+    app_labels:
+      '*': '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Have access to all user groups
+  labels:
+    teleport.internal/resource-type: preset
+  name: group-access
+  revision: e81712c3-bb53-472b-9650-51b216cd2221
+spec:
+  allow:
+    group_labels:
+      '*': '*'
+    rules:
+    - resources:
+      - user_group
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  name: linux-desktop-admins
+  revision: 71b9a163-5efb-4f52-93b6-6fd3782bb780
+spec:
+  allow: {}
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v6
+---
+kind: role
+metadata:
+  description: Default list access request resources role
+  labels:
+    teleport.internal/resource-type: preset
+  name: list-access-request-resources
+  revision: 9e11bb7a-4e18-43cb-b5c8-cfdb2e26b41c
+spec:
+  allow:
+    app_labels:
+      '*': '*'
+    db_labels:
+      '*': '*'
+    group_labels:
+      '*': '*'
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - kind: '*'
+      name: '*'
+      namespace: '*'
+      verbs:
+      - '*'
+    node_labels:
+      '*': '*'
+    rules:
+    - resources:
+      - node
+      verbs:
+      - list
+      - read
+    - resources:
+      - app
+      verbs:
+      - list
+      - read
+    - resources:
+      - db
+      verbs:
+      - list
+      - read
+    - resources:
+      - kube_cluster
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Access to MCP servers
+  labels:
+    teleport.internal/resource-type: preset
+  name: mcp-user
+  revision: 557088f2-b950-4b44-87f8-8be447d2baa1
+spec:
+  allow:
+    app_labels:
+      teleport.internal/app-sub-kind: mcp
+    mcp:
+      tools:
+      - '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Request Okta resources
+  labels:
+    teleport.internal/resource-type: system
+  name: okta-access
+  revision: 7bf1c8e9-5e2f-4c5a-81ab-5a5f7c9ac41e
+spec:
+  allow:
+    app_labels:
+      teleport.dev/origin: okta
+    group_labels:
+      teleport.dev/origin: okta
+    rules:
+    - resources:
+      - user_group
+      verbs:
+      - list
+      - read
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Request Okta resources
+  labels:
+    teleport.dev/origin: okta
+    teleport.internal/resource-type: system
+  name: okta-requester
+  revision: 492506f1-1d90-4c70-a2d4-4232ece5f5a5
+spec:
+  allow:
+    request:
+      max_duration: 336h0m0s
+      search_as_roles:
+      - okta-access
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  name: request-admin
+  revision: 98fefc4f-da37-4803-9325-9f95d6dc3ddd
+spec:
+  allow:
+    rules:
+    - resources:
+      - access_request
+      verbs:
+      - list
+      - read
+      - update
+      - delete
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Request all resources
+  labels:
+    teleport.internal/resource-type: preset
+  name: requester
+  revision: 438ba59e-5637-4b18-b0c1-d0ccc10b7831
+spec:
+  allow:
+    request:
+      search_as_roles:
+      - access
+      - group-access
+      - aws-ic-access
+      - cavlovicj-ec2-ssh-access2
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Request all resources
+  labels:
+    teleport.internal/resource-type: preset
+  name: requester_backup
+  revision: 7486bda2-71e3-41bb-b854-87bb4b2d74e8
+spec:
+  allow:
+    request:
+      search_as_roles:
+      - access
+      - group-access
+      - aws-ic-access
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Request all resources
+  labels:
+    teleport.internal/resource-type: preset
+  name: requester_ssh
+  revision: 66de1c37-bf96-473e-a92c-eb9db7e50e58
+spec:
+  allow:
+    request:
+      search_as_roles:
+      - cavlovicj-ec2-ssh-access2
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Require trusted device to access resources
+  labels:
+    teleport.internal/resource-type: preset
+  name: require-trusted-device
+  revision: f6de9e62-5b7a-4894-97db-2d54a4b909f4
+spec:
+  allow:
+    db_labels:
+      '*': '*'
+    db_names:
+    - '*'
+    db_users:
+    - '*'
+    kubernetes_groups:
+    - '{{internal.kubernetes_groups}}'
+    - system:masters
+    - developers
+    - viewers
+    kubernetes_labels:
+      '*': '*'
+    kubernetes_resources:
+    - kind: '*'
+      name: '*'
+      namespace: '*'
+      verbs:
+      - '*'
+    logins:
+    - '{{internal.logins}}'
+    node_labels:
+      '*': '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    device_trust_mode: required
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Review access requests
+  labels:
+    teleport.internal/resource-type: preset
+  name: reviewer
+  revision: 0d09e262-f2ce-40b3-b212-e0decda78291
+spec:
+  allow:
+    review_requests:
+      preview_as_roles:
+      - access
+      - group-access
+      - aws-ic-access
+      - cavlovicj-ec2-ssh-access2
+      roles:
+      - access
+      - group-access
+      - aws-ic-access
+      - cavlovicj-ec2-ssh-access2
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  name: saml-admin
+  revision: d6a05dd8-09b3-46e4-9e44-92f78abf805e
+spec:
+  allow:
+    app_labels:
+      '*': '*'
+    aws_role_arns:
+    - '{{internal.aws_role_arns}}'
+    azure_identities:
+    - '{{internal.azure_identities}}'
+    gcp_service_accounts:
+    - '{{internal.gcp_service_accounts}}'
+    mcp:
+      tools:
+      - '{{internal.mcp_tools}}'
+    rules:
+    - resources:
+      - saml_idp_service_provider
+      verbs:
+      - read
+      - list
+      - create
+      - update
+      - delete
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v8
+---
+kind: role
+metadata:
+  description: Default Terraform provider role
+  labels:
+    teleport.internal/resource-type: preset
+  name: terraform-provider
+  revision: 4b008ae6-d57b-40be-a39e-7f5668fde535
+spec:
+  allow:
+    app_labels:
+      '*': '*'
+    db_labels:
+      '*': '*'
+    node_labels:
+      '*': '*'
+    rules:
+    - resources:
+      - access_list
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - app
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - cluster_auth_preference
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - cluster_maintenance_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - cluster_networking_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - db
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - device
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - discovery_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - github
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - lock
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - login_rule
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - node
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - oidc
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - okta_import_rule
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - role
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - saml
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - session_recording_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - token
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - trusted_cluster
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - ui_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - user
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - bot
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - installer
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - access_monitoring_rule
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - dynamic_windows_desktop
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - static_host_user
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - workload_identity
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - git_server
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - autoupdate_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - autoupdate_version
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - health_check_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - vnet_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - integration
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - inference_model
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - inference_secret
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - inference_policy
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - retrieval_model
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - saml_idp_service_provider
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - scoped_token
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - scoped_role
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - scoped_role_assignment
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - db_object_import_rule
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    - resources:
+      - beams_config
+      verbs:
+      - list
+      - create
+      - read
+      - update
+      - delete
+    windows_desktop_labels:
+      '*': '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  description: Issue workload identities
+  labels:
+    teleport.internal/resource-type: preset
+  name: wildcard-workload-identity-issuer
+  revision: 83df4059-4b53-4ffb-b368-cc0ba9833a40
+spec:
+  allow:
+    rules:
+    - resources:
+      - workload_identity
+      verbs:
+      - list
+      - read
+    workload_identity_labels:
+      '*': '*'
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v7
+---
+kind: role
+metadata:
+  name: windows-desktop-admins
+  revision: 91ab33ed-47a4-4ef2-9aac-2fbd0f654742
+spec:
+  allow:
+    windows_desktop_labels:
+      '*': '*'
+    windows_desktop_logins:
+    - Administrator
+    - test
+    - cavlovicj
+    - dev
+  deny: {}
+  options:
+    cert_format: standard
+    create_db_user: false
+    create_desktop_user: false
+    desktop_clipboard: true
+    desktop_directory_sharing: true
+    enhanced_recording:
+    - command
+    - network
+    forward_agent: false
+    idp:
+      saml:
+        enabled: true
+    max_session_ttl: 30h0m0s
+    pin_source_ip: false
+    record_session:
+      default: best_effort
+      desktop: true
+    ssh_file_copy: true
+version: v6
+---
+kind: token
+metadata:
+  name: cavj-kube-iam-token
+  revision: 2187e77e-ecce-4daa-b0c2-3c10f8299ee1
+spec:
+  allow:
+  - aws_account: $account_id
+    aws_arn: arn:aws:sts::$account_id:assumed-role/ cavj-kube-iam-role cavj-kube-iam-role
+      /*
+  join_method: iam
+  roles:
+  - Kube
+version: v2
+---
+kind: token
+metadata:
+  name: cavlovicj-kube-db-token
+  revision: 706b039b-876a-4592-b708-49f6a7728d89
+spec:
+  allow:
+  - aws_account: "278576220453"
+    aws_arn: arn:aws:sts::278576220453:assumed-role/cavlovicj-eks-node-role/*
+  join_method: iam
+  roles:
+  - Kube
+  - Db
+version: v2
+---
+kind: token
+metadata:
+  name: iam-token
+  revision: 2c5bae4d-9b3b-4fdf-b44f-33e285f5dba5
+spec:
+  allow:
+  - aws_account: "278576220453"
+  - aws_account: "278576220453"
+    aws_arn: arn:aws:sts::278576220453:assumed-role/teleport-node-role/i-*
+  join_method: iam
+  roles:
+  - Node
+version: v2
+---
+kind: token
+metadata:
+  expires: "2050-01-01T00:00:00Z"
+  name: teleport-cluster-proxy
+  revision: 4cd6d723-f7d7-42f9-9974-c0fcb1ac4e2b
+spec:
+  join_method: kubernetes
+  kubernetes:
+    allow:
+    - service_account: teleport-dynamodb:teleport-cluster-proxy
+    type: in_cluster
+  roles:
+  - Proxy
+version: v2
+---
+kind: token
+metadata:
+  expires: "2050-01-01T00:00:00Z"
+  name: teleport-pg-proxy
+  revision: a73a7d97-c1db-4d10-948a-008a26c76d64
+spec:
+  join_method: kubernetes
+  kubernetes:
+    allow:
+    - service_account: teleport-postgres:teleport-pg-proxy
+    type: in_cluster
+  roles:
+  - Proxy
+version: v2
+---
+kind: token
+metadata:
+  expires: "2050-01-01T00:00:00Z"
+  name: teleport-proxy
+  revision: d4dce948-4515-4052-9459-caf0c9122cdd
+spec:
+  join_method: kubernetes
+  kubernetes:
+    allow:
+    - service_account: teleport-dynamodb:teleport-proxy
+    type: in_cluster
+  roles:
+  - Proxy
+version: v2
+---
+kind: lock
+metadata:
+  name: 1da84135-1c12-42ac-9e50-c4382717279b
+  revision: dabb9a48-7b37-421c-950f-782f1b793dc0
+spec:
+  created_at: "2026-09-10T16:20:14.349088447Z"
+  created_by: cavlovicj
+  target:
+    access_request: 01a08bab-dfe0-7f0d-a70a-5eb97ab15af5
+version: v2
+---
+kind: lock
+metadata:
+  name: a5fadb24-aeb1-41ba-94c7-14ce82f4ed60
+  revision: dee75a28-bea6-46d1-99e2-0af1fc5720c5
+spec:
+  created_at: "2026-09-10T16:19:53.77729237Z"
+  created_by: cavlovicj
+  target:
+    access_request: 01a08bdb-1590-71d3-9f91-c645eafda806
+version: v2
+---
+kind: cluster_networking_config
+metadata:
+  labels:
+    teleport.dev/origin: config-file
+  name: cluster-networking-config
+  revision: 75c12fb6-0660-4746-89e1-627b09682bde
+spec:
+  client_idle_timeout: 0s
+  idle_timeout_message: ""
+  keep_alive_count_max: 3
+  keep_alive_interval: 5m0s
+  proxy_listener_mode: 1
+  session_control_timeout: 0s
+  tunnel_strategy:
+    type: agent_mesh
+  web_idle_timeout: 0s
+version: v2
+---
+kind: cluster_auth_preference
+metadata:
+  labels:
+    teleport.dev/origin: config-file
+  name: cluster-auth-preference
+  revision: 4600685a-f7c2-407f-9fd3-b7b0a4e79b49
+spec:
+  allow_headless: true
+  allow_local_auth: true
+  allow_passwordless: true
+  default_session_ttl: 12h0m0s
+  disconnect_expired_cert: false
+  idp:
+    saml:
+      enabled: true
+  locking_mode: best_effort
+  okta: {}
+  second_factors:
+  - otp
+  - webauthn
+  signature_algorithm_suite: balanced-v1
+  type: local
+  webauthn:
+    rp_id: teleport.cavj.dev
+version: v2
+---
+kind: user
+metadata:
+  description: Used internally by Teleport to automatically approve access requests
+  labels:
+    teleport.internal/resource-type: system
+    teleport.internal/revision: "1"
+  name: '@teleport-access-approval-bot'
+  revision: 2158e389-abc4-4dcd-b8ff-9afe0f1fee98
+spec:
+  created_by:
+    time: "0001-01-01T00:00:00Z"
+    user:
+      name: ""
+  expires: "0001-01-01T00:00:00Z"
+  roles:
+  - '@teleport-access-approver'
+  status:
+    is_locked: false
+    lock_expires: "0001-01-01T00:00:00Z"
+    locked_time: "0001-01-01T00:00:00Z"
+status:
+  mfa_weakest_device: 1
+version: v2
+---
+kind: user
+metadata:
+  expires: "2026-10-02T00:16:23Z"
+  name: Jcavlovic
+  revision: ddf8b453-2ba2-4a00-ad77-af9399f1b52d
+spec:
+  created_by:
+    connector:
+      id: github
+      identity: Jcavlovic
+      type: github
+    time: "2026-10-01T16:16:23.847773629Z"
+    user:
+      name: system
+  expires: "0001-01-01T00:00:00Z"
+  github_identities:
+  - connector_id: github
+    user_id: "121265807"
+    username: Jcavlovic
+  roles:
+  - admin
+  - access
+  - editor
+  - auditor
+  - db-access-postgres
+  - cavlovicj-ec2-ssh-access
+  - argocd-access
+  - saml-admin
+  - cavlovicj-k8s-access
+  - linux-desktop-admins
+  - grafana-editor
+  - windows-desktop-admins
+  - access-graph-reader
+  status:
+    is_locked: false
+    lock_expires: "0001-01-01T00:00:00Z"
+    locked_time: "0001-01-01T00:00:00Z"
+  traits:
+    github_teams:
+    - dev
+    kubernetes_groups: null
+    kubernetes_users: null
+    logins:
+    - Jcavlovic
+status:
+  mfa_weakest_device: 1
+version: v2
+---
+kind: user
+metadata:
+  name: cavlovicj
+  revision: 16aa2d4a-8364-44b9-9108-b020de3eb441
+spec:
+  created_by:
+    time: "2026-07-31T13:46:26.317134788Z"
+    user:
+      name: 3043e311-ad4c-496d-8d1d-8daf6fd59309.teleport.cavj.dev
+  expires: "0001-01-01T00:00:00Z"
+  local_auth:
+    mfa:
+    - addedAt: "2026-07-31T13:48:32.264757800Z"
+      id: 9a74ecd5-ea1f-4279-97f4-a9b38bf8830d
+      kind: mfa_device
+      lastUsed: "2026-10-01T16:14:38.346445472Z"
+      metadata:
+        Name: otp-device
+        Namespace: default
+      totp:
+        key: FLXNNVTFB5UZGZLQYPPSOWKUFKEDKJI6
+      version: v1
+    password_hash: JDJhJDEwJHBZc25NSGt3cGdwcEhZQVlLR2ZOdE9FMEpCU2syTHFDTVA1Q0ZlMVB6aTFELmR6ejhWdi51
+  roles:
+  - admin
+  - cavlovicj-ec2-ssh-access2
+  - db-access-postgres
+  - grafana-access
+  - linux-desktop-admins
+  - grafana-editor
+  status:
+    is_locked: false
+    lock_expires: "0001-01-01T00:00:00Z"
+    locked_time: "0001-01-01T00:00:00Z"
+status:
+  mfa_weakest_device: 2
+  password_state: 2
+version: v2
+---
+kind: user
+metadata:
+  name: test-requester
+  revision: 87914cad-198d-4576-b543-c207545ab87f
+spec:
+  created_by:
+    time: "2026-09-10T15:05:20.903005258Z"
+    user:
+      name: cavlovicj
+  expires: "0001-01-01T00:00:00Z"
+  local_auth:
+    mfa:
+    - addedAt: "2026-09-10T16:40:29.374413930Z"
+      id: 3942cd6a-8588-4811-b910-36eb021b52a6
+      kind: mfa_device
+      lastUsed: "2026-09-10T18:08:21.896086358Z"
+      metadata:
+        Name: "562771"
+        Namespace: default
+      totp:
+        key: Y37TJ42PLRFZLNFX7UIJJE32LOCOJIYV
+      version: v1
+    password_hash: JDJhJDEwJGUwTHdBNXJQR0pTNmJ5Wkt2dFJPdk93NWRXVmgzMURKL09vL2YzQVQuc1NyUlRBNnA2MTdl
+  roles:
+  - requester_ssh
+  - contractor
+  status:
+    is_locked: false
+    lock_expires: "0001-01-01T00:00:00Z"
+    locked_time: "0001-01-01T00:00:00Z"
+status:
+  mfa_weakest_device: 2
+  password_state: 2
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 3ec0ea4d-e695-4c44-84fc-a52134426aa7
+spec:
+  active_keys:
+    ssh:
+    - private_key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1DNENBUUF3QlFZREsyVndCQ0lFSUZXVVpYTGhudVoyMFF0ZDRnT0FkWEM3dVc2ZnRFRktqVnR5SDhzbWI5MlkKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tLQo=
+      public_key: c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1Sek01RTJiVU5jWU5HSG5LMEIweXRwV3JiOHZBZEU2U3RHekVlN296c3MK
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNFekNDQWJxZ0F3SUJBZ0lRWFplOWlxeEF6cURsdmhtbFhsQ1hqekFLQmdncWhrak9QUVFEQWpCcU1Sb3cKR0FZRFZRUUtFeEYwWld4bGNHOXlkQzVqWVhacUxtUmxkakVhTUJnR0ExVUVBeE1SZEdWc1pYQnZjblF1WTJGMgphaTVrWlhZeE1EQXVCZ05WQkFVVEp6RXlORFF3TmpBNE5EYzVOVGcwTnpJeU1UQXdNelF3TmpjNE16azVOemt6Ck1UUTJNRFE1TlRBZUZ3MHlOakEzTXpFeE16TTRNekZhRncwek5qQTNNamd4TXpNNE16RmFNR294R2pBWUJnTlYKQkFvVEVYUmxiR1Z3YjNKMExtTmhkbW91WkdWMk1Sb3dHQVlEVlFRREV4RjBaV3hsY0c5eWRDNWpZWFpxTG1SbApkakV3TUM0R0ExVUVCUk1uTVRJME5EQTJNRGcwTnprMU9EUTNNakl4TURBek5EQTJOemd6T1RrM09UTXhORFl3Ck5EazFNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVMa2NkRlVRdURJS0VDMUxUaHpjY3FVR1MKaTIzQnFUSDRYZ0JWaklSNUJUcnNRL3lvUENldUF1WGl3azVMaWxLSTJ1MHYwZnNyM3paaHlLdE8wTTF5QUtOQwpNRUF3RGdZRFZSMFBBUUgvQkFRREFnR0dNQThHQTFVZEV3RUIvd1FGTUFNQkFmOHdIUVlEVlIwT0JCWUVGS3VwCkpjdDBXMjNHWVZVSUxaeXI5NmtnanNudU1Bb0dDQ3FHU000OUJBTUNBMGNBTUVRQ0lIUWlNM0VQYmtXdEtESUoKcE1ydFhtc0NWaDZzTkJ1R1pCblU4azBLU1R2TkFpQVdKZUZWS0dleGMxb3FwSnVSM2tmaytBdWd1UC80aDNtQgpndXl4MWc0WU9BPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      crl: MIIBIjCBygIBATAKBggqhkjOPQQDAjBqMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxMDAuBgNVBAUTJzEyNDQwNjA4NDc5NTg0NzIyMTAwMzQwNjc4Mzk5NzkzMTQ2MDQ5NRcNMjYwNzMxMTMzNzMxWhcNMzYwNzI4MTMzODMxWqAvMC0wHwYDVR0jBBgwFoAUq6kly3RbbcZhVQgtnKv3qSCOye4wCgYDVR0UBAMCAQEwCgYIKoZIzj0EAwIDRwAwRAIgdkWCBYQ2J2dLIR8fAAW3omZtWiRZtpmZAe2/1wZdA2kCIFDjr68i0jy8/2qQGabzvXdKTbJRkBZVDSTKxb4sYhKH
+      key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0w0MHBIOU9YNGVCRURSdU0KWC9mZFRwMWNtU3pxSXZlWE84WFpmTW42QU1XaFJBTkNBQVF1UngwVlJDNE1nb1FMVXRPSE54eXBRWktMYmNHcApNZmhlQUZXTWhIa0ZPdXhEL0tnOEo2NEM1ZUxDVGt1S1VvamE3Uy9SK3l2Zk5tSElxMDdRelhJQQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: host
+sub_kind: host
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: a9332420-3297-4a7f-87a6-acb62b4661e8
+spec:
+  active_keys:
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNGRENDQWJxZ0F3SUJBZ0lRVlJWOGt2UkgzL1BiellJTDB4YzFOekFLQmdncWhrak9QUVFEQWpCcU1Sb3cKR0FZRFZRUUtFeEYwWld4bGNHOXlkQzVqWVhacUxtUmxkakVhTUJnR0ExVUVBeE1SZEdWc1pYQnZjblF1WTJGMgphaTVrWlhZeE1EQXVCZ05WQkFVVEp6RXhNekE1TlRrME5EVXpOelExTURnNU5ERTRNalEzTWpNNE1qTTVOemN3Ck16SXdOakU1T1RBZUZ3MHlOakEzTXpFeE16TTRNekZhRncwek5qQTNNamd4TXpNNE16RmFNR294R2pBWUJnTlYKQkFvVEVYUmxiR1Z3YjNKMExtTmhkbW91WkdWMk1Sb3dHQVlEVlFRREV4RjBaV3hsY0c5eWRDNWpZWFpxTG1SbApkakV3TUM0R0ExVUVCUk1uTVRFek1EazFPVFEwTlRNM05EVXdPRGswTVRneU5EY3lNemd5TXprM056QXpNakEyCk1UazVNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVacEhYclVTRWwvTWsxQ2dWaE83bmV6MEEKWEZ5c1J3RUFBMGVZVGltUnNGUVNHVlZUekI1RFVxTUcxZVlXNnZWRmI3eU1odU16b2piVllBRGNOWEIyeEtOQwpNRUF3RGdZRFZSMFBBUUgvQkFRREFnR0dNQThHQTFVZEV3RUIvd1FGTUFNQkFmOHdIUVlEVlIwT0JCWUVGRHE5CmVZNFlVQzJic2JDbmJxY0poUDYxdzNZS01Bb0dDQ3FHU000OUJBTUNBMGdBTUVVQ0lFcmVNNm4yUDMrREFFWmIKUktVMk1kQnVwRHV4aEJERHVHM0dBRnVFU2F4MkFpRUF3SzlrTk8yYVhzbzFaeFhNNjdKZkRQdmRtbGJ4aVI3Swp1SmpvaFpJbnlPRT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      crl: MIIBIjCBygIBATAKBggqhkjOPQQDAjBqMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxMDAuBgNVBAUTJzExMzA5NTk0NDUzNzQ1MDg5NDE4MjQ3MjM4MjM5NzcwMzIwNjE5ORcNMjYwNzMxMTMzNzMxWhcNMzYwNzI4MTMzODMxWqAvMC0wHwYDVR0jBBgwFoAUOr15jhhQLZuxsKdupwmE/rXDdgowCgYDVR0UBAMCAQEwCgYIKoZIzj0EAwIDRwAwRAIgU+6z9QSvqvxxHgQvNlyLpfLGXMpITpkFFtkD8dhX830CIGLogQ7Hma0oGjSjCNK10hZG4yQ6rnABEj3sauJSISSn
+      key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3lMYi9KUnBoYTdyQUdQSFAKRCtKVTVTV0dwSlpVdVdVU3NjcWwyakpQOTlLaFJBTkNBQVJta2RldFJJU1g4eVRVS0JXRTd1ZDdQUUJjWEt4SApBUUFEUjVoT0taR3dWQklaVlZQTUhrTlNvd2JWNWhicTlVVnZ2SXlHNHpPaU50VmdBTncxY0hiRQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: windows
+sub_kind: windows
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 7595e89a-736e-4cfd-b446-ccf0d840a51a
+spec:
+  active_keys:
+    ssh:
+    - private_key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1DNENBUUF3QlFZREsyVndCQ0lFSVBFSStzdDdma0MvS2VIUVQ3blcyOU1ISmxFVkpBQ2pwSTBpbU4ySEYwWWMKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tLQo=
+      public_key: c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUx6K2RWUWpmS0VjSisyUEJ5aFJjNGZQd25NY3V2d3ROd2xKWFlONnMzY2gK
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNGVENDQWJ1Z0F3SUJBZ0lSQUw5a0FHcWkwZGFFV1Ava3lxOWwxV2N3Q2dZSUtvWkl6ajBFQXdJd2FqRWEKTUJnR0ExVUVDaE1SZEdWc1pYQnZjblF1WTJGMmFpNWtaWFl4R2pBWUJnTlZCQU1URVhSbGJHVndiM0owTG1OaApkbW91WkdWMk1UQXdMZ1lEVlFRRkV5Y3lOVFEwTURFM09EVXpNamt6TkRjNE9URXhNVFEyTmpjNU9EazBPREF6Ck5qY3pNVFF5Tnprd0hoY05Nall3TnpNeE1UTXpPRE14V2hjTk16WXdOekk0TVRNek9ETXhXakJxTVJvd0dBWUQKVlFRS0V4RjBaV3hsY0c5eWRDNWpZWFpxTG1SbGRqRWFNQmdHQTFVRUF4TVJkR1ZzWlhCdmNuUXVZMkYyYWk1awpaWFl4TURBdUJnTlZCQVVUSnpJMU5EUXdNVGM0TlRNeU9UTTBOemc1TVRFeE5EWTJOems0T1RRNE1ETTJOek14Ck5ESTNPVEJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCRDh3aUhoV2U5UmN4dmpFeEY5U0NKMDAKdkFRN2l3SzVGeHplWFF1b1o2OTNhSjBGcmdGOXZZSE4wL3hzSllORTY3RVBKbWRqU1FUZFdydkRCZHprRFFlagpRakJBTUE0R0ExVWREd0VCL3dRRUF3SUJoakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlNMCmdlMzFGOGhFVzJlai8zSUc5bllGWDN1SllUQUtCZ2dxaGtqT1BRUURBZ05JQURCRkFpRUF4djNUS2JjOVZ1Z2wKSXR1QWFIM0pOQXNaOEx5N2FjdEtJcUo0MWNJR0ZuMENJRGdMM2xVSDNzMFhVMWZLRzEvbU5pWUVGMmhyY0NMWgpLbGswODlTamJiOEUKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      crl: MIIBIjCBygIBATAKBggqhkjOPQQDAjBqMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxMDAuBgNVBAUTJzI1NDQwMTc4NTMyOTM0Nzg5MTExNDY2Nzk4OTQ4MDM2NzMxNDI3ORcNMjYwNzMxMTMzNzMxWhcNMzYwNzI4MTMzODMxWqAvMC0wHwYDVR0jBBgwFoAUi4Ht9RfIRFtno/9yBvZ2BV97iWEwCgYDVR0UBAMCAQEwCgYIKoZIzj0EAwIDRwAwRAIgIOlBzagAf5kJ06QLU8Wdv8Y9UJKcb1EoslFjy/CDX5YCICX6Q/CoCvAyMmD0trl0RxAX3LCJ5eeo8VMuwzmwxhes
+      key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3VnMEN1UStoNmlKT3VuSC8KWCtjUDlXOG1BbjJDdHlFVWUra0YyVmhrZmVtaFJBTkNBQVEvTUloNFZudlVYTWI0eE1SZlVnaWROTHdFTzRzQwp1UmNjM2wwTHFHZXZkMmlkQmE0QmZiMkJ6ZFA4YkNXRFJPdXhEeVpuWTBrRTNWcTd3d1hjNUEwSAotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: user
+sub_kind: user
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: ecbb79a3-0b47-430b-98d8-a2f2ba8577c7
+spec:
+  active_keys:
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURuakNDQW9hZ0F3SUJBZ0lRU2hBOHV6czQzU3dERkVsRWIxNDQ2VEFOQmdrcWhraUc5dzBCQVFzRkFEQnAKTVJvd0dBWURWUVFLRXhGMFpXeGxjRzl5ZEM1allYWnFMbVJsZGpFYU1CZ0dBMVVFQXhNUmRHVnNaWEJ2Y25RdQpZMkYyYWk1a1pYWXhMekF0QmdOVkJBVVRKams0TkRRM01UZ3dNakUyTXpreE16QXdPVGcwT0RJek9Ea3hOemt6Ck1Ea3dNRFkyTmpZMU1CNFhEVEkyTURjek1URXpNemd6TVZvWERUTTJNRGN5T0RFek16Z3pNVm93YVRFYU1CZ0cKQTFVRUNoTVJkR1ZzWlhCdmNuUXVZMkYyYWk1a1pYWXhHakFZQmdOVkJBTVRFWFJsYkdWd2IzSjBMbU5oZG1vdQpaR1YyTVM4d0xRWURWUVFGRXlZNU9EUTBOekU0TURJeE5qTTVNVE13TURrNE5EZ3lNemc1TVRjNU16QTVNREEyCk5qWTJOVENDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFQZlVodWQyM3BabGxTL1QKQ29GOTFYVUVVWEFPVVBmbmptemRWTzJYU2ltdUZEWFJpSzNCODkrSlVzVlNVMDNiNHdrYUtHVjlZcUU4MlVveQoxUTdqQXYrOXowY1J5aUNkb2JsTHdWYVJURzkzUC93TFdzNUpqRk5SZjViU1B3MWkzWlhPekloWUJ1SzIzR1E2Ci9tZ1pmV3lsOGw3Y0JJcWpxMzUzM05HbEdQeUd0Tk5zUUNBZFhMdlE3eDVlbWo4OXpMQzl2eno3bzA4WTBhRFYKSVdxYnhSOU5zTjlJOU1rZldtSmhDaEJuOHgyLzVrTVNkaDFkRG9YUTBwdmVYZnY3VXJtdS95YUlocS9DN0Y3OQp1cDJycFp1Y0hPNm14SndBY25zNXBIYzAyNmdrclRHOXpOTm51bVM5NHowbWtUa3pqenA0TzFkVUEwcE40YjBGCmdxMUQ5ZlVDQXdFQUFhTkNNRUF3RGdZRFZSMFBBUUgvQkFRREFnR21NQThHQTFVZEV3RUIvd1FGTUFNQkFmOHcKSFFZRFZSME9CQllFRk1QYjJuYytkY1hGRFBWaWRmbjVkSnhMb1F1YU1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQgpBUURsTVhLYWxmY1ZWdVlaQTY4QWVIK085aWpYR3lLVXNWNXl6ZTJhU3NHdWNDN0g3c3B4Y3FCWHc2d0dnQ21RCkN6WkpURVljbTh6TklUb2tJSFc4ci80RHhqbm55L21CcS9NSkQrdTBCMDBPc25ZMExxWnI1Z2Z6YmFRcUpsKy8KN1Q4bTl6R3JpaDZqOStSZFZSajJZYVJNaTlnOEkzdEhzZVk3MWkyeDZrdHl2Skx3MFhwS0lETks4Zjc0NG8yeApkUHNjcHM4bjBtTENaaDE4dURRTGpZbFVKbllMRXRPVzlLYm81dGlTM1g5eHMxbjJmU1Yyc2U5aUpVM0RHbEZqCkVVZTNLZGxIc1lxRnpqYlZXMTVvS1d0dzJPclFsL3VFZjZDYXhicDdjSnA5cUlmWk13Q2RoTmJqMEo4V1g2U3IKY0xqVjlHQ3FXUzZ6Q3pwcVdaa0pDajNyCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      crl: MIIB4zCBzAIBATANBgkqhkiG9w0BAQsFADBpMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxLzAtBgNVBAUTJjk4NDQ3MTgwMjE2MzkxMzAwOTg0ODIzODkxNzkzMDkwMDY2NjY1Fw0yNjA3MzExMzM3MzFaFw0zNjA3MjgxMzM4MzFaoC8wLTAfBgNVHSMEGDAWgBTD29p3PnXFxQz1YnX5+XScS6ELmjAKBgNVHRQEAwIBATANBgkqhkiG9w0BAQsFAAOCAQEAXrkRfGgH1RnUlZuoARA1pol5zkd8Pw7Xuy99TGOiDqgwwp/gBWTHi1nhi8jy1ApoWe7cUy40VwFdUxQzTXOqcGncbPURQHnrbhXwnkWSaQMabh4nYG16M4wNAhrPi7ylUBQQg33F60PuPzVvE6qV9E97ObuUniMCtLkBS8xK/A2sQFAyfgZ5Qt+Z4kVYCLNQ1I9H8HLFRM+e4NYvlCfQLLm+91QAwIuGlJpf76vf3uc3AQUj8Ktu0dYkLziIKKrHuY8IXTnEKgcGjxEWyUgCwDIEil2cNIoDCMgRpQmB8t5RofdR8KF7H0mv4RPJDDVeArlDTPadnWn6lLe25ERmeQ==
+      key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBOTlTRzUzYmVsbVdWTDlNS2dYM1ZkUVJSY0E1UTkrZU9iTjFVN1pkS0thNFVOZEdJCnJjSHozNGxTeFZKVFRkdmpDUm9vWlgxaW9UelpTakxWRHVNQy83M1BSeEhLSUoyaHVVdkJWcEZNYjNjLy9BdGEKemttTVUxRi9sdEkvRFdMZGxjN01pRmdHNHJiY1pEcithQmw5YktYeVh0d0VpcU9yZm5mYzBhVVkvSWEwMDJ4QQpJQjFjdTlEdkhsNmFQejNNc0wyL1BQdWpUeGpSb05VaGFwdkZIMDJ3MzBqMHlSOWFZbUVLRUdmekhiL21ReEoyCkhWME9oZERTbTk1ZCsvdFN1YTcvSm9pR3I4THNYdjI2bmF1bG01d2M3cWJFbkFCeWV6bWtkelRicUNTdE1iM00KMDJlNlpMM2pQU2FST1RPUE9uZzdWMVFEU2szaHZRV0NyVVAxOVFJREFRQUJBb0lCQUR5bzExQkdSeHNXeUJwSgpsSk8zWWd6ZlByT252V2ZBVkpzTzNaKzkzUmd3bEovTHBxR3BESEVWWXA0TGxYcEVMT0RvZHlUSU9PRHdUTnNkCmNBclJ3OFVuQjFvRTM2MTJCOFNiNXpteUhMeFh1dUNOUXUrbER1VEIyUEhvaWloVG41cndZQjJyTmh3OTE5bnMKbXFLT1FxWGFSR1cxZ3FNUWhvUlJBRXFNRjM2UFd0c1VBRTBMQTBqVkNvNVNkdm41U24wMStJTVF4bTNTT29DSApvNldjTlE2YktpaVFKQWJaclJDRUwrRGExdlN2aTVLSmcvdjc4ZzlFM0hjdWtYQlc2ME9vMG5XWXZBZ1p0Z29SCjJGREhVM2RTOHNmK0lUeU1jV0IwaHc2QlBuVEdXLzM4ZitXNlgvZStaM2JJU2dPaml0S0ZndXA0Q25jaCtpV0QKVUlHbU1rMENnWUVBK3ZNYzZlZlRpRWVnRFhHVkxpdVpQSkdGWW51Rm9YQXZpUG1WVTlDZ3J1U1VMSmIrTWZxOQoxaGxhdi95eGxtME8rak5SalJVK29xV2NoTEw2ZkVONUJUTjJMWWljbjBiOUY3NnU3OU91dmJsbWtGSDhSbmlxCmpCVDk2UG1MUGdYM0c0MDRRUlh1N01wMGtuTjRHNHpEVWo0MGVJMGF1T20xYW8zbGRwaTVURjhDZ1lFQS9ORlgKc1gxQ05sRk1sSklhVkgrRnFLU2hoWE5xbHJJaXJ2eW8vSnp2Z1g1WEFVTXlRUnRPL1ZUOWFPakpiNnhUaG5zRApaMDdoODU3YVlRY3VGT2N2Qk1Ic2I4Zm9KTDRrWXROSWMwSmpuVncxdlRWWklTcFl3Z09qdHJmMDFPWkxYa2ZmCkI4bGZmekdXdHNOMkhIN0pXTFNTTVdNSWJNQWVwUysxVkE1dkhpc0NnWUFJT0p5eTRRQmlENDZqd2h2VUJtT2YKdzFpdVVFT2hkVTVwVzF2VUFocXhnQldHbkcrNWJYQjRxaDM1K2lwTE5rbHVVdTRTQkNjb0p1ckl3aUJJbitGQQpGVjZDd1YzNExkZ3V4ZlZ2TCswaWxBZFRKUXh4dHBSSHdJeE03SmZ1TVQzV0xqc3dqcXBrSVlIT0puQkIzc3VyClR4UmkrcVJzZUdPVUdRL3lZYkI0V3dLQmdRRGQ3L2lIdTJvd3ZOWDVadmp1VExSTkE1azN5Y1k4WEV6T1NNY2cKVzdSMWZTOXIwRTJCa2pPWmVNNnRGZzRmbHF3TVZsajZpK2tYTU5DTWRQMGpKSC9HTVdjYUNlZmt1WGEvdXJMVApXK2lPNzYvTlZkUFVwWlFkWFl5T2pwYkRmeGVTd0kwdURMMWtyMmViTWFPeUNDdEJUK00ycjdWcG9vNUVmTWsxCjdTWG0yUUtCZ1FDZjVjZWdhQk4yeTZKTm8vUXc5cDBUWkdGYkx6bDl0eStHQjBCSzRBaitIaVAwN3gwVktDdCsKRFJWK2JlQVJvK2JlZkRadmIreDFsenZaZjlRU25IenY1N0d3VUFmV05USFYrWHNSUXk3QTFmK2llc0tLMXozcwo3d3F5KzVRblkyQmhBZzRRYnBpQkJGSmo2U3kzSmRwRkRudWF1U1kvSEdUbytVUXRSWTZIdHc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: db
+sub_kind: db
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 8db08b6e-4f4f-49e1-8c77-c76e7c049e6d
+spec:
+  active_keys:
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURuakNDQW9hZ0F3SUJBZ0lRSmRMNmVtakwyWHNrVHhuRVYwbURFakFOQmdrcWhraUc5dzBCQVFzRkFEQnAKTVJvd0dBWURWUVFLRXhGMFpXeGxjRzl5ZEM1allYWnFMbVJsZGpFYU1CZ0dBMVVFQXhNUmRHVnNaWEJ2Y25RdQpZMkYyYWk1a1pYWXhMekF0QmdOVkJBVVRKalV3TWpjMk9EazRORGcxTURBek9ESXdOelExTVRneE56TTNOVGN6Ck5ERTFORGcyTWpJMk1CNFhEVEkyTURjek1URXpNemd6TVZvWERUTTJNRGN5T0RFek16Z3pNVm93YVRFYU1CZ0cKQTFVRUNoTVJkR1ZzWlhCdmNuUXVZMkYyYWk1a1pYWXhHakFZQmdOVkJBTVRFWFJsYkdWd2IzSjBMbU5oZG1vdQpaR1YyTVM4d0xRWURWUVFGRXlZMU1ESTNOamc1T0RRNE5UQXdNemd5TURjME5URTRNVGN6TnpVM016UXhOVFE0Ck5qSXlOakNDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFLYkpqVWtleGNhREdNNGgKK2tMeG9XbEtwMEtNUDFpbjlDZzZPWXRRUXVqdkpZR2pGOWROalhHVWhETTRaK2VQc2g0R0w0NGJubVh2VmIxNApxNUoxSjIzUnY3c0Y0NFk0cDUwUGIvOXplaENhQ2c5UTdNVzE4d1BSeFVDVnBzMGUrS3JvM0ttK0VoVWowRmpjCjRMVVBJOTd6dURNeW1Dak9YWThTMFcwVlpZVDlzdGxlVWhDREtkeFF2TWJTNHJRUjREYVd3bU5PMVVGZ2JSUXIKWjEwQmwvQ0pxWi9sdGswV2h4d2NZWHF2Q3ZjUk5qWUlhOGpKdnRIdGpaQ1lpT25nT2xzeFJjeGVxTG85a2JVdApXU05TWnk2bVAwUHQ0Z1VMWnJSSTJKTVQ3QjRSMnp1amc3SUs3NUk5aUQvSG5NYWtucUxjK05nMzExWWt1Y2E1CkhKeFdkZTBDQXdFQUFhTkNNRUF3RGdZRFZSMFBBUUgvQkFRREFnR21NQThHQTFVZEV3RUIvd1FGTUFNQkFmOHcKSFFZRFZSME9CQllFRkNlSnhIM3d3b051anI1emNxVlJxVVNoc0g3Nk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQgpBUUFzZDBBQy8yb3QvMWU3ODhCNlJEdXFSajJyLzg3ZEgxd3BUd1pJQm82OWtTbllRMFJmRjJCZnlPSmY0UlJLCkxjVEx1R2kydmo0Zkw0V0lINkZTM3d1SGF5NXdoYmlIZ2Z0cGZDS2FLYzJJTXhSNlk0Ync3bGZLeFBzZEgwbS8KRGRJV3NWTUwraDRud25IVEVnRnU2cVNWU211UVBkL3BvRGFUczZWc24rVGVYdHNmZUF6NGhGbVgvVHpGYzVkSAprT3MzNHJuUTQxWlJsYURKOWxuaDU5SjFPRmk1UHFwU3lUYjVtdE82ejNYejN4d1FEZ3d2eUJFVlRzVyt5bytXCmc4QTdwRTluL0YrODZYZDN0RUtkWVhNakgwYW1NREtQdVV0T2s5a0JxVEtlU1g4T3liY0ZKZWNNQVhmYVRmV3UKdUY1ZjFPRGpvek5kZnovVml6MzNrVVlvCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      crl: MIIB4zCBzAIBATANBgkqhkiG9w0BAQsFADBpMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxLzAtBgNVBAUTJjUwMjc2ODk4NDg1MDAzODIwNzQ1MTgxNzM3NTczNDE1NDg2MjI2Fw0yNjA3MzExMzM3MzFaFw0zNjA3MjgxMzM4MzFaoC8wLTAfBgNVHSMEGDAWgBQnicR98MKDbo6+c3KlUalEobB++jAKBgNVHRQEAwIBATANBgkqhkiG9w0BAQsFAAOCAQEACr9SFE9CNMInI3t6G3WvsYCj6+Avbyk40sLsx/V9T1bw0TL8OUggqPpnH6FST1Pl1Y00SGz2qL060r6FJV0MIxe+4RUj0djqnltpZB50mF2eUHNQGC0qE+IqHtbS9RElWrM5HF8ZXNZoCC1ovev1UxaNxkzqqUmCxsPv/47ze5NdRz1oCxIr73D6Q59ftUPRK8Y9oSW6DhdnXDYAJqmdJyWGyxEfLusoQ53pwZuPUbfFA3hxLg4cJ6j+kdcbdzxHN7I5iM7glixHu5F/ZYjGGeKAi4KwVusnsqPjblwS61ou812ScYQkjC3v8MMoZAEefLESn1KCZKLsZ3gbR7XGWw==
+      key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBcHNtTlNSN0Z4b01ZemlINlF2R2hhVXFuUW93L1dLZjBLRG81aTFCQzZPOGxnYU1YCjEwMk5jWlNFTXpobjU0K3lIZ1l2amh1ZVplOVZ2WGlya25VbmJkRy91d1hqaGppbm5ROXYvM042RUpvS0QxRHMKeGJYekE5SEZRSldtelI3NHF1amNxYjRTRlNQUVdOemd0UThqM3ZPNE16S1lLTTVkanhMUmJSVmxoUDJ5MlY1UwpFSU1wM0ZDOHh0TGl0QkhnTnBiQ1kwN1ZRV0J0RkN0blhRR1g4SW1wbitXMlRSYUhIQnhoZXE4Szl4RTJOZ2hyCnlNbSswZTJOa0ppSTZlQTZXekZGekY2b3VqMlJ0UzFaSTFKbkxxWS9RKzNpQlF0bXRFallreFBzSGhIYk82T0QKc2dydmtqMklQOGVjeHFTZW90ejQyRGZYVmlTNXhya2NuRloxN1FJREFRQUJBb0lCQUFiRGJHcmZQWUFSMzdSaQpNb0s2OGk1SEh2Wm05MTJrdlQrbXNYVXZDQnVTaG1LVi9CanVGZWd2R3l6ME9BWEVSbUhnZUlGZjA0SHpoK0Q0ClR2clFMSTBQNjZGaStTbVU5cnBsZm5KQ2had1NrYlJkSU5EWlVwVmdlN1RRQWhUV0pwbDYrbWNaWkU4byt6YW8KbnZzYlMxRFdtMjBHRVBTeC9rb1hrUU1HVWxqU0c3NDJMVFArd2ZWRW1XRXFXZEVSdWZ0YzB6NVhWc0tlNThaaApBelpOcCtKUkxKemhFNkFkeERteEFMcHd2aVp3TkUzeEluNWpZVUNlaEFZQnFpYnVJN3UxeXBDbGo0QTV5TjM2CitTTHRWNFNFelIxdWo2OHBRc2RqaDZHSXdmZVFRMndtTDBYVEFDMzBqemxkaXQwS2JDU3YvUXlMMmlUNHlHWXgKdnBRbGVuRUNnWUVBM01NMFpqOXdmWlUrNFM4aU5LYW02L3BIeFg3N1NIRURabFFwRXJlYlZ5NmJVekVqL0RESQovMitWWjBBczkyQStqYmcrS1ZKOGJBYTBlTUpGbU9Wc1RoU0ZmdVVHdG5jYy9FWVhWRFJEVy96ai83VDF1UlpQCmY3UkJnQmFXeTNURnRFSHdiZHZibmF1aEtiandlWTNhNnhoQ0E1QURFOG95cjBEVTRpVkRKeEVDZ1lFQXdXalEKSUtMWTVZck9seXFESEVKdEc4VUtjcjNKaEtWZWVTc2hZVEhMV09vWUhtRnQzV21MV1FYbjRoeWlGTElPd0dZVgpTaFB1WE1tNFdWMkhteElvMWVMZmFoajI2ZVRzU09BdXZZSVMySkpCd2YwRitNZDRNbzRiWldOWmp1MFMvN2phCk5jYlBhcm5CVFVSamNRZm43REFWbGNzZ0k2aXd2Q3VhS0dvRWVSMENnWUVBcVFyVWFlTHorVVc1ODJaTEUvUDAKWjBlcmc0QWJYRG9sZDByRWRLK2hSRjNNMUNRUndQOStPWkl3M2ZJWFBJazIvUC95b1dPbklIVDE1bTRrS3RLcQpYeE41c1ZRZ0VzSWNzTlBlOHp4ZHcrZGVrcVAzY0hXMEJENTcxVi8yc2U1Rm9TVEl2T2FZUVNCMTlPUEhSOXltCm9GUmY0Q2g3SXNFMmxGblphUjFOVVhFQ2dZQjNSNDdrTWNxV2RpN0c1NzhJVktjNXN5R29kZ2VzT05pMDNiYXUKWEtsT1lzRVJLNEU0UmZsY285bkloMlFtWTFIWnNwdDZuaVFwTVhieUZrNmxnbU9RMVdSMzZJR082bElXOTd1Ygp3SGFpL2tCenhQcEQzYkR4Yk5iVWhwc2JISGJWSTBuZ1ZJWmpDY0IvU0tnVGM0N0RDVHltcnlsWkZKWTYxcUV5ClA0QVd1UUtCZ1FDWndUK3pDSWhYVlp6UUdpVE9uUlBsbnZsYmpBY1Z2NCtDNkl4M3c3SmJVSUorcFppZkZzLzYKNXhGTkdpa01YWS9tQWxndDA2MHIwTnZCUWVINmlCcUdWa2lwRy9uZjhnMGhpVjVQT2ZMYzdUVmtTaCtGOWRUKwpnYVVCcDV4VlFCaHN1ZFBoSXcyS0hORUJmb0duVjNCT3I0czk5enFEbEYzNEQycExJQVNOQlE9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: db_client
+sub_kind: db_client
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 8a81af85-bd49-40d6-aa0d-83a35eca007d
+spec:
+  active_keys:
+    ssh:
+    - private_key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1DNENBUUF3QlFZREsyVndCQ0lFSUI1R1IyaG5IanJGYVJWSUJFcUxjdDB0UkN0eXVJTHFHTlJDSDJDMTI4TEsKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tLQo=
+      public_key: c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUFQbktkV0FaLzEyeHM5WUNaUVZyV2l4Sk9PcndjdXVMVU1Va2dNUGFhR2kK
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: openssh
+sub_kind: openssh
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: c689e4fe-ee43-4da2-b5e7-a2f5a1e94655
+spec:
+  active_keys:
+    jwt:
+    - private_key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3F1d1pYS29DVlIxdlFOYSsKclN2OEVweEZwSTU5VnQ4MExlam1uOHY1MDdxaFJBTkNBQVNRWnhKV3ZBbWgreXl2dmNwSVN2S0JNME5UK2lucQpyTTdDekljajkzSlpIdExWdGVIVkJySzJDdUR6YXF5MFYwY3NiOEJjcnc4eVhrVVZRanVNQndqQwotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+      public_key: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFa0djU1Zyd0pvZnNzcjczS1NFcnlnVE5EVS9vcAo2cXpPd3N5SEkvZHlXUjdTMWJYaDFRYXl0Z3JnODJxc3RGZEhMRy9BWEs4UE1sNUZGVUk3akFjSXdnPT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: jwt
+sub_kind: jwt
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 2c2b3a3c-a882-4870-87cf-e1c2d2ef4010
+spec:
+  active_keys:
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURuakNDQW9hZ0F3SUJBZ0lRRGcxZnd3NjNyTElmWjA0TGZZclEzekFOQmdrcWhraUc5dzBCQVFzRkFEQnAKTVJvd0dBWURWUVFLRXhGMFpXeGxjRzl5ZEM1allYWnFMbVJsZGpFYU1CZ0dBMVVFQXhNUmRHVnNaWEJ2Y25RdQpZMkYyYWk1a1pYWXhMekF0QmdOVkJBVVRKakU0TmpjNE5qTTBNRGd6TVRBNE5qVXhNalkxTXpZMk9UY3dPVGMxCk5UYzNNVEF3TlRFeE1CNFhEVEkyTURjek1URXpNemd6TVZvWERUTTJNRGN5T0RFek16Z3pNVm93YVRFYU1CZ0cKQTFVRUNoTVJkR1ZzWlhCdmNuUXVZMkYyYWk1a1pYWXhHakFZQmdOVkJBTVRFWFJsYkdWd2IzSjBMbU5oZG1vdQpaR1YyTVM4d0xRWURWUVFGRXlZeE9EWTNPRFl6TkRBNE16RXdPRFkxTVRJMk5UTTJOamszTURrM05UVTNOekV3Ck1EVXhNVENDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFQdHN3dXlHczNJQVhraksKeTE5K01YcEd5ZG5rWG1pcWpkajJtbTJQSzU1Y3V3R2Q0UVkrOVZ1N1N6WTNqYmtqbzU1eWtDQkZTSUZGaFFaTApjdDAxd0lmTkNUSnFYNmpLUHJFL1FCOWlDS0JRMHJZd0kvd2RSd3VrejZEc25UaHJhelI0Q1pWWDNZQytvN2lmCnpwU3doWmk0blN3akNpTDFyOCsvcDZtSXhibzI2Q1ozUStnQlp5SnNib0V4TWVnd1VRZUNxUGRRTjYxaUlBcmkKd3Bmd0R3bE9pSkwxZ3VZM082T1VMSGlrdktwWVd3c3VzaThQSnE5MG1CUDNBZndTaG1UK3pTSU9qRjQ5Mk1VYwpnRmUvNStXYmJKdGU1Ly9JbWhyVVZ5QWMzRWtxUnI5V2dtWUlpb3RVejhQekhIZHpuMlAxL3hmT1RXVWVRQTVRCmcwbEJMRWtDQXdFQUFhTkNNRUF3RGdZRFZSMFBBUUgvQkFRREFnR21NQThHQTFVZEV3RUIvd1FGTUFNQkFmOHcKSFFZRFZSME9CQllFRkFDUTdRcTloMWh3OWkzeWxhZUlQcy8xSURjS01BMEdDU3FHU0liM0RRRUJDd1VBQTRJQgpBUUE0aEQ3bDFGQ1N0MW12YU5Ha3llQmVONGwwR3RINDcwVXJvcnM0cEZhelptdFhhMUhONGZQcll6bVZWU1ZHCmdwa0hOM01pampwNmhjOUpIWWcvMDBiQkp5Z0czZEJIRnZVbk9BanhFSlg5cGh2VU1BYmhjTGZkbUhESVMxNnQKWEExY2tGWmZvL0lDa0ZyUXJrS0NWUCtCaDh3UEFhU1B6bjRpdlBLZDNiQVVpa1M4U0k2WVJCVnVYNVB1KzliTwphbzZpZjI2K0dUclcwK21QMCtWcm9DRThkbEhUT0hucGIxbGxWdlJ1c1J5UjdtQUFXa0llRklnTWJCNlBTZzZICmhmaTlZNmhMT2hQcUFQem9OaGgwbkEzVTl5SVhNd3FjdVEvV3ZONFh0YW9nSFpaM2NXNExPWEJGZCsyOXhVNmQKbzRVRk9pZndhcUJOUit5TUZKMmI3RG5XCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      crl: MIIB4zCBzAIBATANBgkqhkiG9w0BAQsFADBpMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxLzAtBgNVBAUTJjE4Njc4NjM0MDgzMTA4NjUxMjY1MzY2OTcwOTc1NTc3MTAwNTExFw0yNjA3MzExMzM3MzFaFw0zNjA3MjgxMzM4MzFaoC8wLTAfBgNVHSMEGDAWgBQAkO0KvYdYcPYt8pWniD7P9SA3CjAKBgNVHRQEAwIBATANBgkqhkiG9w0BAQsFAAOCAQEAm/hZ7lUkG56t7La+EWTCfjbt2LVg/HuUKITzMrapXegj7j+XEAylzTBKd6z7kzVbiSILYidTRmHtYBnUjKiRo6HcS7LmdovwOi3NlZ0+gwmSYJZ9Wdakz6SoHTDQBXBnsoHF8p3G2TFnEFhSHGde4ELnv+qpyyr7358uvVBcY+TKfR8uSzXyFeYpCuaT+G/m2mTlPqS+AgPA53aMc8xX4P8HvSW+R2D9NIomOkFBEMGAdidzc1WKJfyVACBYbLL8hcN3Fn/aWDoOcVHWhm4RJ9demXu0aHGU4EzfIeXwmjjdtBkfBcF1fzNIxNDEJDvPHPnJCdYZ0BusDB4xnzlvUQ==
+      key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBKzJ6QzdJYXpjZ0JlU01yTFgzNHhla2JKMmVSZWFLcU4yUGFhYlk4cm5seTdBWjNoCkJqNzFXN3RMTmplTnVTT2pubktRSUVWSWdVV0ZCa3R5M1RYQWg4MEpNbXBmcU1vK3NUOUFIMklJb0ZEU3RqQWoKL0IxSEM2VFBvT3lkT0d0ck5IZ0psVmZkZ0w2anVKL09sTENGbUxpZExDTUtJdld2ejcrbnFZakZ1amJvSm5kRAo2QUZuSW14dWdURXg2REJSQjRLbzkxQTNyV0lnQ3VMQ2wvQVBDVTZJa3ZXQzVqYzdvNVFzZUtTOHFsaGJDeTZ5Ckx3OG1yM1NZRS9jQi9CS0daUDdOSWc2TVhqM1l4UnlBVjcvbjVadHNtMTduLzhpYUd0UlhJQnpjU1NwR3YxYUMKWmdpS2kxVFB3L01jZDNPZlkvWC9GODVOWlI1QURsQ0RTVUVzU1FJREFRQUJBb0lCQUR2YjZoQ01CVjhIN1dxaApOWWczc0NudmZwRXN5TGxjbWNiazkyRk1LOU5aT29DcENQRUd2ajJudXNGZXVwUXdndnp2UTVjYlI2YlhXVk5sClZTU0xicG9tVzZFd0tEUTBhbmFpbTI2ZFZYWnRwNjBPaXhLMEdiMFE4UW5jSzVaS0pNenFJMFgyRkZ0Wmgvc2wKdVBZM2pLY09sUVQwRnE2NkZiQjliYnAwUUxjVGNLWUxic3FkUzh6NXRPRnV0ODRNczBzUVJ5dDVKWTlRaERkVQorZGswUWZCNWVuNnVhK0YwWS9Wbkd6QnNkeE5sc2NJK1M2V0ZmdWJ6WW5mWmRzc3c3R2Z3aVpQQ0srcUUwVlRJCjkreStlZXVOTFpsWmpJOW5CU3ZBdFArZTBXQkZ4N3phN3o3TlovWEVFOFN4NHRhK0Z5dWVRMkpMclFuVDhuQkUKVWRjNTdERUNnWUVBL2NWUml3MDFHZ09pWlkvYVJaVGlmaUFtNkNkS2h0LzVzTGJidWt0OUIyWjVjMzdOQ1M0UAovMmUxYkowVTVPY3ZjWWJ1WmljeitHTytvU3BCOWNGWEVMYVFKMXFJbkFsYzB3MzU4M1BPYlNHaS9yVW52NE4xCktveGpSS1h4OXZ6QktSY3Uxb1RnSmFlZlBOZ1VDU2dNQS9veDc4eFl3WFM0Z0ppWHlQMENzaDBDZ1lFQS9hSXEKMkFMUVE5UlRVTVZQT1cwYXBQdndvSndLRWg4cHpONGJRbWpkWEtWSlhDYlVyTmlOaHR0VVpTSlUxYTVQWnBLUwoyLzFXUGxuWldRWUc2SjJCOVp3YlBlYXphSUNUVWgwRXBSeXNKZzRoQUdmeHFMMmlFTXJ2eWM0Ryt3bFJ4TFFhCnpueUZ1TG9acWpUd0dPVUo1Q0phNCtPSkhXVnB3MlRnSHBHdXl4MENnWUJiRHQ1L29yR1hNQTZwbXNDYmp4em0KWE9zWkNtQTNuVTZmRmo0cHpzU0NUMGJ0Sm1hMEVJODAraVdqWDRvTHlOakJSOFZyYWsyL3B5clQ4YkhSV1JyQQpxSUY1WFliL1ZteTBYcU45cytReVRJdU1FYnk5ZjVJZlBsaXdYVXRCY05odXdoN1FZc1Y3UFhacUFxN055a3psCmNIVlNzbVIycGtjOS9ZTVpYNUFFRVFLQmdDV0ZPdTlQb3oyVmlHbTNkcHZaTHdyZkZsNjhGcVZOcE9KZ3JRbXEKOTZ3LzYxVk5qVUt3bW1jcnhSVmMrYzNPaG9KM0JuQ3l6bkpVMmxsWUVlZVJmV3MzRjdTVmowN1RUbmZrUVE2bgo2ak9LL1lqUTE2Z052WTdjWnBLay90VmVNSkYzejB0aWttbWNaaldPdFVJSmgrZ095UUZUWkxKTGtWVE5kSFl4Ck9QbGxBb0dCQU1OZUtwK0dDbDhETXNIdTZSbTh1WUtoaWpUMG5PSWxyUWM3b1YxTnBjOEZHS0g4WjVKOWZSdTEKR3VQd0YwQ1RuUU1rNjJrZGIwaFRyV3ZKdnRFaG1aSGNtcFRWNGZoTml5dFc2ekI5VWZlbm5EWWRVeXljWkFUYgp3ZUs3K0pnVjFOUmw3U01QMVdJOVBsckV0WjVoMU5ZL2RYc3FZT2dGQi9WVjE5bHlYWk1VCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: saml_idp
+sub_kind: saml_idp
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 6b91fc0f-4d71-4398-ae86-de423e6dcc34
+spec:
+  active_keys:
+    jwt:
+    - private_key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBdFI3Sm9BVXlvSWdJVSsvcWZDWVZFeVl3d2ZlMXpNVUExd1hMOWE2bTRnSjJaRTFNCnBVdnFibUJFd3F5SmJKcThjaitZVjdQdmxtMVkyeTR6THJndHBMYWhoSUNRRlJ2Y1hydFExRnZWSHkxMU5XTisKNUc4S2tPQk9pUGJMcFc5YWpvOG5SYkQrWTdIc2F4UmJuT0hwYW53YTFLRnc5bmR1WnczRFV4ZmhvYzh2bmxvcAo5WHRESHFsR0FNY3F4OEhRM1F0R2NWanpIRjBoWXVWUmRlaTdOU2N0WllRc2lTUUFTNEJyNmFPZG1zVHdsczNoCk9nUXRjcFd1Sm9nRWtsdWhnaHcxeDFJcy8ydTIxanZscytpZzFPVll5R1cyUmRIQWI1RU1uK0c2ZXgwWlpRMzEKY2dleGpxVG1seVhzUVoxTlFlUFBqdS85WEdkcGZmbGJ0Y2M1cHdJREFRQUJBb0lCQUJZOTRhUzAvcktZQWUzTQoySTdHWG5BcmtIRkJhaUhyVDE4WVp5T1Vmd25pSTRmTnRrdldOc08zTHJwNVZhYndtWk91RzVjcGtaSjNleUh2CldubXlSR2lseE0vd3VjRGQyd0lISHJYMVVRYXpIbUdnQmtVbkhiVU0xcGdiTm9icVZjU0w3OWF2Rlk1SW15L0wKSURUenlTWTZkMUVGUWtvQ0FKekhJK1ZnV1dUMVIzMUhRYUNqR0lpZnZDdmFDZ21OSjFBb0xPc2w4aEc5a2ZscgpxbENRd1o3cXFNbkh5bTBHcjFDcFUwQ01VWmZlMkdBamFEaFQvYmZmYWF1cGp5aE1kZDczVWRxbU4raFZqMjNGCkdkYnlaRTlFenBvV01pVmFoYVdTb2hkb2g5M3U4ZmQzWVp6b093Qm9NbkxPRE9ucnpldDBTMFFpZjZWUlFFYXcKcmJ3Y1k0RUNnWUVBNHp3bmVmK0pHYTlwajVKMnBFQnAzTGUrWjVydnVGVDUzK1NjYmlEbUlIK1R1R3Yyd1RtcApMc2hVc25uTy9ydXNrYWVsUVRhLzVQSlltdTdpc3hiZnEzYnpwY2VFbndJWC9DelQzZHdHallvekV2WU9LN0NUCldLM1psRnB4SWU2R0lTc3lHTTMxcFUxeWR3ZmZwaTBwNEl0QlZjSWZwZDNNaXVRY2V3dytTT3NDZ1lFQXpBdzUKMk84dDdRR1ArVDVHcXc4QTVYaklveTlpczZuaFd6b3BOdXRPWGlleXhEcXQyNkpuRmZ5SXZLOTJaYng1RUJSeQpLQWwrbnFUNVZndkdEajRLaGppTFJhRmtIeFhXU0FyNjM4TWkzTWdkdW1mUnp1eGhMRFQ3N3d1WFRJS3orNVd1ClJ0L1FKR2pMQjJKNHF4dE1mczM1elAvSGtjWldmaWhXWUFBK0l6VUNnWUE0dUtCR0JMSk5WZ3JzaXF2UXpqOWUKbUFNUVM0MkJIcjBNMVR6ekJJVk5JV3RYUXFQaWtha1lnMnNZN2V6c2l4NUZjV3AvdjlIZ3JWbk91c2lkMlp6VgphU2ppZmM0dC90REw0c2l6L2FNcEc1RXFMMzlVQ295Tk8wQXZsdS9jZjNTOXZOR1JmWC9PMW1rM0t5RDVreFo3CjlXYkdxR0ZML3ZSNnl2d00vdjVoSndLQmdDOTFiSUw3Wm5nb2s5OEowQS83Umw4WkQ3bDh6UDB5dHZxcjlXZ1QKcEwrYmhpWEQ3Q29ZaE5lRlRCeHV4eC8walVmaktZWU1aMG5vM3lGWFRiS0VWWmhRVUh4YWhGb0NqenRrYW1OZgpGSjI3WWNhNFhRRSswMzhmdDdVcXdmOEdxMndKcldaSXFqVzl0Zk02d1F3ekprQ2NFY3pQZFJCL3pDQTlxNUZhCm5SazlBb0dCQUpEdlJoYitJNHovUjloSHVOZ2czcDJiQWZCbWpqRlFwNDhWTndLNHZyRjhSeVNMSXZzaVRQTFMKSmRET252eHJlWTkydlM3QjVUai9pUDY1QlVudkd2UEtwQ3RPZUFIYU5VeWxqdW5VeTFSMkZxQWFzZjhKTERKTQplWG9BMWtJYnpTOHFSQnBQZmFZYTczNW5IRE9RQ2dxMWFyNTE5UG11czRxS3dRMDRrRlNqCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+      public_key: LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXRSN0pvQVV5b0lnSVUrL3FmQ1lWRXlZd3dmZTF6TVVBMXdYTDlhNm00Z0oyWkUxTXBVdnEKYm1CRXdxeUpiSnE4Y2orWVY3UHZsbTFZMnk0ekxyZ3RwTGFoaElDUUZSdmNYcnRRMUZ2Vkh5MTFOV04rNUc4SwprT0JPaVBiTHBXOWFqbzhuUmJEK1k3SHNheFJibk9IcGFud2ExS0Z3OW5kdVp3M0RVeGZob2M4dm5sb3A5WHRECkhxbEdBTWNxeDhIUTNRdEdjVmp6SEYwaFl1VlJkZWk3TlNjdFpZUXNpU1FBUzRCcjZhT2Rtc1R3bHMzaE9nUXQKY3BXdUpvZ0VrbHVoZ2h3MXgxSXMvMnUyMWp2bHMraWcxT1ZZeUdXMlJkSEFiNUVNbitHNmV4MFpaUTMxY2dleApqcVRtbHlYc1FaMU5RZVBQanUvOVhHZHBmZmxidGNjNXB3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: oidc_idp
+sub_kind: oidc_idp
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 653c7983-6ce4-436f-a35d-c628dc940b8f
+spec:
+  active_keys:
+    jwt:
+    - private_key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBMnZJTnRUUXJQYXBzeW1nZFB0eXFhQkhKaDNQRkNPbDFISG5FVHdXanZuREwvSFc4CjdVZ3UydVRuVURheWRBMXlmTWdndXphNWg4TlBFREpRRUlXM1R4NkdNc0xSYi9pd1VkY3BhRzYwMlRReFhyMi8KMWhCMDM1MWlFa1dtQlc3ZytHazRhWGkyeVI5OEZmRGxjZitaM2s5M2RTL3ExejkyK0NaRTZQdEhLZVhrR204dQo1RWpwZUtMdkFNWGhSV0xnUkVhM3IrUWt4MnV4UWtXTXZSL1UzRlI4c05TVTBEbElnZXAwSlZVTTFzMFl4SDRRClErR09Cb2VLZ29ESUEwWHp2bGc2ZWxSNlM2UWwzWGlMQzBZWCt1Ty94V05HSU5ya3RvMDhkTlo1NFhxazIrMFgKSGRjSHFBREJRWW5EZ2wyUkNUOUdsMEJCaWhRTFg4NUJacTJuNXdJREFRQUJBb0lCQUUrVkt5bGgySlBXRml3dQpVdThPQzN5L2RtYmZURS9VZUFhTk5pOVpCKzlKbGNQaTBmVFh4M3cyTnVRZnRaYmNhbkJ6MS8za3d1Ulh1QzNWCmMrZkZpdDlkNDM2ZzlMckVCT2NDaytFTFdINFk3QmNaVnBrTEswZzZyektnRVZ3cE5Pbm1hU1JoUmVOdUo4N2IKM0xLbXF6bTAzZUdCTk5YZmtqRlp5N041M3FDWjdMckJXT3BtZ3JhOThUZlRCNkhIZ0U3bGR4aVVLakUzTVFZaApweWJaZGlHSm1tK2l2ZXNSaERvOGhxRnVFVG1kYWhIeVQvK05SNk9lN1B3T0ZVcjNmNzcyeGV4ZUtoL2ZrL0tPCit3V29rUlJwZk5TZnJFRDJyL3plb0RyejVuVjlrQk9Jc25IcTI3a2NhNHI0a1Z6Z280cDJuamZYTmdhLzYvbE0KQzlDeGE5VUNnWUVBOG1IT3k5alBiT2tHSXZiUG1QbEFKdkNqL2RHNU1iaUxPTHJzdS9xRFVsWU5iWWhkM0dvbgp5VnQ3a0x6WldGaGFpNm5iMWtlK2RPd0daTkVtckx1YjVNUSs5OXlySG5YamZpRVpCby93dFRURnl1Y0NHUHZwClBpSUZGY0xObnlTMG5SQWVMOElnbFdnMmphb3lZS2pPb0M4cnRXZDU4VTBBL3AxU2pubThGTjBDZ1lFQTV6OG8KTEhSdjlWOFp4bVRpNVdIbXhJcTRRY1l3ZHdSUERscXdCQUs4TGljc1Rrd1BWOFhTT25IR1dkU3BaSDBzS0xTWgo5b1R0Y1pJUXBUZXE1VTM4UzJack5FZEV6Q3lSRmx3Y2ZCa1NNM0RVMFdYNWh0bWNaMk85dDJ0QzhOUUVxUy84Ckt5c0VRQWZhTDNpVldrL3YvU08xM0Rta0MwR3d6VlM0L3cxSEVaTUNnWUJDbFJHc3Q3TkxWTHZsME96NE5jZ2sKcWtneVNuRllNankwYWN6c1dvWEdrWE1BMnN3RjUzZGtmZWYwdTV2dEErQmpxMWFEaDVQUEpLTWhBTDlpQmV0dQpMV2FxeWdpTHhwQ21ya3JrblpmZS8wOHlUTUVyd2MreHpNQ2UyTE9KZXhqT2FJWVNVbjZHN0dqSUE2L3hFNDRuClBLNENHQm5NYW4zU2M3OGcrbG5yVlFLQmdCOU9CWG8vS1FqbW51NmtxYkt6MWpHMU5jeHhzQTNzbjJjcUQ3bjcKUk01YXJ6ektQeWw2dGtNRE0vN2xNeWxQYUxMNS8vM0hjUDEyOEpudE4wMWppVXdMeVdlQ1htWGxncDZzU1k3agpOZnVRd3I2Mk4xbHlEQ0pTOWxQbVNXR2cwaUMxUmtYeHhObUdOcHRHajdGeU1PTHIrcXFkZ3YrakhQUXZDL3c3CkordlJBb0dCQU45bEYxd0JDKzhMM2dxOUErWkpHcVRRbWlFeXBqN1V5a1NEQ2EvVlVqWVFuTmQya3VGWWFmYmYKM2hmL2lDNWkrK3FiOFoySXdtWVBFRHNlOU5CR1RybUNWK3pUYU5nay9Vbm9RWHgwY3ZLMjQvemJTaGJqSGxCYwovenc5NGtBbnR0MnhxdUJJRVpaWktIaUdsWTR3NS80b0laaXdkZExpdVdyQzdaY2NJNHdvCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+      public_key: LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQTJ2SU50VFFyUGFwc3ltZ2RQdHlxYUJISmgzUEZDT2wxSEhuRVR3V2p2bkRML0hXODdVZ3UKMnVUblVEYXlkQTF5Zk1nZ3V6YTVoOE5QRURKUUVJVzNUeDZHTXNMUmIvaXdVZGNwYUc2MDJUUXhYcjIvMWhCMAozNTFpRWtXbUJXN2crR2s0YVhpMnlSOThGZkRsY2YrWjNrOTNkUy9xMXo5MitDWkU2UHRIS2VYa0dtOHU1RWpwCmVLTHZBTVhoUldMZ1JFYTNyK1FreDJ1eFFrV012Ui9VM0ZSOHNOU1UwRGxJZ2VwMEpWVU0xczBZeEg0UVErR08KQm9lS2dvRElBMFh6dmxnNmVsUjZTNlFsM1hpTEMwWVgrdU8veFdOR0lOcmt0bzA4ZE5aNTRYcWsyKzBYSGRjSApxQURCUVluRGdsMlJDVDlHbDBCQmloUUxYODVCWnEybjV3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNGakNDQWJ1Z0F3SUJBZ0lSQUp4dU9kaXZsa1FCTWovalNseWw4OU13Q2dZSUtvWkl6ajBFQXdJd2FqRWEKTUJnR0ExVUVDaE1SZEdWc1pYQnZjblF1WTJGMmFpNWtaWFl4R2pBWUJnTlZCQU1URVhSbGJHVndiM0owTG1OaApkbW91WkdWMk1UQXdMZ1lEVlFRRkV5Y3lNRGM1TXpFNE9UTXlOakU0TlRjM05UVXhOek14TURrek5qUXpORFV6Ck5ERTROalk1TmpNd0hoY05Nall3TnpNeE1UTXpPRE14V2hjTk16WXdOekk0TVRNek9ETXhXakJxTVJvd0dBWUQKVlFRS0V4RjBaV3hsY0c5eWRDNWpZWFpxTG1SbGRqRWFNQmdHQTFVRUF4TVJkR1ZzWlhCdmNuUXVZMkYyYWk1awpaWFl4TURBdUJnTlZCQVVUSnpJd056a3pNVGc1TXpJMk1UZzFOemMxTlRFM016RXdPVE0yTkRNME5UTTBNVGcyCk5qazJNekJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCS0o5YmpaNWdudE43RS9SMzZVUGFWVTkKWEZUejB1QzlGVmFLYTJuVEt1dTFUalFhdG5hYmVaNUlUMFN3cGV5bzA5VGwyOHpJUWhsRktFN1FJcTU4SStHagpRakJBTUE0R0ExVWREd0VCL3dRRUF3SUJoakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlNlCmFucVlrWlE5V25hTFgxRzJOejRQNVZRajdUQUtCZ2dxaGtqT1BRUURBZ05KQURCR0FpRUEzMkwzS3dFM3Z4UTkKRTdoVDYzYmU3RVhqQldRMWcvVmVGbmFVTzZFdFJjMENJUUNuVVdJQkVNWnlxMjR3dUdkSE45UUlhanc0NmxjYQowNE9YQ0p6RFU5Vlp1UT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      crl: MIIBIjCBygIBATAKBggqhkjOPQQDAjBqMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxMDAuBgNVBAUTJzIwNzkzMTg5MzI2MTg1Nzc1NTE3MzEwOTM2NDM0NTM0MTg2Njk2MxcNMjYwNzMxMTMzNzMxWhcNMzYwNzI4MTMzODMxWqAvMC0wHwYDVR0jBBgwFoAUnmp6mJGUPVp2i19Rtjc+D+VUI+0wCgYDVR0UBAMCAQEwCgYIKoZIzj0EAwIDRwAwRAIgfqokvo0hmUOTE2amXH/4UiVKM4wLX3Sf2a1wfVg6OZECICshveahPi0H+/qinmyV1ho7EVWcdLYiZlgE7BOqo4ce
+      key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ3ZvdlVVSE1NZUpZV2hXd0IKSUFvS2ZvQnUzVDg1OHRVeHh1L0pVeEhTU0ltaFJBTkNBQVNpZlc0MmVZSjdUZXhQMGQrbEQybFZQVnhVODlMZwp2UlZXaW10cDB5cnJ0VTQwR3JaMm0zbWVTRTlFc0tYc3FOUFU1ZHZNeUVJWlJTaE8wQ0t1ZkNQaAotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: spiffe
+sub_kind: spiffe
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: a610e4cd-0331-4e11-a514-746e4c83768c
+spec:
+  active_keys:
+    jwt:
+    - private_key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0NVaVN5MHR3ZER3eVo1ME8KRnVVYzlpbXpzYTZZL0RkRk44QkQ3ZGtyUXdlaFJBTkNBQVI4NzJkWXJZOC9NV1gveEs4RVZzNHd4NmtvMHNjQwp5ZmNiekRZUjRmVVNpWVd4V3lrVGh6MEloL2dwL2I2ckZzd29YbkdGZ3FRbzdMb1dVY2xJa09ZdgotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+      public_key: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFZk85bldLMlBQekZsLzhTdkJGYk9NTWVwS05MSApBc24zRzh3MkVlSDFFb21Gc1ZzcEU0YzlDSWY0S2YyK3F4Yk1LRjV4aFlLa0tPeTZGbEhKU0pEbUx3PT0KLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: okta
+sub_kind: okta
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: df529eb9-5ba8-4933-b568-90ae3355c569
+spec:
+  active_keys:
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNGVENDQWJ1Z0F3SUJBZ0lSQUpzS0g4LzZWZGIrR0RHY2lvaWdlMGN3Q2dZSUtvWkl6ajBFQXdJd2FqRWEKTUJnR0ExVUVDaE1SZEdWc1pYQnZjblF1WTJGMmFpNWtaWFl4R2pBWUJnTlZCQU1URVhSbGJHVndiM0owTG1OaApkbW91WkdWMk1UQXdMZ1lEVlFRRkV5Y3lNRFl3T0RJNU1EYzFORGMyTkRrMk9EZzJOVFExTWpNMk1EazJOekl3Ck5qRXdOVGM0TmpNd0hoY05Nall3TnpNeE1UTXpPRE14V2hjTk16WXdOekk0TVRNek9ETXhXakJxTVJvd0dBWUQKVlFRS0V4RjBaV3hsY0c5eWRDNWpZWFpxTG1SbGRqRWFNQmdHQTFVRUF4TVJkR1ZzWlhCdmNuUXVZMkYyYWk1awpaWFl4TURBdUJnTlZCQVVUSnpJd05qQTRNamt3TnpVME56WTBPVFk0T0RZMU5EVXlNell3T1RZM01qQTJNVEExCk56ZzJNekJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCQ2t6L284c1dYaXdiRzBzTmNKNnVSZS8KYnIzeHNnSHBKTURpWklQTDZoSXZQTTdMOUJsZlpnTlpaKzNxbThzd3JDTWI0ZmF2MU9TVGZLQXQ2cExveVVPagpRakJBTUE0R0ExVWREd0VCL3dRRUF3SUJoakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlNkCmJTb0hDK1hXMlFIV3o3UkUwNThpWlhaZktqQUtCZ2dxaGtqT1BRUURBZ05JQURCRkFpQWR4VVpRTGRxRW44ZFEKR1k0OW5RSW5jTWdMZG5ibDVEdE40TXB1KzNFb1d3SWhBTkZkNVNzZ1h3OXZkMWlrRnF3UVA4SnVJczZyZVRFbApzazN4MmVmSDNMcjcKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      crl: MIIBIzCBygIBATAKBggqhkjOPQQDAjBqMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxMDAuBgNVBAUTJzIwNjA4MjkwNzU0NzY0OTY4ODY1NDUyMzYwOTY3MjA2MTA1Nzg2MxcNMjYwNzMxMTMzNzMxWhcNMzYwNzI4MTMzODMxWqAvMC0wHwYDVR0jBBgwFoAUnW0qBwvl1tkB1s+0RNOfImV2XyowCgYDVR0UBAMCAQEwCgYIKoZIzj0EAwIDSAAwRQIhAJTU16pv8GSrHvFgzmDl0LxYNmRRMeD9kQniGNgEzIubAiAeQ9h/udQWpD1NceqacoDCH65IfwZ1E6Xu7rvAa/yoQw==
+      key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0w1SlAwUE5hem5LVklFcFUKOVZLNDIyYmpmUzZIdG1sa2NvM3FGNlhCdGhhaFJBTkNBQVFwTS82UExGbDRzR3h0TERYQ2Vya1h2MjY5OGJJQgo2U1RBNG1TRHkrb1NMenpPeS9RWlgyWURXV2Z0NnB2TE1Ld2pHK0gycjlUa2szeWdMZXFTNk1sRAotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: awsra
+sub_kind: awsra
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: dd150e87-e8c7-444b-9803-ab4fad0dd715
+spec:
+  active_keys:
+    jwt:
+    - private_key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1DNENBUUF3QlFZREsyVndCQ0lFSUoyTUcvR2ZlOHk4QnZYZVByWXJGOVEvVG8zRm5LR1RDelNkZk5HTHBwT0oKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tLQo=
+      public_key: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUNvd0JRWURLMlZ3QXlFQWhGVlFmUzduVzNTNXdKeDBON3AvY21CNVdzaFNlK2NnUUkvMjlNT3loUEk9Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo=
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: bound_keypair
+sub_kind: bound_keypair
+version: v2
+---
+kind: cert_authority
+metadata:
+  name: teleport.cavj.dev
+  revision: 4c4f7473-5ac8-45b9-a11b-97ddd800fc49
+spec:
+  active_keys:
+    tls:
+    - cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNGVENDQWJ1Z0F3SUJBZ0lSQVB4djZFUlU1RDcwY2sxcUcxQ2RBR1l3Q2dZSUtvWkl6ajBFQXdJd2FqRWEKTUJnR0ExVUVDaE1SZEdWc1pYQnZjblF1WTJGMmFpNWtaWFl4R2pBWUJnTlZCQU1URVhSbGJHVndiM0owTG1OaApkbW91WkdWMk1UQXdMZ1lEVlFRRkV5Y3pNelUxTkRZMU1UQTRNakU1TVRFNU16Y3lNRE00TmpnMU5EVTBPVE0wCk1EVXpNelUyTlRRd0hoY05Nall3TnpNeE1UTXpPRE14V2hjTk16WXdOekk0TVRNek9ETXhXakJxTVJvd0dBWUQKVlFRS0V4RjBaV3hsY0c5eWRDNWpZWFpxTG1SbGRqRWFNQmdHQTFVRUF4TVJkR1ZzWlhCdmNuUXVZMkYyYWk1awpaWFl4TURBdUJnTlZCQVVUSnpNek5UVTBOalV4TURneU1Ua3hNVGt6TnpJd016ZzJPRFUwTlRRNU16UXdOVE16Ck5UWTFOREJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCS3BLUkZITlhLeWtDQS9jdjVTSkdUNmUKeVpCTEdMQ3VSNmFMWVhQRlVpczVaMzRRTjlwMWpRWXpUS2dEL1Izbk45L2FzOHRYS3IwcWFNTDcrT1FLamp1agpRakJBTUE0R0ExVWREd0VCL3dRRUF3SUJoakFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlFvCkt6MjFVbDhCZ2xaK3kvem1yYWpUL3ZYSmZEQUtCZ2dxaGtqT1BRUURBZ05JQURCRkFpQk5tYXRnTXZiNzdyVjcKeGtRNGFmSDNneG1MNGIzR1ZOZFVBQ0YyVnRmNllRSWhBTWdQdFJCRDJ2dkltelpxOWdCV3pMZEdSSENRU2swbwp0QTNxWG1nNXJBNXoKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      crl: MIIBIjCBygIBATAKBggqhkjOPQQDAjBqMRowGAYDVQQKExF0ZWxlcG9ydC5jYXZqLmRldjEaMBgGA1UEAxMRdGVsZXBvcnQuY2F2ai5kZXYxMDAuBgNVBAUTJzMzNTU0NjUxMDgyMTkxMTkzNzIwMzg2ODU0NTQ5MzQwNTMzNTY1NBcNMjYwNzMxMTMzNzMxWhcNMzYwNzI4MTMzODMxWqAvMC0wHwYDVR0jBBgwFoAUKCs9tVJfAYJWfsv85q2o0/71yXwwCgYDVR0UBAMCAQEwCgYIKoZIzj0EAwIDRwAwRAIgG7wLBK/xVq605Z41TYhf+KbodmxdTYa+yeCxdqKNf9QCICoKs6gbS2HCukGH3grp4sQ1vXJYFlzOhzsqyQe1gUwq
+      key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR0hBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ1Z5bzVnOUZ2b0JZdkxtcTMKNzhaTkIvSDVXOG9saU5xL1JEUVBYT1RSTnNlaFJBTkNBQVNxU2tSUnpWeXNwQWdQM0wrVWlSaytuc21RU3hpdwpya2VtaTJGenhWSXJPV2QrRURmYWRZMEdNMHlvQS8wZDV6ZmYyclBMVnlxOUttakMrL2prQ280NwotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==
+  additional_trusted_keys: {}
+  cluster_name: teleport.cavj.dev
+  type: app_client
+sub_kind: app_client
+version: v2
