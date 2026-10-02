@@ -72,6 +72,18 @@ auth:
     access_graph:
       enabled: true
       endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
+      
+  extraVolumes:
+    - name: access-graph-ca
+      secret:
+        secretName: access-graph-tls
+        items:
+          - key: ca.crt
+            path: ca.crt
+  extraVolumeMounts:
+    - name: access-graph-ca
+      mountPath: /var/run/access-graph
+      readOnly: true
   # auth.teleportConfig contains YAML teleport configuration for auth pods
   # The configuration will be merged with the chart-generated configuration
   # and will take precedence in case of conflict.
