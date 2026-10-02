@@ -73,6 +73,9 @@ auth:
       enabled: true
       endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
       ca: /var/run/access-graph/ca.crt
+      audit_log:
+        # enables Audit Log export from Teleport
+        enabled: true
 
   extraVolumes:
     - name: access-graph-ca
