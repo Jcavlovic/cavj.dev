@@ -72,7 +72,8 @@ auth:
     access_graph:
       enabled: true
       endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
-      
+      ca: /var/run/access-graph/ca.crt
+
   extraVolumes:
     - name: access-graph-ca
       secret:
