@@ -65,6 +65,15 @@ teleportVersionOverride: ""
 #    command: ["curl", "http://hook"]
 #  imagePullPolicy: Always
 auth:
+  teleportConfig:
+    teleport:
+      storage:
+        type: postgresql
+        conn_string: postgres://teleport@teleport-nodocs-cluster-rw.teleport-nodocs.svc.cluster.local:5432/teleport_backend?sslmode=verify-full&pool_max_conns=20
+        audit_events_uri:
+          - "postgres://teleport@teleport-nodocs-cluster-rw.teleport-nodocs.svc.cluster.local:5432/teleport_audit?sslmode=verify-full"
+        audit_sessions_uri: "s3://cavlovicj/records?region=us-west-1"
+
   # auth.teleportConfig contains YAML teleport configuration for auth pods
   # The configuration will be merged with the chart-generated configuration
   # and will take precedence in case of conflict.
@@ -202,7 +211,7 @@ authentication:
 # To use an ingress, set proxyListenerMode=multiplex, ingress.enabled=true and service.type=ClusterIP
 #
 # Possible values are 'separate' and 'multiplex'
-proxyListenerMode: "separate"
+proxyListenerMode: "multiplex"
 
 # Optional setting for configuring session recording.
 # See `session_recording` under https://goteleport.com/docs/reference/config/#auth-service
@@ -261,9 +270,9 @@ tunnelPublicAddr: []
 # Setting acme to 'true' enables the ACME protocol and will attempt to get a free TLS certificate from Let's Encrypt.
 # Setting acme to 'false' (the default) will cause Teleport to generate and use self-signed certificates for its web UI.
 # This section is mutually exclusive with the "tls" value below.
-acme: false
+acme: true
 # acmeEmail is the email address to provide during certificate registration (this is a Let's Encrypt requirement)
-acmeEmail: ""
+acmeEmail: "jordan.cavlovic@goteleport.com"
 # acmeURI is the ACME server to use for getting certificates. The default is to use Let's Encrypt's production server.
 acmeURI: ""
 
@@ -555,18 +564,18 @@ highAvailability:
   # These settings are mutually exclusive with the "tls" value below.
   certManager:
     # If set to true, use cert-manager to get certificates for Teleport to use for TLS termination
-    enabled: false
+    enabled: true
     # If set to true, a common name matching the cluster name will be set in the certificate signing request. This is mandatory for some CAs.
-    addCommonName: false
+    addCommonName: true
     # If set to true, any additional public addresses configured under the `publicAddr` chart value will be added to the certificate signing request.
     # This setting is not enabled by default to preserve backward compatibility.
     addPublicAddrs: false
     # Name of the Issuer/ClusterIssuer to use for certs
     # NOTE: You will always need to create this yourself when certManager.enabled is true.
-    issuerName: ""
+    issuerName: "letsencrypt-prod"
     # Kind of Issuer that cert-manager should look for.
     # This defaults to 'Issuer' to keep everything contained within the teleport namespace.
-    issuerKind: Issuer
+    issuerKind: ClusterIssuer
     # Group of Issuer that cert-manager should look for.
     # This defaults to 'cert-manager.io' which is the default Issuer group.
     issuerGroup: cert-manager.io
