@@ -55,10 +55,6 @@ recovery:
 #    parameters:
 #      serverName: cluster-example
 
-  objectStore:
-    # -- Whether to create the ObjectStore resource used by the `barman-cloud.cloudnative-pg.io` plugin for recovery. Its name comes from `recovery.pluginConfiguration.parameters.barmanObjectName`, defaulting to `<fullname>-recovery`. Set to `false` to recover from an ObjectStore managed outside of this chart (e.g. the source cluster's), leaving it untouched.
-    create: true
-
   # Barman Object Store configuration applicable to both `barmanObjectStore` and `plugin` methods when using
   # the `barman-cloud.cloudnative-pg.io` plugin.
 
@@ -178,9 +174,9 @@ recovery:
       sslMode: "verify-full"
       passwordSecret:
         # -- Whether to create a secret for the password
-        create: false
+        create: true
         # -- Name of the secret containing the password
-        name: ""
+        name: "pg-secret"
         # -- The key in the secret containing the password
         key: "password"
         # -- The password value to use when creating the secret
@@ -195,7 +191,7 @@ recovery:
         name: ""
         key: ""
 
-
+ 
 cluster:
   # -- Number of instances
   instances: 3
@@ -225,17 +221,6 @@ cluster:
     enabled: false
     size: 1Gi
     storageClass: ""
-
-  # -- Override the default emptyDir used by CNPG for temporary storage.
-  # See: https://cloudnative-pg.io/documentation/current/cluster_conf/#ephemeral-volumes
-  ephemeralVolumeSource: {}
-    # volumeClaimTemplate:
-    #   spec:
-    #     accessModes: ["ReadWriteOnce"]
-    #     storageClassName: "scratch-storage-class"
-    #     resources:
-    #       requests:
-    #         storage: 1Gi
 
   # -- The UID of the postgres user inside the image, defaults to 26
   postgresUID: -1
@@ -403,7 +388,13 @@ cluster:
 
   postgresql:
     # -- PostgreSQL configuration options (postgresql.conf)
-    parameters: {}
+    parameters:
+      # Required by the Teleport Postgres backend: its change feed uses a
+      # logical replication slot with the wal2json output plugin.
+      # PG >= 18.6/17.11/16.15/15.19/14.24 require plugins to be allowlisted.
+      output_plugin_libraries: "pgoutput, test_decoding, wal2json"
+      # At least one slot per Teleport Auth Service replica.
+      max_replication_slots: "32"
       # max_connections: 300
 
     # -- Quorum-based Synchronous Replication
@@ -412,9 +403,7 @@ cluster:
      # number: 1
 
     # -- PostgreSQL Host Based Authentication rules (lines to be appended to the pg_hba.conf file)
-    pg_hba:
-      - hostssl teleport all ::/0 cert
-      - hostssl teleport 0.0.0.0/0 cert
+    pg_hba: []
       # - host all all 10.244.0.0/16 md5
 
     # -- PostgreSQL User Name Maps rules (lines to be appended to the pg_ident.conf file)
@@ -481,16 +470,6 @@ cluster:
   additionalLabels: {}
   annotations: {}
 
-  # -- Mount custom files in the PostgreSQL Pods through `spec.projectedVolumeTemplate`.
-  # See: https://cloudnative-pg.io/documentation/current/cluster_conf/#projected-volumes
-  projectedVolumeTemplate: {}
-    # sources:
-    #   - secret:
-    #       name: sample-secret
-    #       items:
-    #         - key: tls.crt
-    #           path: certificate/tls.crt
-
   console:
     # -- Deploys a console StatefulSet to run long-running commands against the cluster (e.g. `CREATE INDEX`).
     enabled: false
@@ -499,28 +478,11 @@ backups:
   # -- You need to configure backups manually, so backups are disabled by default.
   enabled: false
 
-  # @schema
-  # type: string
-  # enum: [prefer-standby, primary]
-  # @schema
-  # -- Which instance takes the backups. One of `prefer-standby` (default) or `primary`.
-  target: "prefer-standby"
-
   # -- One of `barmanObjectStore` (default) or `plugin`
   method: barmanObjectStore
 
   pluginConfiguration: {}
 #    name: barman-cloud.cloudnative-pg.io
-
-  objectStore:
-    # -- Whether to create the ObjectStore resource used by the `barman-cloud.cloudnative-pg.io` plugin. Its name comes from the plugin's `barmanObjectName` parameter (see `cluster.plugins`), defaulting to `<fullname>-backups`. Set to `false` to reference an ObjectStore managed outside of this chart, leaving it untouched.
-    create: true
-    # -- Render the `ObjectStore` as a Helm hook (pre-install,pre-upgrade,pre-rollback) so it is applied before
-    # the Cluster. Set to false for GitOps tools (ArgoCD/Flux) that treat Helm hooks as ephemeral resources
-    helmHook: true
-    # -- Extra annotations for the plugin `ObjectStore` resources only. Handy
-    # for e.g. `argocd.argoproj.io/sync-wave: "-1"` when helmHook above is set to false.
-    annotations: {}
 
   # Barman Object Store configuration applicable to both `barmanObjectStore` and `plugin` methods when using
   # the `barman-cloud.cloudnative-pg.io` plugin.
