@@ -1,0 +1,27 @@
+- name: Hello World Sample
+  hosts: all
+  gather_facts: false
+  pre_tasks:
+    - name: Wait for Teleport ssh_config to become available # noqa: run-once[task] (best effort)
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.wait_for:
+        path: /tbot-output/ssh_config
+        state: present
+        timeout: 120
+
+    - name: Configure SSH via Teleport
+      ansible.builtin.set_fact:
+        ansible_ssh_common_args: "-F /tbot-output/ssh_config"
+
+  tasks:
+    # We have to disable gather_facts at the start because we can't expect to
+    # have SSH access until Teleport's ssh_config is ready. Now that it is, we
+    # can run the module explicitly.
+    - name: Gather facts
+      ansible.builtin.setup:
+
+    - name: "Print node hostname"
+      ansible.builtin.command: "hostname"
+      changed_when: false
+
