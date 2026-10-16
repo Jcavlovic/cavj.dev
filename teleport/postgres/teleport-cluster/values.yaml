@@ -18,11 +18,6 @@ clusterName: "teleport2.cavj.dev"
 # Name for this kubernetes cluster to be used by teleport users.
 kubeClusterName: "cavj-eks-cluster"
 
-labels:
-  env: dev
-  region: us-west-1
-  team: cs
-
 ##################################################
 # Values that you may need to change.
 ##################################################
@@ -93,6 +88,10 @@ auth:
         secretKeyRef:
           name: postgres-pass
           key: password
+  labels:
+    env: dev
+    region: us-west-1
+    team: cs
           
     # Uncomment along with audit_sessions_uri once the bucket-creds secret exists.
     # - name: AWS_ACCESS_KEY_ID
