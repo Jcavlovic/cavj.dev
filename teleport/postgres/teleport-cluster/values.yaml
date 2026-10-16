@@ -16,7 +16,7 @@
 clusterName: "teleport2.cavj.dev"
 
 # Name for this kubernetes cluster to be used by teleport users.
-kubeClusterName: "cavj-eks-cluster"
+kubeClusterName: "cavlovicj-eks-cluster"
 
 ##################################################
 # Values that you may need to change.
@@ -76,19 +76,19 @@ auth:
     - name: postgres-ca
       configMap:
         name: postgres-ca
+
   extraVolumeMounts:
     - name: postgres-ca
       mountPath: /var/lib/postgres-ca
       readOnly: true
+
   extraEnv:
-    # Password for the "teleport" role on the CNPG cluster (postgres-cluster).
-    # kubectl -n teleport-postgres create secret generic postgres-pass \
-    #   --from-literal=password='<the teleport role password>'
     - name: PGPASSWORD
       valueFrom:
         secretKeyRef:
           name: postgres-pass
           key: password
+          
     # Uncomment along with audit_sessions_uri once the bucket-creds secret exists.
     # - name: AWS_ACCESS_KEY_ID
     #   valueFrom:
@@ -421,7 +421,7 @@ persistence:
 ##################################################
 aws:
   # The AWS region where the DynamoDB tables are located.
-  region: "us-west-1"
+  region: ""
   # The DynamoDB table name to use for backend storage. Teleport will attempt to create this table automatically if it does not exist.
   # The container will need an appropriately-provisioned IAM role with permissions to create DynamoDB tables.
   backendTable: ""
