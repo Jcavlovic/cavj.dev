@@ -18,6 +18,11 @@ clusterName: "teleport2.cavj.dev"
 # Name for this kubernetes cluster to be used by teleport users.
 kubeClusterName: "cavj-eks-cluster"
 
+labels:
+  env: dev
+  region: us-west-1
+  team: cs
+
 ##################################################
 # Values that you may need to change.
 ##################################################
