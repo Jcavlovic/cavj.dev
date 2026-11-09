@@ -191,7 +191,7 @@ recovery:
         name: ""
         key: ""
 
-
+ 
 cluster:
   # -- Number of instances
   instances: 3

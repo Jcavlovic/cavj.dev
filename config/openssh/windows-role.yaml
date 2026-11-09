@@ -1,0 +1,12 @@
+kind: role
+version: v7
+metadata:
+  name: windows-admin
+spec:
+  allow:
+    logins: ['Administrator', 'administrator']
+    node_labels:
+      env: dev
+    windows_desktop_logins: ['Administrator']
+    windows_desktop_labels:
+      '*': '*'

@@ -1,0 +1,45 @@
+AWX:
+  enabled: true
+  name: awx
+ 
+  spec:
+    admin_user: admin
+    # Admin password is auto-generated into secret "awx-admin-password"
+ 
+    # --- Ingress via Traefik ---
+    service_type: ClusterIP
+    ingress_type: ingress
+    ingress_class_name: traefik
+    ingress_hosts:
+      - hostname: awx.cavj.dev
+    ingress_annotations: |
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      external-dns.alpha.kubernetes.io/hostname: awx.cavj.dev
+      external-dns.alpha.kubernetes.io/ttl: "300"
+ 
+    # AWX sits behind a TLS-terminating proxy
+    extra_settings:
+      - setting: CSRF_TRUSTED_ORIGINS
+        value:
+          - https://awx.cavj.dev
+      - setting: USE_X_FORWARDED_HOST
+        value: "True"
+ 
+    # --- Managed Postgres (operator-deployed) ---
+    postgres_storage_class: gp3
+    # EBS volumes mount root-owned; init container chowns data dir for postgres (uid 26)
+    postgres_data_volume_init: true
+    postgres_storage_requirements:
+      requests:
+        storage: 20Gi
+ 
+    # --- Projects persistence (optional) ---
+    # projects_persistence: true
+    # projects_storage_class: efs-sc        # needs RWX (EFS) if >1 web/task replica
+    # projects_storage_access_mode: ReadWriteMany
+    # projects_storage_size: 8Gi
+ 
+    web_replicas: 1
+    task_replicas: 1
+ 

@@ -1,0 +1,15 @@
+kind: role
+version: v7
+metadata:
+  name: ssh-user 
+  description: SSH to dev EC2 instances as the Teleport user.
+spec:
+  allow:
+    logins: ["{{user.metadata.name}}"]
+    node_labels:
+      env: dev
+    host_groups: []                  # optional: add groups the user should join, e.g. ["docker"]
+  options:
+    create_host_user_mode: keep      # creates the user on first login and keeps it
+    max_session_ttl: 8h              # 8 hour work day
+    forward_agent: false             # Enable if user needs git/ssh jumping, can be dangerous"

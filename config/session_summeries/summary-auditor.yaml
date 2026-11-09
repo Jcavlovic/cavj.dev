@@ -1,0 +1,13 @@
+kind: role
+metadata:
+  name: summary-auditor
+spec:
+  allow:
+    rules:
+    - resources:
+      - session
+      verbs:
+      - read
+      - list
+version: v7
+

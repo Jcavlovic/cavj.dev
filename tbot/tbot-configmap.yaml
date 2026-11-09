@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tbot-awx-config
+  namespace: awx
+data:
+  tbot.yaml: |
+    version: v2
+    onboarding:
+      join_method: kubernetes
+      # ensure token is set to the name of the join token you created earlier
+      token: awx-bot
+    storage:
+      # a memory destination is used for the bots own state since the kubernetes
+      # join method does not require persistence.
+      type: memory
+    # ensure this is configured to the address of your Teleport Proxy Service.
+    proxy_server: teleport.cavj.dev:443
+    services:
+    # The `ssh-multiplexer` service provides a high-performance multiplexer
+    # socket for use in Ansible jobs.
+    - type: ssh-multiplexer
+      # This path (/tbot/) must match the volume mount for the `tbot-binaries`
+      # shared volume.
+      proxy_command: ["/tbot/fdpass-teleport"]
+      destination:
+        type: directory
+        # The path in the pod where credentials and the multiplexer socket will
+        # be created. This must match the volume mounts for both the worker and
+        # tbot containers as configured in your AWX container group template.
+        path: "/tbot-output"
+

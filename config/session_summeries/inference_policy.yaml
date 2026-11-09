@@ -1,0 +1,12 @@
+kind: inference_policy
+version: v1
+metadata:
+  name: all-sessions
+  description: Summarize all sessions
+spec:
+  kinds:
+  - ssh
+  - k8s
+  - db
+  - desktop
+  model: shell-summary-model

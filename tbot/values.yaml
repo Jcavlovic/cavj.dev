@@ -1,0 +1,5 @@
+clusterName: teleport.cavj.dev
+teleportProxyAddress: teleport.cavj.dev:443
+defaultOutput:
+    secretName: awx-bot-output
+token: awx-bot

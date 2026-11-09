@@ -1,0 +1,16 @@
+# Creates node to connect openssh nodes to teleport.
+# Required fields
+#   metadata.name - New GUID
+#   spec.addr     - OpenSSH node IP addr and port, ie Windows Machine
+
+kind: node
+version: v2
+sub_kind: openssh
+metadata:
+  name: D6DA5CB5-2006-4BBD-9E97-7F7A1B7D3580 
+  labels:
+    env: dev 
+spec:
+  addr: ec2-54-219-62-50.us-west-1.compute.amazonaws.com:22
+  hostname: openssh-node
+
