@@ -65,7 +65,7 @@ teleportVersionOverride: ""
 #    command: ["curl", "http://hook"]
 #  imagePullPolicy: Always
 auth:
-  teleportConfig:
+  # teleportConfig:
     # <...>
 
     # Add a section for configuring the Access Graph connection.
@@ -133,22 +133,22 @@ auth:
   # teleportConfig: {}
 
 proxy:
-  teleportConfig:
-    access_graph:
-      enabled: true
-      endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
-      ca: /var/run/access-graph/ca.crt
-  extraVolumes:
-    - name: access-graph-ca
-      secret:
-        secretName: access-graph-tls
-        items:
-          - key: ca.crt
-            path: ca.crt
-  extraVolumeMounts:
-    - name: access-graph-ca
-      mountPath: /var/run/access-graph
-      readOnly: true
+  # teleportConfig:
+  #   access_graph:
+  #     enabled: true
+  #     endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
+  #     ca: /var/run/access-graph/ca.crt
+  # extraVolumes:
+  #   - name: access-graph-ca
+  #     secret:
+  #       secretName: access-graph-tls
+  #       items:
+  #         - key: ca.crt
+  #           path: ca.crt
+  # extraVolumeMounts:
+  #   - name: access-graph-ca
+  #     mountPath: /var/run/access-graph
+  #     readOnly: true
 
 authentication:
   # Default authentication type. Possible values are 'local' and 'github' for OSS, plus 'oidc' and 'saml' for Enterprise.
