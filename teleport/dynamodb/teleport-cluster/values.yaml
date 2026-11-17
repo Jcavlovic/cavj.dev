@@ -16,7 +16,7 @@
 clusterName: "teleport.cavj.dev"
 
 # Name for this kubernetes cluster to be used by teleport users.
-kubeClusterName: "cavj-eks-cluster"
+kubeClusterName: "cavlovicj-eks-cluster"
 
 ############################## firfe####################
 # Values that you may need to change.
@@ -69,25 +69,25 @@ auth:
     # <...>
 
     # Add a section for configuring the Access Graph connection.
-    access_graph:
-      enabled: true
-      endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
-      ca: /var/run/access-graph/ca.crt
-      audit_log:
-        # enables Audit Log export from Teleport
-        enabled: true
+  #   access_graph:
+  #     enabled: true
+  #     endpoint: access-graph-teleport-access-graph.teleport-dynamodb.svc.cluster.local:443
+  #     ca: /var/run/access-graph/ca.crt
+  #     audit_log:
+  #       # enables Audit Log export from Teleport
+  #       enabled: true
 
-  extraVolumes:
-    - name: access-graph-ca
-      secret:
-        secretName: access-graph-tls
-        items:
-          - key: ca.crt
-            path: ca.crt
-  extraVolumeMounts:
-    - name: access-graph-ca
-      mountPath: /var/run/access-graph
-      readOnly: true
+  # extraVolumes:
+  #   - name: access-graph-ca
+  #     secret:
+  #       secretName: access-graph-tls
+  #       items:
+  #         - key: ca.crt
+  #           path: ca.crt
+  # extraVolumeMounts:
+  #   - name: access-graph-ca
+  #     mountPath: /var/run/access-graph
+  #     readOnly: true
   # auth.teleportConfig contains YAML teleport configuration for auth pods
   # The configuration will be merged with the chart-generated configuration
   # and will take precedence in case of conflict.
