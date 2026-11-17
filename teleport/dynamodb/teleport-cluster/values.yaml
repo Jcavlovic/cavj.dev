@@ -65,6 +65,7 @@ teleportVersionOverride: ""
 #    command: ["curl", "http://hook"]
 #  imagePullPolicy: Always
 auth:
+  teleportConfig: {}
   # teleportConfig:
     # <...>
 
@@ -133,6 +134,7 @@ auth:
   # teleportConfig: {}
 
 proxy:
+  teleportConfig: {}
   # teleportConfig:
   #   access_graph:
   #     enabled: true
@@ -144,7 +146,7 @@ proxy:
   #       secretName: access-graph-tls
   #       items:
   #         - key: ca.crt
-  #           path: ca.crt
+  #           path: ca.crt  
   # extraVolumeMounts:
   #   - name: access-graph-ca
   #     mountPath: /var/run/access-graph
